@@ -5,7 +5,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 
-namespace Fabric_Demo.Controllers
+namespace Fabric.Demo.Controllers
 {
     public class HomeController : Controller
     {

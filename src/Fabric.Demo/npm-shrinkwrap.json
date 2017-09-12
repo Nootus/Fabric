@@ -1,5 +1,5 @@
 {
-  "name": "Fabric_Demo",
+  "name": "Fabric.Demo",
   "version": "0.0.0",
   "dependencies": {
     "@angular/animations": {
