@@ -19,9 +19,9 @@ namespace Nootus.Fabric.Web.Core
     public abstract class ModuleStartup<TContext> : IModuleStartup
         where TContext : DbContext
     {
-        protected IConfigurationRoot Configuration { get; set; }
+        protected IConfiguration Configuration { get; set; }
 
-        public virtual void Startup(IConfigurationRoot configuration)
+        public virtual void Startup(IConfiguration configuration)
         {
             this.Configuration = configuration;
         }

@@ -15,8 +15,6 @@ namespace Nootus.Fabric.Web.Core.Common
     {
         public static string ConnectionString { get; set; }
 
-        public static string WebPath { get; set; }
-
         public static string EnvironmentName { get; set; }
 
         public static bool IsEnvironment(string environmentName)

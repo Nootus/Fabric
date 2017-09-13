@@ -28,13 +28,5 @@ namespace Nootus.Fabric.Web.Security.Entities
         public bool DashboardInd { get; set; }
 
         public List<IdentityPageClaimEntity> Claims { get; set; }
-
-        public IEnumerable<IdentityClaimEntity> PageClaims
-        {
-            get
-            {
-                return this.Claims.Select(s => s.Claim);
-            }
-        }
     }
 }

@@ -11,7 +11,14 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Nootus.Fabric.Web.Core", "s
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Nootus.Fabric.Web.Security", "src\Nootus.Fabric.Web.Security\Nootus.Fabric.Web.Security.csproj", "{45A38980-8765-4F23-AADA-494FF80423A6}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Nootus.Fabric.Web", "src\Nootus.Fabric.Web\Nootus.Fabric.Web.csproj", "{1CA0AF65-E33A-441C-8C85-3C2528A0C267}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Nootus.Fabric.Web", "src\Nootus.Fabric.Web\Nootus.Fabric.Web.csproj", "{1CA0AF65-E33A-441C-8C85-3C2528A0C267}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{730B9C6F-0745-4BE5-B35B-5D2E5A38530C}"
+	ProjectSection(SolutionItems) = preProject
+		Directory.Build.props = Directory.Build.props
+		stylecop.json = stylecop.json
+		stylecop.ruleset = stylecop.ruleset
+	EndProjectSection
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

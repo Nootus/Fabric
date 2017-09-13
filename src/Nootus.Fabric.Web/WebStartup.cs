@@ -8,35 +8,74 @@
 //-------------------------------------------------------------------------------------------------
 namespace Nootus.Fabric.Web
 {
+    using System.Collections.Generic;
+    using AutoMapper;
     using Microsoft.AspNetCore.Builder;
     using Microsoft.AspNetCore.Hosting;
     using Microsoft.AspNetCore.SpaServices.Webpack;
     using Microsoft.Extensions.Configuration;
     using Microsoft.Extensions.DependencyInjection;
+    using Newtonsoft.Json;
     using Nootus.Fabric.Web.Core;
+    using Nootus.Fabric.Web.Core.Common;
+    using Nootus.Fabric.Web.Core.Extensions;
+    using Nootus.Fabric.Web.Core.Mapping;
     using Nootus.Fabric.Web.Security;
-    using System;
-    using System.Collections.Generic;
-    using System.Text;
+    using Nootus.Fabric.Web.Security.Extensions;
+    using Nootus.Fabric.Web.Security.Filters;
 
     public class WebStartup
     {
-        public IConfiguration Configuration { get; }
-        protected List<IModuleStartup> components = new List<IModuleStartup>
+        private List<IModuleStartup> modules = new List<IModuleStartup>
         {
-            new SecurityStartup()
+            new SecurityStartup(),
         };
 
-
-        public WebStartup(IConfiguration configuration)
+        public WebStartup(IConfiguration configuration, IHostingEnvironment env)
         {
-            Configuration = configuration;
+            this.Configuration = configuration;
+
+            // initializing all modules
+            foreach (var module in this.modules)
+            {
+                module.Startup(this.Configuration);
+            }
+
+            SiteSettings.ConnectionString = configuration.GetConnectionString("WebApp");
+            SiteSettings.EnvironmentName = env.EnvironmentName;
         }
 
+        public IConfiguration Configuration { get; }
 
-        public void ConfigureServices(Microsoft.Extensions.DependencyInjection.IServiceCollection services)
+        public void ConfigureServices(IServiceCollection services)
         {
-            services.AddMvc();
+            // Automapper configurations
+            Mapper.Initialize(x =>
+            {
+                x.AddProfile<CoreMappingProfile>();
+                foreach (var module in this.modules)
+                {
+                    module.ConfigureMapping(x);
+                }
+            });
+
+            // configuring services for all modules
+            foreach (var module in this.modules)
+            {
+                module.ConfigureServices(services);
+            }
+
+            services.AddSession();
+            services.AddMvc()
+                .AddMvcOptions(options =>
+                {
+                    options.Filters.Add(new NTAuthorizeFilter());
+                })
+                .AddJsonOptions(options =>
+                {
+                    options.SerializerSettings.DateTimeZoneHandling = DateTimeZoneHandling.Local;
+                    options.SerializerSettings.DateFormatHandling = DateFormatHandling.IsoDateFormat;
+                });
         }
 
         public void Configure(IApplicationBuilder app, IHostingEnvironment env)
@@ -44,9 +83,10 @@ namespace Nootus.Fabric.Web
             if (env.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();
+                app.UseDatabaseErrorPage();
                 app.UseWebpackDevMiddleware(new WebpackDevMiddlewareOptions
                 {
-                    HotModuleReplacement = true
+                    HotModuleReplacement = true,
                 });
             }
             else
@@ -55,16 +95,37 @@ namespace Nootus.Fabric.Web
             }
 
             app.UseStaticFiles();
+            app.UseSession(new SessionOptions());
+            app.UseContextMiddleware();
 
+            // configuring services for all modules
+            foreach (var module in this.modules)
+            {
+                module.Configure(app, env);
+            }
+
+            app.UseProfileMiddleware();
             app.UseMvc(routes =>
             {
                 routes.MapRoute(
-                    name: "default",
-                    template: "{controller=Home}/{action=Index}/{id?}");
-
-                routes.MapSpaFallbackRoute(
-                    name: "spa-fallback",
+                    name: "webapi",
+                    template: "api/{controller}/{action}/{id?}",
                     defaults: new { controller = "Home", action = "Index" });
+
+                routes.MapRoute(
+                    name: "error",
+                    template: "Error",
+                    defaults: new { controller = "Home", action = "Error" });
+
+                routes.MapRoute(
+                    name: "catchall",
+                    template: "{*url}",
+                    defaults: new { controller = "Home", action = "Index" });
+
+                routes.MapRoute(
+                   name: "default",
+                   template: "{controller}/{action}",
+                   defaults: new { controller = "Home", action = "Index" });
             });
         }
     }

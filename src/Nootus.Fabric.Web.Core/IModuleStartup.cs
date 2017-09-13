@@ -16,7 +16,7 @@ namespace Nootus.Fabric.Web.Core
 
     public interface IModuleStartup
     {
-        void Startup(IConfigurationRoot configuration);
+        void Startup(IConfiguration configuration);
 
         void ConfigureServices(IServiceCollection services);
 

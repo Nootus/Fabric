@@ -6,10 +6,10 @@
 //  Customization of IdentityRole to add Company and RoleType
 // </description>
 //-------------------------------------------------------------------------------------------------
-using Microsoft.AspNetCore.Identity;
-
 namespace Nootus.Fabric.Web.Security.Entities
 {
+    using Microsoft.AspNetCore.Identity;
+
     public class ApplicationRole : IdentityRole
     {
         public int CompanyId { get; set; }

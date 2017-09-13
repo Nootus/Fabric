@@ -29,12 +29,12 @@ namespace Nootus.Fabric.Web.Security.Identity
         private SecurityRepository accountRepository;
 
         public ApplicationSignInManager(
-                SecurityRepository accountRepository,            
-                UserManager<ApplicationUser> userManager, 
-                IHttpContextAccessor contextAccessor, 
-                IUserClaimsPrincipalFactory<ApplicationUser> claimsFactory, 
-                IOptions<IdentityOptions> optionsAccessor, 
-                ILogger<SignInManager<ApplicationUser>> logger, 
+                SecurityRepository accountRepository,
+                UserManager<ApplicationUser> userManager,
+                IHttpContextAccessor contextAccessor,
+                IUserClaimsPrincipalFactory<ApplicationUser> claimsFactory,
+                IOptions<IdentityOptions> optionsAccessor,
+                ILogger<SignInManager<ApplicationUser>> logger,
                 IAuthenticationSchemeProvider schemes)
             : base(userManager, contextAccessor, claimsFactory, optionsAccessor, logger, schemes)
         {

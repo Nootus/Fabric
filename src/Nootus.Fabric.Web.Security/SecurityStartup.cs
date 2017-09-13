@@ -47,7 +47,7 @@ namespace Nootus.Fabric.Web.Security
         }
 
         public override void Configure(IApplicationBuilder app, IHostingEnvironment env)
-        {          
+        {
             app.UseAuthentication();
         }
     }

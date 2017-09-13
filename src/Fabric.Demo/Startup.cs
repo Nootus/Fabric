@@ -1,19 +1,21 @@
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using Microsoft.AspNetCore.Builder;
-using Microsoft.AspNetCore.Hosting;
-using Microsoft.AspNetCore.SpaServices.Webpack;
-using Microsoft.Extensions.Configuration;
-using Microsoft.Extensions.DependencyInjection;
-using Nootus.Fabric.Web;
-
+//-------------------------------------------------------------------------------------------------
+// <copyright file="Startup.cs" company="Nootus">
+//  Copyright (c) Nootus. All rights reserved.
+// </copyright>
+// <description>
+//  This is application startup class. Application specific overrides go here
+// </description>
+//-------------------------------------------------------------------------------------------------
 namespace Fabric.Demo
 {
-    public class Startup: WebStartup
+    using Microsoft.AspNetCore.Hosting;
+    using Microsoft.Extensions.Configuration;
+    using Nootus.Fabric.Web;
+
+    public class Startup : WebStartup
     {
-        public Startup(IConfiguration configuration): base(configuration)
+        public Startup(IConfiguration configuration, IHostingEnvironment env)
+            : base(configuration, env)
         {
         }
     }
