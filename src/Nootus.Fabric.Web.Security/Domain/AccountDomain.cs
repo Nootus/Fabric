@@ -10,6 +10,7 @@ namespace Nootus.Fabric.Web.Security.Domain
 {
     using System.Collections.Generic;
     using System.Threading.Tasks;
+    using Microsoft.AspNetCore.Identity;
     using Nootus.Fabric.Web.Core.Context;
     using Nootus.Fabric.Web.Core.Exception;
     using Nootus.Fabric.Web.Security.Common;
@@ -17,7 +18,6 @@ namespace Nootus.Fabric.Web.Security.Domain
     using Nootus.Fabric.Web.Security.Identity;
     using Nootus.Fabric.Web.Security.Models;
     using Nootus.Fabric.Web.Security.Repositories;
-    using Microsoft.AspNetCore.Identity;
 
     public class AccountDomain
     {

@@ -12,17 +12,16 @@ namespace Nootus.Fabric.Web.Security.Identity
     using System.Linq;
     using System.Security.Claims;
     using System.Threading.Tasks;
-    using Nootus.Fabric.Web.Core.Context;
-    using Nootus.Fabric.Web.Security.Entities;
-    using Nootus.Fabric.Web.Security.Models;
-    using Nootus.Fabric.Web.Security.Repositories;
-    using Microsoft.AspNetCore.Builder;
+    using Microsoft.AspNetCore.Authentication;
     using Microsoft.AspNetCore.Http;
     using Microsoft.AspNetCore.Identity;
     using Microsoft.Extensions.Logging;
     using Microsoft.Extensions.Options;
     using Newtonsoft.Json;
-    using Microsoft.AspNetCore.Authentication;
+    using Nootus.Fabric.Web.Core.Context;
+    using Nootus.Fabric.Web.Security.Entities;
+    using Nootus.Fabric.Web.Security.Models;
+    using Nootus.Fabric.Web.Security.Repositories;
 
     public class ApplicationSignInManager : SignInManager<ApplicationUser>
     {

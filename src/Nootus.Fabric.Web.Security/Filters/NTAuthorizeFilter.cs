@@ -11,12 +11,12 @@ namespace Nootus.Fabric.Web.Security.Filters
     using System;
     using System.Linq;
     using System.Security.Claims;
+    using Microsoft.AspNetCore.Mvc;
+    using Microsoft.AspNetCore.Mvc.Filters;
     using Nootus.Fabric.Web.Core.Context;
     using Nootus.Fabric.Web.Security.Common;
     using Nootus.Fabric.Web.Security.Identity;
     using Nootus.Fabric.Web.Security.Middleware;
-    using Microsoft.AspNetCore.Mvc;
-    using Microsoft.AspNetCore.Mvc.Filters;
 
     [AttributeUsage(AttributeTargets.Class | AttributeTargets.Method, AllowMultiple = true, Inherited = true)]
     public class NTAuthorizeFilter : Attribute, IAuthorizationFilter

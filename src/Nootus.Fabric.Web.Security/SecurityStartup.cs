@@ -8,19 +8,17 @@
 //-------------------------------------------------------------------------------------------------
 namespace Nootus.Fabric.Web.Security
 {
-    using AutoMapper;
+    using Microsoft.AspNetCore.Authentication;
+    using Microsoft.AspNetCore.Builder;
+    using Microsoft.AspNetCore.Hosting;
+    using Microsoft.AspNetCore.Identity;
+    using Microsoft.Extensions.DependencyInjection;
     using Nootus.Fabric.Web.Core;
     using Nootus.Fabric.Web.Security.Domain;
     using Nootus.Fabric.Web.Security.Entities;
     using Nootus.Fabric.Web.Security.Extensions;
     using Nootus.Fabric.Web.Security.Identity;
-    using Nootus.Fabric.Web.Security.Mapping;
     using Nootus.Fabric.Web.Security.Repositories;
-    using Microsoft.AspNetCore.Builder;
-    using Microsoft.AspNetCore.Hosting;
-    using Microsoft.AspNetCore.Identity;
-    using Microsoft.Extensions.DependencyInjection;
-    using Microsoft.AspNetCore.Authentication;
 
     public class SecurityStartup : ModuleStartup<SecurityDbContext>
     {

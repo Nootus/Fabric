@@ -1,5 +1,5 @@
 ﻿//-------------------------------------------------------------------------------------------------
-// <copyright file="IdentityRoleHierarchyEntity.cs" company="Nootus">
+// <copyright file="RoleHierarchyEntity.cs" company="Nootus">
 //  Copyright (c) Nootus. All rights reserved.
 // </copyright>
 // <description>
@@ -10,8 +10,8 @@ namespace Nootus.Fabric.Web.Security.Entities
 {
     using System.ComponentModel.DataAnnotations.Schema;
 
-    [Table("IdentityRoleHierarchy", Schema = "security")]
-    public class IdentityRoleHierarchyEntity
+    [Table("RoleHierarchy", Schema = "security")]
+    public class RoleHierarchyEntity
     {
         public string RoleId { get; set; }
 

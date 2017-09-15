@@ -13,7 +13,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Nootus.Fabric.Web.Security"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Nootus.Fabric.Web", "src\Nootus.Fabric.Web\Nootus.Fabric.Web.csproj", "{1CA0AF65-E33A-441C-8C85-3C2528A0C267}"
 EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{730B9C6F-0745-4BE5-B35B-5D2E5A38530C}"
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Stylecop", "Stylecop", "{730B9C6F-0745-4BE5-B35B-5D2E5A38530C}"
 	ProjectSection(SolutionItems) = preProject
 		Directory.Build.props = Directory.Build.props
 		stylecop.json = stylecop.json

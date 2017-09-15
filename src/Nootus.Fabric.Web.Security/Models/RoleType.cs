@@ -14,6 +14,6 @@ namespace Nootus.Fabric.Web.Security.Models
         GroupAdmin = 2,
         CompanyAdmin = 3,
         ModuleAdmin = 4,
-        UserDefined = 5
+        UserDefined = 5,
     }
 }

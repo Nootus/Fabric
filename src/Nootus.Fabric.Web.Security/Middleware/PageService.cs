@@ -26,16 +26,16 @@ namespace Nootus.Fabric.Web.Security.Middleware
 
         public static void CachePageClaimsRoles(SecurityRepository repository)
         {
-            Pages = repository.IdentityPagesGet();
-            MenuPages = repository.IdentityMenuPagesGet();
-            AdminRoles = repository.IdentityAdminRolesGet();
+            Pages = repository.PagesGet();
+            MenuPages = repository.MenuPagesGet();
+            AdminRoles = repository.AdminRolesGet();
 
             CacheCompanyClaims(repository);
         }
 
         private static void CacheCompanyClaims(SecurityRepository repository)
         {
-            var companies = repository.IdentityCompanyClaimsGet();
+            var companies = repository.CompanyClaimsGet();
             CompanyClaims = new Dictionary<int, CompanyEntity>();
             foreach (var company in companies)
             {

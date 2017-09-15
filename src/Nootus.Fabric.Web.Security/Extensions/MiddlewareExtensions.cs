@@ -8,10 +8,10 @@
 //-------------------------------------------------------------------------------------------------
 namespace Nootus.Fabric.Web.Security.Extensions
 {
-    using Nootus.Fabric.Web.Security.Middleware;
-    using Nootus.Fabric.Web.Security.Repositories;
     using Microsoft.AspNetCore.Builder;
     using Microsoft.Extensions.DependencyInjection;
+    using Nootus.Fabric.Web.Security.Middleware;
+    using Nootus.Fabric.Web.Security.Repositories;
 
     public static class MiddlewareExtensions
     {

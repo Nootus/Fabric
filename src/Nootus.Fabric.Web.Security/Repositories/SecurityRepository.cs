@@ -8,6 +8,9 @@
 //-------------------------------------------------------------------------------------------------
 namespace Nootus.Fabric.Web.Security.Repositories
 {
+    using System.Collections.Generic;
+    using System.Linq;
+    using System.Threading.Tasks;
     using AutoMapper;
     using Microsoft.AspNetCore.Identity;
     using Microsoft.EntityFrameworkCore;
@@ -16,9 +19,6 @@ namespace Nootus.Fabric.Web.Security.Repositories
     using Nootus.Fabric.Web.Security.Common;
     using Nootus.Fabric.Web.Security.Entities;
     using Nootus.Fabric.Web.Security.Models;
-    using System.Collections.Generic;
-    using System.Linq;
-    using System.Threading.Tasks;
 
     public class SecurityRepository : BaseRepository<SecurityDbContext>
     {
@@ -145,27 +145,27 @@ namespace Nootus.Fabric.Web.Security.Repositories
             }
         }
 
-        public List<PageModel> IdentityPagesGet()
+        public List<PageModel> PagesGet()
         {
-            var query = from page in this.DbContext.IdentityPages.Include(c => c.Claims).ThenInclude(a => a.Claim) select page;
-            return Mapper.Map<List<IdentityPageEntity>, List<PageModel>>(query.ToList());
+            var query = from page in this.DbContext.Pages.Include(c => c.Claims).ThenInclude(a => a.Claim) select page;
+            return Mapper.Map<List<PageEntity>, List<PageModel>>(query.ToList());
         }
 
-        public List<MenuModel> IdentityMenuPagesGet()
+        public List<MenuModel> MenuPagesGet()
         {
-            var query = from menuPage in this.DbContext.IdentityMenuPages where menuPage.DeletedInd == false select Mapper.Map<IdentityMenuPageEntity, MenuModel>(menuPage);
+            var query = from menuPage in this.DbContext.MenuPages where menuPage.DeletedInd == false select Mapper.Map<MenuPageEntity, MenuModel>(menuPage);
             return query.ToList();
         }
 
-        public List<CompanyEntity> IdentityCompanyClaimsGet()
+        public List<CompanyEntity> CompanyClaimsGet()
         {
             var query = from company in this.DbContext.Companies.Include(c => c.Claims).ThenInclude(a => a.Claim) select company;
             return query.ToList();
         }
 
-        public List<ListItem<string, string>> IdentityAdminRolesGet()
+        public List<ListItem<string, string>> AdminRolesGet()
         {
-            var dbroles = (from roles in this.DbContext.IdentityRoleHierarchies
+            var dbroles = (from roles in this.DbContext.RoleHierarchies
                            join role in this.DbContext.Roles on roles.RoleId equals role.Id
                            join child in this.DbContext.Roles on roles.ChildRoleId equals child.Id
                            select new ListItem<string, string>() { Key = role.Name, Item = child.Name }).ToList();

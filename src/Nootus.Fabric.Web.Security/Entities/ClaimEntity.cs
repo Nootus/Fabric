@@ -1,5 +1,5 @@
 ﻿//-------------------------------------------------------------------------------------------------
-// <copyright file="IdentityClaimEntity.cs" company="Nootus">
+// <copyright file="ClaimEntity.cs" company="Nootus">
 //  Copyright (c) Nootus. All rights reserved.
 // </copyright>
 // <description>
@@ -11,8 +11,8 @@ namespace Nootus.Fabric.Web.Security.Entities
     using System.ComponentModel.DataAnnotations;
     using System.ComponentModel.DataAnnotations.Schema;
 
-    [Table("IdentityClaim", Schema = "security")]
-    public class IdentityClaimEntity
+    [Table("Claim", Schema = "security")]
+    public class ClaimEntity
     {
         [Key]
         public int Id { get; set; }

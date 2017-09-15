@@ -37,6 +37,6 @@ namespace Nootus.Fabric.Web.Security.Entities
 
         public int? ParentCompanyId { get; set; }
 
-        public List<IdentityCompanyClaimEntity> Claims { get; set; }
+        public List<CompanyClaimEntity> Claims { get; set; }
     }
 }

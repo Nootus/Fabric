@@ -12,13 +12,13 @@ namespace Nootus.Fabric.Web.Security.Middleware
     using System.Linq;
     using System.Security.Claims;
     using System.Threading.Tasks;
+    using Microsoft.AspNetCore.Http;
+    using Microsoft.AspNetCore.Identity;
     using Nootus.Fabric.Web.Core.Common;
     using Nootus.Fabric.Web.Core.Context;
     using Nootus.Fabric.Web.Security.Common;
     using Nootus.Fabric.Web.Security.Entities;
     using Nootus.Fabric.Web.Security.Identity;
-    using Microsoft.AspNetCore.Http;
-    using Microsoft.AspNetCore.Identity;
 
     public class ProfileMiddleware
     {

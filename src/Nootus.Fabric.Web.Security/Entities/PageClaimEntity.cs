@@ -1,5 +1,5 @@
 ﻿//-------------------------------------------------------------------------------------------------
-// <copyright file="IdentityPageClaimEntity.cs" company="Nootus">
+// <copyright file="PageClaimEntity.cs" company="Nootus">
 //  Copyright (c) Nootus. All rights reserved.
 // </copyright>
 // <description>
@@ -11,8 +11,8 @@ namespace Nootus.Fabric.Web.Security.Entities
     using System.ComponentModel.DataAnnotations;
     using System.ComponentModel.DataAnnotations.Schema;
 
-    [Table("IdentityPageClaim", Schema = "security")]
-    public class IdentityPageClaimEntity
+    [Table("PageClaim", Schema = "security")]
+    public class PageClaimEntity
     {
         [Key]
         public int Id { get; set; }
@@ -24,6 +24,6 @@ namespace Nootus.Fabric.Web.Security.Entities
         public bool PrimaryClaimInd { get; set; }
 
         [ForeignKey("ClaimId")]
-        public IdentityClaimEntity Claim { get; set; }
+        public ClaimEntity Claim { get; set; }
     }
 }

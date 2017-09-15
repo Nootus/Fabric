@@ -8,10 +8,10 @@
 //-------------------------------------------------------------------------------------------------
 namespace Nootus.Fabric.Web.Security.Repositories
 {
-    using Nootus.Fabric.Web.Security.Entities;
+    using Microsoft.AspNetCore.Identity;
     using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
     using Microsoft.EntityFrameworkCore;
-    using Microsoft.AspNetCore.Identity;
+    using Nootus.Fabric.Web.Security.Entities;
 
     public class SecurityDbContext : IdentityDbContext<ApplicationUser, ApplicationRole, string>
     {
@@ -20,17 +20,17 @@ namespace Nootus.Fabric.Web.Security.Repositories
         {
         }
 
-        public DbSet<IdentityClaimEntity> IdentityClaims { get; set; }
+        public DbSet<ClaimEntity> Claims { get; set; }
 
-        public DbSet<IdentityPageEntity> IdentityPages { get; set; }
+        public DbSet<PageEntity> Pages { get; set; }
 
-        public DbSet<IdentityMenuPageEntity> IdentityMenuPages { get; set; }
+        public DbSet<MenuPageEntity> MenuPages { get; set; }
 
-        public DbSet<IdentityPageClaimEntity> IdentityPageClaims { get; set; }
+        public DbSet<PageClaimEntity> PageClaims { get; set; }
 
-        public DbSet<IdentityRoleHierarchyEntity> IdentityRoleHierarchies { get; set; }
+        public DbSet<RoleHierarchyEntity> RoleHierarchies { get; set; }
 
-        public DbSet<IdentityCompanyClaimEntity> IdentityCompanyClaims { get; set; }
+        public DbSet<CompanyClaimEntity> CompanyClaims { get; set; }
 
         public DbSet<UserProfileEntity> UserProfiles { get; set; }
 
@@ -40,7 +40,7 @@ namespace Nootus.Fabric.Web.Security.Repositories
 
         protected override void OnModelCreating(ModelBuilder builder)
         {
-            builder.Entity<IdentityRoleHierarchyEntity>(entity =>
+            builder.Entity<RoleHierarchyEntity>(entity =>
             {
                 entity.HasKey(e => new { e.RoleId, e.ChildRoleId });
             });
@@ -53,12 +53,12 @@ namespace Nootus.Fabric.Web.Security.Repositories
             base.OnModelCreating(builder);
 
             // renaming identity tables
-            builder.Entity<ApplicationUser>().ToTable("IdentityUser", "security");
-            builder.Entity<ApplicationRole>().ToTable("IdentityRole", "security");
-            builder.Entity<IdentityRoleClaim<string>>().ToTable("IdentityRoleClaim", "security");
-            builder.Entity<IdentityUserClaim<string>>().ToTable("IdentityUserClaim", "security");
-            builder.Entity<IdentityUserLogin<string>>().ToTable("IdentityUserLogin", "security");
-            builder.Entity<IdentityUserRole<string>>().ToTable("IdentityUserRole", "security");
+            builder.Entity<ApplicationUser>().ToTable("User", "security");
+            builder.Entity<ApplicationRole>().ToTable("Role", "security");
+            builder.Entity<IdentityRoleClaim<string>>().ToTable("RoleClaim", "security");
+            builder.Entity<IdentityUserClaim<string>>().ToTable("UserClaim", "security");
+            builder.Entity<IdentityUserLogin<string>>().ToTable("UserLogin", "security");
+            builder.Entity<IdentityUserRole<string>>().ToTable("UserRole", "security");
         }
     }
 }

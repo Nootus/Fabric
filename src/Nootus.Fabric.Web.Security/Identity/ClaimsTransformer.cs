@@ -13,11 +13,11 @@ namespace Nootus.Fabric.Web.Security.Identity
     using System.Linq;
     using System.Security.Claims;
     using System.Threading.Tasks;
-    using Nootus.Fabric.Web.Core.Context;
-    using Nootus.Fabric.Web.Security.Models;
     using Microsoft.AspNetCore.Authentication;
     using Microsoft.AspNetCore.Http;
     using Newtonsoft.Json;
+    using Nootus.Fabric.Web.Core.Context;
+    using Nootus.Fabric.Web.Security.Models;
 
     public class ClaimsTransformer : IClaimsTransformation
     {
