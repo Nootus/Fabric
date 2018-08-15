@@ -12,6 +12,7 @@ namespace Nootus.Fabric.Web.Security.Filters
     using System.Linq;
     using System.Security.Claims;
     using Microsoft.AspNetCore.Mvc;
+    using Microsoft.AspNetCore.Mvc.Authorization;
     using Microsoft.AspNetCore.Mvc.Filters;
     using Nootus.Fabric.Web.Core.Context;
     using Nootus.Fabric.Web.Security.Common;
@@ -23,6 +24,12 @@ namespace Nootus.Fabric.Web.Security.Filters
     {
         public void OnAuthorization(AuthorizationFilterContext context)
         {
+            // checking for AllowAnonymous
+            // if (context.Filters.Any(f => f is AllowAnonymousFilter))
+            // {
+            //    return;
+            // }
+
             // getting the current module and claim
             string action = context.RouteData.Values["action"].ToString().ToLower();
             string controller = context.RouteData.Values["controller"].ToString().ToLower() + "controller";

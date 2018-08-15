@@ -18,54 +18,6 @@ namespace Nootus.Fabric.Web.Core.Helpers.Web
 
     public static class AjaxHelper
     {
-        public static AjaxModel<T> Get<T>(Func<string, T> action, string message = "")
-            where T : class
-        {
-            AjaxModel<T> ajax;
-
-            try
-            {
-                T model = action(null);
-                ajax = new AjaxModel<T>() { Result = AjaxResult.Success, Model = model, Message = message };
-            }
-            catch (System.Exception exp)
-            {
-                ajax = new AjaxModel<T>() { Result = AjaxResult.Exception, Model = null, Message = exp.GetBaseException().Message };
-            }
-
-            return ajax;
-        }
-
-        public static AjaxModel<T> Save<T>(Action<string> action, string message)
-            where T : class
-        {
-            AjaxModel<T> ajax;
-
-            try
-            {
-                action(null);
-                ajax = new AjaxModel<T>() { Result = AjaxResult.Success, Model = null, Message = message };
-            }
-            catch (System.Exception exp)
-            {
-                ajax = new AjaxModel<T>() { Result = AjaxResult.Exception, Model = null, Message = exp.GetBaseException().Message };
-            }
-
-            return ajax;
-        }
-
-        public static AjaxModel<T> SaveGet<T>(Func<string, T> action, string message)
-            where T : class
-        {
-            return Get(action, message);
-        }
-
-        public static AjaxModel<T> BlankModel<T>()
-            where T : class
-        {
-            return new AjaxModel<T>() { Result = AjaxResult.Success, Model = null, Message = string.Empty };
-        }
-
         public static async Task<AjaxModel<T>> GetAsync<T>(Func<string, Task<T>> action, string message = "")
             where T : class
         {
@@ -75,6 +27,10 @@ namespace Nootus.Fabric.Web.Core.Helpers.Web
             {
                 T model = await action(null);
                 ajax = new AjaxModel<T>() { Result = AjaxResult.Success, Model = model, Message = message };
+            }
+            catch (NTException exp)
+            {
+                ajax = new AjaxModel<T>() { Result = AjaxResult.ValidationException, Model = null, Errors = exp.Errors, Message = exp.GetBaseException().Message };
             }
             catch (System.Exception exp)
             {
@@ -95,7 +51,7 @@ namespace Nootus.Fabric.Web.Core.Helpers.Web
             }
             catch (NTException exp)
             {
-                ajax = new AjaxModel<NTModel>() { Result = AjaxResult.ValidationException, Model = new NTModel() { Data = exp.Errors }, Message = exp.Message };
+                ajax = new AjaxModel<NTModel>() { Result = AjaxResult.ValidationException, Model = null, Errors = exp.Errors, Message = exp.GetBaseException().Message };
             }
             catch (System.Exception exp)
             {
@@ -148,6 +104,12 @@ namespace Nootus.Fabric.Web.Core.Helpers.Web
             {
                 return null;
             }
+        }
+
+        public static AjaxModel<T> BlankModel<T>()
+            where T : class
+        {
+            return new AjaxModel<T>() { Result = AjaxResult.Success, Model = null, Message = string.Empty };
         }
     }
 }

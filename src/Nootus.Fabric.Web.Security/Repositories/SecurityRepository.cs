@@ -27,6 +27,14 @@ namespace Nootus.Fabric.Web.Security.Repositories
             this.DbContext = dbContext;
         }
 
+        public async Task UserProfileSave(UserProfileEntity entity, int defaultCompanyId)
+        {
+            this.DbContext.Add(entity);
+            await this.DbContext.SaveChangesAsync();
+            this.DbContext.Add(new UserCompanyEntity() { UserProfileId = entity.UserProfileId, CompanyId = defaultCompanyId });
+            await this.DbContext.SaveChangesAsync();
+        }
+
         public async Task<ProfileModel> UserProfileGet(string userName, int companyId)
         {
             var query = from users in this.DbContext.UserProfiles

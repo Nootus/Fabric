@@ -32,6 +32,30 @@ namespace Nootus.Fabric.Web.Security.Domain
             this.accountRepository = accountRepository;
         }
 
+        public async Task<ProfileModel> Register(RegisterUserModel model)
+        {
+            if (model.Password != model.ConfirmPassword)
+            {
+                throw new NTException(SecurityMessages.PasswordsDifferent);
+            }
+
+            IdentityResult result = await this.userManager.CreateAsync(new ApplicationUser() { Email = model.UserName, UserName = model.UserName }, model.Password);
+            if (result.Succeeded)
+            {
+                ApplicationUser user = await this.userManager.FindByNameAsync(model.UserName);
+                await this.userManager.AddToRoleAsync(user, SecuritySettings.DefaultNewUserRole);
+                await this.accountRepository.UserProfileSave(
+                    new UserProfileEntity() { UserProfileId = user.Id, FirstName = model.FirstName, LastName = model.LastName, EmailAddress = user.Email },
+                    SecuritySettings.NootusCompanyId);
+            }
+            else
+            {
+                throw new NTException(SecurityMessages.RegisterUserError, AutoMapper.Mapper.Map<List<NTError>>(result.Errors));
+            }
+
+            return await this.Validate(model.UserName, model.Password);
+        }
+
         public async Task<ProfileModel> Validate(string userName, string password)
         {
             var result = await this.signInManager.PasswordSignInAsync(userName, password, false, false);
@@ -41,16 +65,12 @@ namespace Nootus.Fabric.Web.Security.Domain
                 throw new NTException(SecurityMessages.InvalidUsernamePassword);
             }
 
-            var profile = await Profile.Get(userName, this.accountRepository);
-
-            return profile;
+            return await Profile.Get(userName, this.accountRepository);
         }
 
         public async Task<ProfileModel> ProfileGet()
         {
-            var profile = await Profile.Get(NTContext.Context.UserName, this.accountRepository);
-
-            return profile;
+            return await Profile.Get(NTContext.Context.UserName, this.accountRepository);
         }
 
         public async Task Logout()

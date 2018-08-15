@@ -36,11 +36,6 @@ namespace Nootus.Fabric.Web
             this.Configuration = configuration;
 
             // initializing all modules
-            foreach (var module in this.modules)
-            {
-                module.Startup(this.Configuration);
-            }
-
             SiteSettings.ConnectionString = configuration.GetConnectionString("WebApp");
             SiteSettings.EnvironmentName = env.EnvironmentName;
         }
@@ -127,6 +122,15 @@ namespace Nootus.Fabric.Web
                    template: "{controller}/{action}",
                    defaults: new { controller = "Home", action = "Index" });
             });
+        }
+
+        protected void Initialize(List<IModuleStartup> appModules)
+        {
+            this.modules.AddRange(appModules);
+            foreach (var module in this.modules)
+            {
+                module.Startup(this.Configuration);
+            }
         }
     }
 }

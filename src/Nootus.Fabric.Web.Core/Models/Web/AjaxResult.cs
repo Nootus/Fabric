@@ -13,6 +13,6 @@ namespace Nootus.Fabric.Web.Core.Models.Web
     {
         Success = 0,
         Exception = 1,
-        ValidationException = 2
+        ValidationException = 2,
     }
 }

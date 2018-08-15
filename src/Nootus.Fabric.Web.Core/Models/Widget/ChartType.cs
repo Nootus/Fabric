@@ -13,6 +13,6 @@ namespace Nootus.Fabric.Web.Core.Models.Widget
         DiscreteBarChart = 1,
         PieChart = 2,
         LineChart = 3,
-        StackedAreaChart = 4
+        StackedAreaChart = 4,
     }
 }

@@ -9,8 +9,8 @@
 namespace Nootus.Fabric.Web.Core.Extensions
 {
     using System.Threading.Tasks;
-    using Nootus.Fabric.Web.Core.Context;
     using Microsoft.AspNetCore.Http;
+    using Nootus.Fabric.Web.Core.Context;
 
     public class ContextMiddleware
     {

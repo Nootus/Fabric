@@ -23,6 +23,8 @@ namespace Nootus.Fabric.Web.Security.Middleware
     public class ProfileMiddleware
     {
         private RequestDelegate next;
+        private SignInManager<ApplicationUser> signInManager;
+        private UserManager<ApplicationUser> userManager;
 
         public ProfileMiddleware(RequestDelegate next)
         {
@@ -31,31 +33,38 @@ namespace Nootus.Fabric.Web.Security.Middleware
 
         public async Task Invoke(HttpContext context, SignInManager<ApplicationUser> signInManager, UserManager<ApplicationUser> userManager)
         {
+            // setting local variables
+            this.signInManager = signInManager;
+            this.userManager = userManager;
+
             if (context.User.Identity.IsAuthenticated)
             {
-                this.SetNTContext(context);
+                await this.SetNTContext(context);
             }
-
-            // automatically logging in in the dev mode
-            else if (SiteSettings.IsEnvironment(SecurityConstants.DevEnvironment))
+            else
             {
-                ApplicationUser user = await userManager.FindByNameAsync(SecuritySettings.NootusProfileUserName);
-                await signInManager.SignInAsync(user, false);
+                // automatically logging in in the dev mode
+                await this.LoginDevEnvironment();
             }
 
             await this.next(context);
         }
 
-        public void SetNTContext(HttpContext context)
+        public async Task SetNTContext(HttpContext context)
         {
             var claims = context.User.Claims;
 
             string companyId = context.Request.Headers[SecurityConstants.HeaderCompanyId];
             companyId = companyId ?? claims.Where(c => c.Type == NTClaimTypes.CompanyId).Select(c => c.Value).FirstOrDefault();
+            var userId = claims.FirstOrDefault(c => c.Type == ClaimTypes.NameIdentifier);
+            if (userId is null)
+            {
+                await this.LoginDevEnvironment();
+            }
 
             NTContextModel model = new NTContextModel()
             {
-                UserId = claims.First(c => c.Type == ClaimTypes.NameIdentifier).Value,
+                UserId = userId?.Value,
                 UserName = context.User.Identity.Name,
                 FirstName = claims.First(c => c.Type == NTClaimTypes.FirstName).Value,
                 LastName = claims.First(c => c.Type == NTClaimTypes.LastName).Value,
@@ -66,6 +75,15 @@ namespace Nootus.Fabric.Web.Security.Middleware
             model.GroupCompanyId = PageService.CompanyClaims[model.CompanyId]?.ParentCompanyId ?? model.CompanyId;
 
             NTContext.Context = model;
+        }
+
+        private async Task LoginDevEnvironment()
+        {
+            if (SiteSettings.IsEnvironment(SecurityConstants.DevEnvironment))
+            {
+                ApplicationUser user = await this.userManager.FindByNameAsync(SecuritySettings.NootusProfileUserName);
+                await this.signInManager.SignInAsync(user, false);
+            }
         }
     }
 }

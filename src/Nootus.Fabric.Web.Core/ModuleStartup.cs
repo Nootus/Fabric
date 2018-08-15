@@ -9,12 +9,12 @@
 namespace Nootus.Fabric.Web.Core
 {
     using AutoMapper;
-    using Nootus.Fabric.Web.Core.Common;
     using Microsoft.AspNetCore.Builder;
     using Microsoft.AspNetCore.Hosting;
     using Microsoft.EntityFrameworkCore;
     using Microsoft.Extensions.Configuration;
     using Microsoft.Extensions.DependencyInjection;
+    using Nootus.Fabric.Web.Core.Common;
 
     public abstract class ModuleStartup<TContext> : IModuleStartup
         where TContext : DbContext

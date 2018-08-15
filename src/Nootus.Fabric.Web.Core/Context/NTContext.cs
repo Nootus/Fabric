@@ -9,19 +9,20 @@
 //-------------------------------------------------------------------------------------------------
 namespace Nootus.Fabric.Web.Core.Context
 {
+    using System.Threading;
     using AutoMapper;
     using Microsoft.AspNetCore.Http;
-    using System.Threading;
 
     public static class NTContext
     {
-        private static AsyncLocal<NTContextModel> AsyncContext = new AsyncLocal<NTContextModel>();
-        private static AsyncLocal<HttpContext> AsyncHttpContext = new AsyncLocal<HttpContext>();
+        private static AsyncLocal<NTContextModel> asyncContext = new AsyncLocal<NTContextModel>();
+        private static AsyncLocal<HttpContext> asyncHttpContext = new AsyncLocal<HttpContext>();
+
         public static NTContextModel Context
         {
             get
             {
-                return AsyncContext.Value;
+                return asyncContext.Value;
             }
 
             set
@@ -36,7 +37,7 @@ namespace Nootus.Fabric.Web.Core.Context
 
                 if (contextModel == null)
                 {
-                    AsyncContext.Value = model;
+                    asyncContext.Value = model;
                 }
                 else
                 {
@@ -49,12 +50,12 @@ namespace Nootus.Fabric.Web.Core.Context
         {
             get
             {
-                return AsyncHttpContext.Value;
+                return asyncHttpContext.Value;
             }
 
             set
             {
-                AsyncHttpContext.Value = value;
+                asyncHttpContext.Value = value;
             }
         }
     }

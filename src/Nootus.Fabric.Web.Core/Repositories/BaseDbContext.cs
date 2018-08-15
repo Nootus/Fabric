@@ -11,8 +11,8 @@ namespace Nootus.Fabric.Web.Core.Repositories
     using System.Linq;
     using System.Threading;
     using System.Threading.Tasks;
-    using Nootus.Fabric.Web.Core.Entities;
     using Microsoft.EntityFrameworkCore;
+    using Nootus.Fabric.Web.Core.Entities;
 
     public class BaseDbContext<TContext> : DbContext
         where TContext : DbContext

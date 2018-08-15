@@ -19,6 +19,7 @@ namespace Nootus.Fabric.Web.Security.Common
 
         public const string NootusProfileUserName = "PRASANNA@NOOTUS.COM";
         public const int NootusCompanyId = 1;
+        public const string DefaultNewUserRole = "RegisteredUser";
 
         public static int[] AdminRoles
         {

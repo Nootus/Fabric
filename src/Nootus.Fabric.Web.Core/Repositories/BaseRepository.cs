@@ -16,11 +16,11 @@ namespace Nootus.Fabric.Web.Core.Repositories
     using System.Linq.Expressions;
     using System.Threading.Tasks;
     using AutoMapper;
+    using Microsoft.EntityFrameworkCore;
+    using Microsoft.EntityFrameworkCore.Metadata;
     using Nootus.Fabric.Web.Core.Context;
     using Nootus.Fabric.Web.Core.Entities;
     using Nootus.Fabric.Web.Core.Models;
-    using Microsoft.EntityFrameworkCore;
-    using Microsoft.EntityFrameworkCore.Metadata;
 
     public class BaseRepository<TContext>
         where TContext : DbContext
@@ -263,7 +263,7 @@ namespace Nootus.Fabric.Web.Core.Repositories
             SqlParameter parameter = command.CreateParameter();
             parameter.ParameterName = parameterName;
             parameter.DbType = type;
-            parameter.Value = value == null ? DBNull.Value : value;
+            parameter.Value = value ?? DBNull.Value;
             return parameter;
         }
 
