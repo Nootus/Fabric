@@ -18,6 +18,7 @@ namespace Nootus.Fabric.Web.Security.Identity
     using Microsoft.Extensions.Logging;
     using Microsoft.Extensions.Options;
     using Newtonsoft.Json;
+    using Nootus.Fabric.Web.Core.Common;
     using Nootus.Fabric.Web.Core.Context;
     using Nootus.Fabric.Web.Security.Entities;
     using Nootus.Fabric.Web.Security.Models;
@@ -44,6 +45,7 @@ namespace Nootus.Fabric.Web.Security.Identity
         {
             var principal = await base.CreateUserPrincipalAsync(user);
             ClaimsIdentity identity = (ClaimsIdentity)principal.Identity;
+
             var profile = await Profile.Get(user.UserName, this.accountRepository);
 
             string companies = string.Join(",", profile.Companies.Select(s => s.CompanyId.ToString()));
@@ -53,19 +55,22 @@ namespace Nootus.Fabric.Web.Security.Identity
             identity.AddClaim(new Claim(NTClaimTypes.CompanyId, profile.CompanyId.ToString()));
             identity.AddClaim(new Claim(NTClaimTypes.Companies, companies));
 
-            // storing claims in session and removing them. These claims will be added by Transformer
-            List<ClaimModel> sessionClaims = new List<ClaimModel>();
-            List<Claim> identityClaims = identity.Claims.ToList();
-            foreach (var claim in identityClaims)
+            if (FabricSettings.SessionClaims)
             {
-                if (claim.Type != ClaimTypes.Name && claim.Type != NTClaimTypes.FirstName && claim.Type != NTClaimTypes.LastName && claim.Type != NTClaimTypes.CompanyId)
+                // storing claims in session and removing them. These claims will be added by Transformer
+                List<ClaimModel> sessionClaims = new List<ClaimModel>();
+                List<Claim> identityClaims = identity.Claims.ToList();
+                foreach (var claim in identityClaims)
                 {
-                    sessionClaims.Add(new ClaimModel() { ClaimType = claim.Type, ClaimValue = claim.Value });
-                    identity.RemoveClaim(claim);
+                    if (claim.Type != ClaimTypes.Name && claim.Type != NTClaimTypes.FirstName && claim.Type != NTClaimTypes.LastName && claim.Type != NTClaimTypes.CompanyId)
+                    {
+                        sessionClaims.Add(new ClaimModel() { ClaimType = claim.Type, ClaimValue = claim.Value });
+                        identity.RemoveClaim(claim);
+                    }
                 }
-            }
 
-            NTContext.HttpContext.Session.SetString("IdentityClaims", JsonConvert.SerializeObject(sessionClaims));
+                NTContext.HttpContext.Session.SetString("IdentityClaims", JsonConvert.SerializeObject(sessionClaims));
+            }
 
             return principal;
         }

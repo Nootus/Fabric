@@ -41,6 +41,7 @@ namespace Nootus.Fabric.Web.Core.Context
                 }
                 else
                 {
+                    // assigning to itself for overriding the values
                     contextModel = Mapper.Map<NTContextModel, NTContextModel>(model, contextModel);
                 }
             }

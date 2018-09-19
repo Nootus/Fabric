@@ -31,7 +31,7 @@ namespace Nootus.Fabric.Web.Core
             services.AddEntityFrameworkSqlServer()
             .AddDbContext<TContext>(options =>
             {
-                options.UseSqlServer(SiteSettings.ConnectionString);
+                options.UseSqlServer(FabricSettings.ConnectionString);
             });
 
             this.ConfigureDependencyInjection(services);

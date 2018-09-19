@@ -36,8 +36,10 @@ namespace Nootus.Fabric.Web
             this.Configuration = configuration;
 
             // initializing all modules
-            SiteSettings.ConnectionString = configuration.GetConnectionString("WebApp");
-            SiteSettings.EnvironmentName = env.EnvironmentName;
+            FabricSettings.ConnectionString = configuration.GetConnectionString("WebApp");
+            FabricSettings.EnvironmentName = env.EnvironmentName;
+            FabricSettings.SessionClaims = configuration.GetSection("FabricSettings").GetValue<bool>("SessionClaims");
+            FabricSettings.LoginDevEnvironment = configuration.GetSection("FabricSettings").GetValue<bool>("LoginDevEnvironment");
         }
 
         public IConfiguration Configuration { get; }

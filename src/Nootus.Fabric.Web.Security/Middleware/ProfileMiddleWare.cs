@@ -79,7 +79,7 @@ namespace Nootus.Fabric.Web.Security.Middleware
 
         private async Task LoginDevEnvironment()
         {
-            if (SiteSettings.IsEnvironment(SecurityConstants.DevEnvironment))
+            if (FabricSettings.LoginDevEnvironment && FabricSettings.IsEnvironment(SecurityConstants.DevEnvironment))
             {
                 ApplicationUser user = await this.userManager.FindByNameAsync(SecuritySettings.NootusProfileUserName);
                 await this.signInManager.SignInAsync(user, false);

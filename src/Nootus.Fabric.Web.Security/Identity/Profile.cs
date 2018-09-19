@@ -20,28 +20,39 @@ namespace Nootus.Fabric.Web.Security.Identity
     {
         public static async Task<ProfileModel> Get(string userName, SecurityRepository accountRepository)
         {
-            int companyId = NTContext.Context.CompanyId;
+            ProfileModel profile;
+            string profileContextName = "ProfileContextObject";
 
-            ProfileModel profile = await accountRepository.UserProfileGet(userName, companyId);
-
-            // setting all the roles for admin roles
-            if (profile.AdminRoles.Length > 0)
+            if (NTContext.HttpContext.Items[profileContextName] == null)
             {
-                profile.AdminRoles = PageService.AdminRoles.Where(r => profile.AdminRoles.Contains(r.Key)).Select(r => r.Item).ToArray();
+                int companyId = NTContext.Context.CompanyId;
+                profile = await accountRepository.UserProfileGet(userName, companyId);
+
+                // setting all the roles for admin roles
+                if (profile.AdminRoles.Length > 0)
+                {
+                    profile.AdminRoles = PageService.AdminRoles.Where(r => profile.AdminRoles.Contains(r.Key)).Select(r => r.Item).ToArray();
+                }
+
+                profile.SetMenu();
+
+                // setting the claims on to the context
+                NTContextModel model = new NTContextModel()
+                {
+                    UserId = profile.UserId,
+                    UserName = profile.UserName,
+                    FirstName = profile.FirstName,
+                    LastName = profile.LastName,
+                    CompanyId = profile.CompanyId,
+                };
+                NTContext.Context = model;
+
+                NTContext.HttpContext.Items[profileContextName] = profile;
             }
-
-            profile.SetMenu();
-
-            // setting the claims on to the context
-            NTContextModel model = new NTContextModel()
+            else
             {
-                UserId = profile.UserId,
-                UserName = profile.UserName,
-                FirstName = profile.FirstName,
-                LastName = profile.LastName,
-                CompanyId = profile.CompanyId,
-            };
-            NTContext.Context = model;
+                profile = (ProfileModel)NTContext.HttpContext.Items[profileContextName];
+            }
 
             return profile;
         }
