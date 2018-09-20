@@ -1,4 +1,12 @@
-﻿namespace Nootus.Fabric.Web.Security.Models
+﻿//-------------------------------------------------------------------------------------------------
+// <copyright file="RegisterUserModel.cs" company="Nootus">
+//  Copyright (c) Nootus. All rights reserved.
+// </copyright>
+// <description>
+//  Registering user
+// </description>
+//-------------------------------------------------------------------------------------------------
+namespace Nootus.Fabric.Web.Security.Models
 {
     public class RegisterUserModel
     {

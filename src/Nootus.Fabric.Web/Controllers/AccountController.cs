@@ -19,7 +19,7 @@ namespace Nootus.Fabric.Web.Controllers
 
     public class AccountController : Controller
     {
-        private AccountDomain domain;
+        private readonly AccountDomain domain;
 
         public AccountController(AccountDomain domain)
         {

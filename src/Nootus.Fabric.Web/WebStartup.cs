@@ -26,7 +26,7 @@ namespace Nootus.Fabric.Web
 
     public class WebStartup
     {
-        private List<IModuleStartup> modules = new List<IModuleStartup>
+        private readonly List<IModuleStartup> modules = new List<IModuleStartup>
         {
             new SecurityStartup(),
         };
@@ -72,6 +72,7 @@ namespace Nootus.Fabric.Web
                 {
                     options.SerializerSettings.DateTimeZoneHandling = DateTimeZoneHandling.Local;
                     options.SerializerSettings.DateFormatHandling = DateFormatHandling.IsoDateFormat;
+                    options.SerializerSettings.DateFormatString = "yyyy-MM-ddTHH:mm:ss";
                 });
         }
 
