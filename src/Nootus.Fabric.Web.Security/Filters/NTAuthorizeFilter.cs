@@ -58,8 +58,16 @@ namespace Nootus.Fabric.Web.Security.Filters
 
             // checking the companyid passed in headers
             string companies = userClaims.Where(c => c.Type == NTClaimTypes.Companies).Select(c => c.Value).FirstOrDefault();
-            string companyId = context.HttpContext.Request.Headers[SecurityConstants.HeaderCompanyId];
-            companyId = companyId ?? userClaims.Where(c => c.Type == NTClaimTypes.CompanyId).Select(c => c.Value).FirstOrDefault();
+            string companyId;
+
+            if (context.HttpContext.Request.Headers.ContainsKey(SecurityConstants.HeaderCompanyId))
+            {
+                companyId = context.HttpContext.Request.Headers[SecurityConstants.HeaderCompanyId];
+            }
+            else
+            {
+                companyId = userClaims.Where(c => c.Type == NTClaimTypes.CompanyId).Select(c => c.Value).FirstOrDefault();
+            }
 
             if (companies == null || companyId == null || !companies.Split(',').Contains(companyId))
             {

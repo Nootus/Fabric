@@ -72,7 +72,6 @@ namespace Nootus.Fabric.Web
                 {
                     options.SerializerSettings.DateTimeZoneHandling = DateTimeZoneHandling.Local;
                     options.SerializerSettings.DateFormatHandling = DateFormatHandling.IsoDateFormat;
-                    options.SerializerSettings.DateFormatString = "yyyy-MM-ddTHH:mm:ss";
                 });
         }
 

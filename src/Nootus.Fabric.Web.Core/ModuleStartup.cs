@@ -16,8 +16,7 @@ namespace Nootus.Fabric.Web.Core
     using Microsoft.Extensions.DependencyInjection;
     using Nootus.Fabric.Web.Core.Common;
 
-    public abstract class ModuleStartup<TContext> : IModuleStartup
-        where TContext : DbContext
+    public abstract class ModuleStartup : IModuleStartup
     {
         protected IConfiguration Configuration { get; set; }
 
@@ -28,12 +27,6 @@ namespace Nootus.Fabric.Web.Core
 
         public virtual void ConfigureServices(IServiceCollection services)
         {
-            services.AddEntityFrameworkSqlServer()
-            .AddDbContext<TContext>(options =>
-            {
-                options.UseSqlServer(FabricSettings.ConnectionString);
-            });
-
             this.ConfigureDependencyInjection(services);
         }
 
