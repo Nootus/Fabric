@@ -15,6 +15,14 @@ namespace Nootus.Fabric.Web.Core.Exception
         private string message;
         private List<NTError> errors;
 
+        public NTException()
+        {
+        }
+
+        public NTException(string message, System.Exception innerException) : base(message, innerException)
+        {
+        }
+
         public NTException(string message)
         {
             this.message = message;

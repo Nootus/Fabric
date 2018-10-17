@@ -14,7 +14,7 @@ namespace Nootus.Fabric.Web.Security.Middleware
     using Nootus.Fabric.Web.Security.Models;
     using Nootus.Fabric.Web.Security.Repositories;
 
-    public class PageService
+    public static class PageService
     {
         public static List<PageModel> Pages { get; set; }
 

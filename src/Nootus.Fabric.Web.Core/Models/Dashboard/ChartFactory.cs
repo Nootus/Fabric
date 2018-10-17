@@ -10,6 +10,7 @@ namespace Nootus.Fabric.Web.Core.Models.Dashboard
 {
     using System;
     using System.Collections.Generic;
+    using System.Globalization;
     using System.Linq;
     using System.Threading.Tasks;
     using Microsoft.EntityFrameworkCore;
@@ -17,20 +18,20 @@ namespace Nootus.Fabric.Web.Core.Models.Dashboard
 
     public static class ChartFactory
     {
-        public static async Task<ChartModel<Tx, Ty>> Create<Tx, Ty, TContext>(WidgetOptions options, BaseDbContext<TContext> dbContext, string sql, params object[] parameters)
+        public static async Task<ChartModel<TX, TY>> Create<TX, TY, TContext>(WidgetOptions options, BaseDbContext<TContext> dbContext, string sql, params object[] parameters)
             where TContext : DbContext
         {
-            List<ChartEntity<Tx, Ty>> data = await dbContext.FromSql<ChartEntity<Tx, Ty>>(sql, parameters)
+            List<ChartEntity<TX, TY>> data = await dbContext.FromSql<ChartEntity<TX, TY>>(sql, parameters)
                                     .Select(m => m).ToListAsync();
 
-            return CreateChartModel<Tx, Ty>(data, options.XAxisLabel, options.YAxisLabel);
+            return CreateChartModel<TX, TY>(data, options.XAxisLabel, options.YAxisLabel);
         }
 
-        private static ChartModel<Tx, Ty> CreateChartModel<Tx, Ty>(List<ChartEntity<Tx, Ty>> data, string xAxisLabel, string yAxisLabel)
+        private static ChartModel<TX, TY> CreateChartModel<TX, TY>(List<ChartEntity<TX, TY>> data, string xAxisLabel, string yAxisLabel)
         {
-            List<ChartDataModel<Tx, Ty>> dataModel = MapChartData<Tx, Ty>(data);
+            List<ChartDataModel<TX, TY>> dataModel = MapChartData<TX, TY>(data);
 
-            ChartModel<Tx, Ty> model = (ChartModel<Tx, Ty>)CreateChartModel(new ChartModel<Tx, Ty>(), dataModel, xAxisLabel, yAxisLabel);
+            ChartModel<TX, TY> model = (ChartModel<TX, TY>)CreateChartModel(new ChartModel<TX, TY>(), dataModel, xAxisLabel, yAxisLabel);
 
             // setting up the x data axis labels
             model.XAxisDataLabels = SetXAsisDataLables(model.Data);
@@ -38,14 +39,14 @@ namespace Nootus.Fabric.Web.Core.Models.Dashboard
             return model;
         }
 
-        private static ChartModel<Tx, Ty> CreateChartModel<Tx, Ty>(ChartModel<Tx, Ty> model, List<ChartDataModel<Tx, Ty>> data, string xAxisLabel, string yAxisLabel)
+        private static ChartModel<TX, TY> CreateChartModel<TX, TY>(ChartModel<TX, TY> model, List<ChartDataModel<TX, TY>> data, string xAxisLabel, string yAxisLabel)
         {
             // ensuring that all X exist in the data
-            IEnumerable<ChartPointModel<Tx, Ty>> xList = data.SelectMany(m => m.Values).Select(v => new ChartPointModel<Tx, Ty>() { X = v.X, Y = default(Ty), Order = v.Order }).Distinct(new ChartPointModelComparer<Tx, Ty>());
+            IEnumerable<ChartPointModel<TX, TY>> xList = data.SelectMany(m => m.Values).Select(v => new ChartPointModel<TX, TY>() { X = v.X, Y = default(TY), Order = v.Order }).Distinct(new ChartPointModelComparer<TX, TY>());
 
             foreach (var item in data)
             {
-                IEnumerable<ChartPointModel<Tx, Ty>> missing = xList.Except(item.Values, new ChartPointModelComparer<Tx, Ty>());
+                IEnumerable<ChartPointModel<TX, TY>> missing = xList.Except(item.Values, new ChartPointModelComparer<TX, TY>());
 
                 // adding the missing
                 foreach (var missValue in missing)
@@ -63,9 +64,9 @@ namespace Nootus.Fabric.Web.Core.Models.Dashboard
             return model;
         }
 
-        private static List<ChartDataModel<Tx, Ty>> MapChartData<Tx, Ty>(List<ChartEntity<Tx, Ty>> data)
+        private static List<ChartDataModel<TX, TY>> MapChartData<TX, TY>(List<ChartEntity<TX, TY>> data)
         {
-            Dictionary<string, ChartDataModel<Tx, Ty>> dict = new Dictionary<string, ChartDataModel<Tx, Ty>>();
+            Dictionary<string, ChartDataModel<TX, TY>> dict = new Dictionary<string, ChartDataModel<TX, TY>>();
 
             foreach (var entity in data)
             {
@@ -73,11 +74,11 @@ namespace Nootus.Fabric.Web.Core.Models.Dashboard
 
                 if (!dict.ContainsKey(key))
                 {
-                    dict.Add(key, new ChartDataModel<Tx, Ty>() { Key = key, Order = entity.KeyOrder, Values = new List<ChartPointModel<Tx, Ty>>() });
+                    dict.Add(key, new ChartDataModel<TX, TY>() { Key = key, Order = entity.KeyOrder, Values = new List<ChartPointModel<TX, TY>>() });
                 }
 
                 dict[key].Values.Add(
-                        new ChartPointModel<Tx, Ty>()
+                        new ChartPointModel<TX, TY>()
                         {
                             X = entity.X,
                             Y = entity.Y,
@@ -88,16 +89,16 @@ namespace Nootus.Fabric.Web.Core.Models.Dashboard
             return dict.Values.ToList();
         }
 
-        private static List<Tx> SetXAsisDataLables<Tx, Ty>(List<ChartDataModel<Tx, Ty>> data)
+        private static List<TX> SetXAsisDataLables<TX, TY>(List<ChartDataModel<TX, TY>> data)
         {
-            List<Tx> dataLabels = new List<Tx>();
+            List<TX> dataLabels = new List<TX>();
             int index = -1;
 
             foreach (var item in data)
             {
                 foreach (var value in item.Values)
                 {
-                    Tx x = value.X;
+                    TX x = value.X;
                     index = dataLabels.IndexOf(x);
                     if (index == -1)
                     {
@@ -105,7 +106,7 @@ namespace Nootus.Fabric.Web.Core.Models.Dashboard
                         index = dataLabels.Count - 1;
                     }
 
-                    value.X = (Tx)Convert.ChangeType(index.ToString(), typeof(Tx));
+                    value.X = (TX)Convert.ChangeType(index.ToString(), typeof(TX));
                 }
             }
 

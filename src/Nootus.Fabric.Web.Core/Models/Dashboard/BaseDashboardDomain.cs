@@ -13,14 +13,6 @@ namespace Nootus.Fabric.Web.Core.Models.Dashboard
 
     public abstract class BaseDashboardDomain
     {
-        protected int CompanyId
-        {
-            get
-            {
-                return NTContext.Context.CompanyId;
-            }
-        }
-
         public abstract Task<ChartModel<string, int>> GetWidgetData(int widgetId, WidgetOptions options);
     }
 }

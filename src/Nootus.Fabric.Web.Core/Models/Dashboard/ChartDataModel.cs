@@ -10,12 +10,12 @@ namespace Nootus.Fabric.Web.Core.Models.Dashboard
 {
     using System.Collections.Generic;
 
-    public class ChartDataModel<Tx, Ty>
+    public class ChartDataModel<TX, TY>
     {
         public string Key { get; set; }
 
         public int Order { get; set; }
 
-        public List<ChartPointModel<Tx, Ty>> Values { get; set; }
+        public List<ChartPointModel<TX, TY>> Values { get; set; }
     }
 }

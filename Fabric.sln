@@ -3,8 +3,6 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 15
 VisualStudioVersion = 15.0.26730.12
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Fabric.Demo", "src\Fabric.Demo\Fabric.Demo.csproj", "{5FCD55AA-322A-435E-BAC4-1A936E1367E1}"
-EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "src", "src", "{799E3072-47A2-4B1F-B985-B623D0D859DD}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Nootus.Fabric.Web.Core", "src\Nootus.Fabric.Web.Core\Nootus.Fabric.Web.Core.csproj", "{875DDB01-E836-4C2E-9462-B44C0E54CDAB}"
@@ -13,23 +11,12 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Nootus.Fabric.Web.Security"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Nootus.Fabric.Web", "src\Nootus.Fabric.Web\Nootus.Fabric.Web.csproj", "{1CA0AF65-E33A-441C-8C85-3C2528A0C267}"
 EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Stylecop", "Stylecop", "{730B9C6F-0745-4BE5-B35B-5D2E5A38530C}"
-	ProjectSection(SolutionItems) = preProject
-		Directory.Build.props = Directory.Build.props
-		stylecop.json = stylecop.json
-		stylecop.ruleset = stylecop.ruleset
-	EndProjectSection
-EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
 		Release|Any CPU = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
-		{5FCD55AA-322A-435E-BAC4-1A936E1367E1}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{5FCD55AA-322A-435E-BAC4-1A936E1367E1}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{5FCD55AA-322A-435E-BAC4-1A936E1367E1}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{5FCD55AA-322A-435E-BAC4-1A936E1367E1}.Release|Any CPU.Build.0 = Release|Any CPU
 		{875DDB01-E836-4C2E-9462-B44C0E54CDAB}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{875DDB01-E836-4C2E-9462-B44C0E54CDAB}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{875DDB01-E836-4C2E-9462-B44C0E54CDAB}.Release|Any CPU.ActiveCfg = Release|Any CPU
@@ -47,7 +34,6 @@ Global
 		HideSolutionNode = FALSE
 	EndGlobalSection
 	GlobalSection(NestedProjects) = preSolution
-		{5FCD55AA-322A-435E-BAC4-1A936E1367E1} = {799E3072-47A2-4B1F-B985-B623D0D859DD}
 		{875DDB01-E836-4C2E-9462-B44C0E54CDAB} = {799E3072-47A2-4B1F-B985-B623D0D859DD}
 		{45A38980-8765-4F23-AADA-494FF80423A6} = {799E3072-47A2-4B1F-B985-B623D0D859DD}
 		{1CA0AF65-E33A-441C-8C85-3C2528A0C267} = {799E3072-47A2-4B1F-B985-B623D0D859DD}

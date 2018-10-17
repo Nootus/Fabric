@@ -10,14 +10,14 @@ namespace Nootus.Fabric.Web.Core.Models.Dashboard
 {
     using System.Collections.Generic;
 
-    public class ChartModel<Tx, Ty>
+    public class ChartModel<TX, TY>
     {
         public string XAxisLabel { get; set; }
 
         public string YAxisLabel { get; set; }
 
-        public List<ChartDataModel<Tx, Ty>> Data { get; set; }
+        public List<ChartDataModel<TX, TY>> Data { get; set; }
 
-        public List<Tx> XAxisDataLabels { get; set; }
+        public List<TX> XAxisDataLabels { get; set; }
     }
 }

@@ -10,14 +10,14 @@ namespace Nootus.Fabric.Web.Core.Models.Dashboard
 {
     using System.Collections.Generic;
 
-    public class ChartPointModelComparer<Tx, Ty> : IEqualityComparer<ChartPointModel<Tx, Ty>>
+    public class ChartPointModelComparer<TX, TY> : IEqualityComparer<ChartPointModel<TX, TY>>
     {
-        public bool Equals(ChartPointModel<Tx, Ty> x, ChartPointModel<Tx, Ty> y)
+        public bool Equals(ChartPointModel<TX, TY> x, ChartPointModel<TX, TY> y)
         {
             return x.X.Equals(y.X);
         }
 
-        public int GetHashCode(ChartPointModel<Tx, Ty> obj)
+        public int GetHashCode(ChartPointModel<TX, TY> obj)
         {
             return obj.X.GetHashCode();
         }

@@ -1,5 +1,5 @@
 ﻿//-------------------------------------------------------------------------------------------------
-// <copyright file="NTAuthorizeFilter.cs" company="Nootus">
+// <copyright file="NTAuthorizeFilterAttribute.cs" company="Nootus">
 //  Copyright (c) Nootus. All rights reserved.
 // </copyright>
 // <description>
@@ -20,7 +20,7 @@ namespace Nootus.Fabric.Web.Security.Filters
     using Nootus.Fabric.Web.Security.Middleware;
 
     [AttributeUsage(AttributeTargets.Class | AttributeTargets.Method, AllowMultiple = true, Inherited = true)]
-    public class NTAuthorizeFilter : Attribute, IAuthorizationFilter
+    public class NTAuthorizeFilterAttribute : Attribute, IAuthorizationFilter
     {
         public void OnAuthorization(AuthorizationFilterContext context)
         {

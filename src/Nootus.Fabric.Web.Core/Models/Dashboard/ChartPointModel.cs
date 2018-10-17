@@ -8,11 +8,11 @@
 //-------------------------------------------------------------------------------------------------
 namespace Nootus.Fabric.Web.Core.Models.Dashboard
 {
-    public class ChartPointModel<Tx, Ty>
+    public class ChartPointModel<TX, TY>
     {
-        public Tx X { get; set; }
+        public TX X { get; set; }
 
-        public Ty Y { get; set; }
+        public TY Y { get; set; }
 
         public int Order { get; set; }
     }
