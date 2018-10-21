@@ -11,4 +11,12 @@
     </PackageReference>
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="Middleware\" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\Nootus.Fabric.Web.Core\Nootus.Fabric.Web.Core.csproj" />
+  </ItemGroup>
+
 </Project>

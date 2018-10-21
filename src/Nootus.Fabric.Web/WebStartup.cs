@@ -8,11 +8,9 @@
 //-------------------------------------------------------------------------------------------------
 namespace Nootus.Fabric.Web
 {
-    using System.Collections.Generic;
     using AutoMapper;
     using Microsoft.AspNetCore.Builder;
     using Microsoft.AspNetCore.Hosting;
-    using Microsoft.AspNetCore.SpaServices.Webpack;
     using Microsoft.Extensions.Configuration;
     using Microsoft.Extensions.DependencyInjection;
     using Newtonsoft.Json;
@@ -20,15 +18,16 @@ namespace Nootus.Fabric.Web
     using Nootus.Fabric.Web.Core.Common;
     using Nootus.Fabric.Web.Core.Extensions;
     using Nootus.Fabric.Web.Core.Mapping;
-    using Nootus.Fabric.Web.Security;
-    using Nootus.Fabric.Web.Security.Extensions;
-    using Nootus.Fabric.Web.Security.Filters;
+    using Nootus.Fabric.Web.Security.Core.Extensions;
+    using Nootus.Fabric.Web.Security.Core.Filters;
+    using Nootus.Fabric.Web.Security.SqlServer;
+    using System.Collections.Generic;
 
     public class WebStartup
     {
-        private readonly List<IModuleStartup> modules = new List<IModuleStartup>
+        private readonly List<IMicroserviceStartup> modules = new List<IMicroserviceStartup>
         {
-            new SecurityStartup(),
+            new SecuritySqlServerStartup(),
         };
 
         public WebStartup(IConfiguration configuration, IHostingEnvironment env)
@@ -122,7 +121,7 @@ namespace Nootus.Fabric.Web
             });
         }
 
-        protected void Initialize(List<IModuleStartup> appModules)
+        protected void Initialize(List<IMicroserviceStartup> appModules)
         {
             this.modules.AddRange(appModules);
             foreach (var module in this.modules)

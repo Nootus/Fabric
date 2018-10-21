@@ -8,14 +8,13 @@
 //-------------------------------------------------------------------------------------------------
 namespace Nootus.Fabric.Web.Controllers
 {
-    using System.Threading.Tasks;
-    using Microsoft.AspNetCore.Authorization;
     using Microsoft.AspNetCore.Mvc;
     using Nootus.Fabric.Web.Core.Helpers.Web;
     using Nootus.Fabric.Web.Core.Models.Web;
-    using Nootus.Fabric.Web.Security.Common;
-    using Nootus.Fabric.Web.Security.Domain;
-    using Nootus.Fabric.Web.Security.Models;
+    using Nootus.Fabric.Web.Security.Core.Common;
+    using Nootus.Fabric.Web.Security.Core.Models;
+    using Nootus.Fabric.Web.Security.SqlServer.Domain;
+    using System.Threading.Tasks;
 
     public class AccountController : Controller
     {

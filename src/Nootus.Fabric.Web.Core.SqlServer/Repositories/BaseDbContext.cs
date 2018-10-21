@@ -12,7 +12,7 @@ namespace Nootus.Fabric.Web.Core.SqlServer.Repositories
     using System.Threading;
     using System.Threading.Tasks;
     using Microsoft.EntityFrameworkCore;
-    using Nootus.Fabric.Web.Core.Entities;
+    using Nootus.Fabric.Web.Core.SqlServer.Entities;
 
     public class BaseDbContext<TContext> : DbContext
         where TContext : DbContext

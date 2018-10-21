@@ -19,8 +19,8 @@ namespace Nootus.Fabric.Web.Core.SqlServer.Repositories
     using Microsoft.EntityFrameworkCore;
     using Microsoft.EntityFrameworkCore.Metadata;
     using Nootus.Fabric.Web.Core.Context;
-    using Nootus.Fabric.Web.Core.Entities;
     using Nootus.Fabric.Web.Core.Models;
+    using Nootus.Fabric.Web.Core.SqlServer.Entities;
 
     public class BaseRepository<TContext>
         where TContext : DbContext

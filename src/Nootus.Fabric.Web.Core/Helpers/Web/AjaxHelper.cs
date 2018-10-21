@@ -12,9 +12,7 @@ namespace Nootus.Fabric.Web.Core.Helpers.Web
     using System.Threading.Tasks;
     using Nootus.Fabric.Web.Core.Context;
     using Nootus.Fabric.Web.Core.Exception;
-    using Nootus.Fabric.Web.Core.Models.Dashboard;
     using Nootus.Fabric.Web.Core.Models.Web;
-    using Nootus.Fabric.Web.Core.Models.Widget;
 
     public static class AjaxHelper
     {
@@ -67,6 +65,7 @@ namespace Nootus.Fabric.Web.Core.Helpers.Web
             return await GetAsync(action, message);
         }
 
+/*
         public static async Task<AjaxModel<object>> GetDashboardAsync(BaseDashboardDomain dashboardDomain, IWidgetDomain widgetDomain)
         {
             var ajaxModel = AjaxHelper.BlankModel<object>();
@@ -105,7 +104,7 @@ namespace Nootus.Fabric.Web.Core.Helpers.Web
                 return null;
             }
         }
-
+*/
         public static AjaxModel<T> BlankModel<T>()
             where T : class
         {
