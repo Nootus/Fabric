@@ -14,7 +14,10 @@
 
   <ItemGroup>
     <ProjectReference Include="..\Nootus.Fabric.Web.Core\Nootus.Fabric.Web.Core.csproj" />
-    <ProjectReference Include="..\Nootus.Fabric.Web.Security\Nootus.Fabric.Web.Security.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="Repositories\" />
   </ItemGroup>
 
 </Project>

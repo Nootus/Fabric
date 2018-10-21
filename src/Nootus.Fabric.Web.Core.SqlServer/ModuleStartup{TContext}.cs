@@ -6,9 +6,8 @@
 //  This is base startup class. This initializes the database connection and provide abstract methods
 // </description>
 //-------------------------------------------------------------------------------------------------
-namespace Nootus.Fabric.Web.Core
+namespace Nootus.Fabric.Web.Core.SqlServer
 {
-    using AutoMapper;
     using Microsoft.AspNetCore.Builder;
     using Microsoft.AspNetCore.Hosting;
     using Microsoft.EntityFrameworkCore;

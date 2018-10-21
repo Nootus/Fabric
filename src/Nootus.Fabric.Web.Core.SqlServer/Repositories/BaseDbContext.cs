@@ -6,7 +6,7 @@
 //  Base class for DBContext.
 // </description>
 //-------------------------------------------------------------------------------------------------
-namespace Nootus.Fabric.Web.Core.Repositories
+namespace Nootus.Fabric.Web.Core.SqlServer.Repositories
 {
     using System.Linq;
     using System.Threading;

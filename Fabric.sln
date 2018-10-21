@@ -11,6 +11,16 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Nootus.Fabric.Web.Security"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Nootus.Fabric.Web", "src\Nootus.Fabric.Web\Nootus.Fabric.Web.csproj", "{1CA0AF65-E33A-441C-8C85-3C2528A0C267}"
 EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Nootus.Fabric.Web.Security.Core", "src\Nootus.Fabric.Web.Security.Core\Nootus.Fabric.Web.Security.Core.csproj", "{2AC6B01A-9356-496B-9379-B076E54C95EA}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Nootus.Fabric.Web.Security.SqlServer", "src\Nootus.Fabric.Web.Security.SqlServer\Nootus.Fabric.Web.Security.SqlServer.csproj", "{0276A21B-E4A2-4E2E-A1BB-DC2A4F2DD402}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Nootus.Fabric.Web.Security.Cosmos", "src\Nootus.Fabric.Web.Security.Cosmos\Nootus.Fabric.Web.Security.Cosmos.csproj", "{DBA2E9CA-E134-4C72-878E-287188C71771}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Nootus.Fabric.Web.Core.SqlServer", "src\Nootus.Fabric.Web.Core.SqlServer\Nootus.Fabric.Web.Core.SqlServer.csproj", "{6406BCB0-E41B-4038-8755-D1BEDA1C3AAC}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Nootus.Fabric.Web.Core.Cosmos", "src\Nootus.Fabric.Web.Core.Cosmos\Nootus.Fabric.Web.Core.Cosmos.csproj", "{B7A7D112-2D41-4004-BEEF-998D8D725E69}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -29,6 +39,26 @@ Global
 		{1CA0AF65-E33A-441C-8C85-3C2528A0C267}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{1CA0AF65-E33A-441C-8C85-3C2528A0C267}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{1CA0AF65-E33A-441C-8C85-3C2528A0C267}.Release|Any CPU.Build.0 = Release|Any CPU
+		{2AC6B01A-9356-496B-9379-B076E54C95EA}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{2AC6B01A-9356-496B-9379-B076E54C95EA}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{2AC6B01A-9356-496B-9379-B076E54C95EA}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{2AC6B01A-9356-496B-9379-B076E54C95EA}.Release|Any CPU.Build.0 = Release|Any CPU
+		{0276A21B-E4A2-4E2E-A1BB-DC2A4F2DD402}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{0276A21B-E4A2-4E2E-A1BB-DC2A4F2DD402}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{0276A21B-E4A2-4E2E-A1BB-DC2A4F2DD402}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{0276A21B-E4A2-4E2E-A1BB-DC2A4F2DD402}.Release|Any CPU.Build.0 = Release|Any CPU
+		{DBA2E9CA-E134-4C72-878E-287188C71771}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{DBA2E9CA-E134-4C72-878E-287188C71771}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{DBA2E9CA-E134-4C72-878E-287188C71771}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{DBA2E9CA-E134-4C72-878E-287188C71771}.Release|Any CPU.Build.0 = Release|Any CPU
+		{6406BCB0-E41B-4038-8755-D1BEDA1C3AAC}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{6406BCB0-E41B-4038-8755-D1BEDA1C3AAC}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{6406BCB0-E41B-4038-8755-D1BEDA1C3AAC}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{6406BCB0-E41B-4038-8755-D1BEDA1C3AAC}.Release|Any CPU.Build.0 = Release|Any CPU
+		{B7A7D112-2D41-4004-BEEF-998D8D725E69}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B7A7D112-2D41-4004-BEEF-998D8D725E69}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B7A7D112-2D41-4004-BEEF-998D8D725E69}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B7A7D112-2D41-4004-BEEF-998D8D725E69}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -37,6 +67,11 @@ Global
 		{875DDB01-E836-4C2E-9462-B44C0E54CDAB} = {799E3072-47A2-4B1F-B985-B623D0D859DD}
 		{45A38980-8765-4F23-AADA-494FF80423A6} = {799E3072-47A2-4B1F-B985-B623D0D859DD}
 		{1CA0AF65-E33A-441C-8C85-3C2528A0C267} = {799E3072-47A2-4B1F-B985-B623D0D859DD}
+		{2AC6B01A-9356-496B-9379-B076E54C95EA} = {799E3072-47A2-4B1F-B985-B623D0D859DD}
+		{0276A21B-E4A2-4E2E-A1BB-DC2A4F2DD402} = {799E3072-47A2-4B1F-B985-B623D0D859DD}
+		{DBA2E9CA-E134-4C72-878E-287188C71771} = {799E3072-47A2-4B1F-B985-B623D0D859DD}
+		{6406BCB0-E41B-4038-8755-D1BEDA1C3AAC} = {799E3072-47A2-4B1F-B985-B623D0D859DD}
+		{B7A7D112-2D41-4004-BEEF-998D8D725E69} = {799E3072-47A2-4B1F-B985-B623D0D859DD}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {B1122D6A-97B1-40DD-A9D4-1A6DA8577D8B}

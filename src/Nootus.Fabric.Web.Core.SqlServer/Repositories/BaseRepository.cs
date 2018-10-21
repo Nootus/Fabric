@@ -6,7 +6,7 @@
 //  Base Repository with CRUD operations
 // </description>
 //-------------------------------------------------------------------------------------------------
-namespace Nootus.Fabric.Web.Core.Repositories
+namespace Nootus.Fabric.Web.Core.SqlServer.Repositories
 {
     using System;
     using System.Collections.Generic;
