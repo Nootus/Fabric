@@ -19,7 +19,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\Nootus.Fabric.Web.Core.SqlServer\Nootus.Fabric.Web.Core.SqlServer.csproj" />
-    <ProjectReference Include="..\Nootus.Fabric.Web.Security\Nootus.Fabric.Web.Security.csproj" />
+    <ProjectReference Include="..\Nootus.Fabric.Web.Security.Core\Nootus.Fabric.Web.Security.Core.csproj" />
   </ItemGroup>
 
 </Project>

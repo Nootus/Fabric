@@ -37,7 +37,7 @@ namespace Nootus.Fabric.Web.Core
             config.AddProfiles(this.GetType().Assembly);
         }
 
-        public virtual void Configure(IApplicationBuilder app, IHostingEnvironment env)
+        public virtual void Configure(IApplicationBuilder app)
         {
             // this is not required for all Modules. Those needed will override
         }

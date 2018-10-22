@@ -24,6 +24,6 @@ namespace Nootus.Fabric.Web.Core
 
         void ConfigureMapping(IMapperConfigurationExpression action);
 
-        void Configure(IApplicationBuilder app, IHostingEnvironment env);
+        void Configure(IApplicationBuilder app);
     }
 }

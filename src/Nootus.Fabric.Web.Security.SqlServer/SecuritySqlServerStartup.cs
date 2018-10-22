@@ -21,7 +21,7 @@ namespace Nootus.Fabric.Web.Security.SqlServer
     using Nootus.Fabric.Web.Security.SqlServer.Middleware;
     using Nootus.Fabric.Web.Security.SqlServer.Repositories;
 
-    public class SecuritySqlServerStartup : MicroserviceStartup<SecurityDbContext>
+    public class SecuritySqlServerStartup : MicroserviceSqlServerStartup<SecurityDbContext>
     {
         public override void ConfigureServices(IServiceCollection services)
         {
@@ -45,7 +45,7 @@ namespace Nootus.Fabric.Web.Security.SqlServer
             services.AddScoped<SignInManager<ApplicationUser>, ApplicationSignInManager>();
         }
 
-        public override void Configure(IApplicationBuilder app, IHostingEnvironment env)
+        public override void Configure(IApplicationBuilder app)
         {
             app.UseAuthentication();
         }

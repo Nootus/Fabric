@@ -14,7 +14,7 @@ namespace Nootus.Fabric.Web.Core.Extensions
 
     public class ContextMiddleware
     {
-        private RequestDelegate next;
+        private readonly RequestDelegate next;
 
         public ContextMiddleware(RequestDelegate next)
         {

@@ -11,6 +11,7 @@ namespace Nootus.Fabric.Web
     using AutoMapper;
     using Microsoft.AspNetCore.Builder;
     using Microsoft.AspNetCore.Hosting;
+    using Microsoft.AspNetCore.Mvc;
     using Microsoft.Extensions.Configuration;
     using Microsoft.Extensions.DependencyInjection;
     using Newtonsoft.Json;
@@ -27,7 +28,7 @@ namespace Nootus.Fabric.Web
     {
         private readonly List<IMicroserviceStartup> modules = new List<IMicroserviceStartup>
         {
-            new SecuritySqlServerStartup(),
+            // new SecuritySqlServerStartup(),
         };
 
         public WebStartup(IConfiguration configuration, IHostingEnvironment env)
@@ -62,7 +63,8 @@ namespace Nootus.Fabric.Web
             }
 
             services.AddSession();
-            services.AddMvc()
+            services.AddCors();
+            services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_2)
                 .AddMvcOptions(options =>
                 {
                     options.Filters.Add(new NTAuthorizeFilterAttribute());
@@ -80,20 +82,23 @@ namespace Nootus.Fabric.Web
             {
                 app.UseDeveloperExceptionPage();
                 app.UseDatabaseErrorPage();
+                app.UseCors(options => options.AllowAnyHeader().AllowAnyMethod().AllowAnyOrigin().AllowCredentials());
             }
             else
             {
                 app.UseExceptionHandler("/Home/Error");
+                // app.UseHsts();
             }
 
-            app.UseStaticFiles();
+            // app.UseHttpsRedirection();
+            app.UseFileServer();
             app.UseSession(new SessionOptions());
             app.UseContextMiddleware();
 
             // configuring services for all modules
             foreach (var module in this.modules)
             {
-                module.Configure(app, env);
+                module.Configure(app);
             }
 
             app.UseProfileMiddleware();
@@ -102,7 +107,7 @@ namespace Nootus.Fabric.Web
                 routes.MapRoute(
                     name: "webapi",
                     template: "api/{controller}/{action}/{id?}",
-                    defaults: new { controller = "Home", action = "Index" });
+                    defaults: new { controller = "Home", action = "ServiceStart" });
 
                 routes.MapRoute(
                     name: "error",

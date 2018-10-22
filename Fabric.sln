@@ -7,8 +7,6 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "src", "src", "{799E3072-47A
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Nootus.Fabric.Web.Core", "src\Nootus.Fabric.Web.Core\Nootus.Fabric.Web.Core.csproj", "{875DDB01-E836-4C2E-9462-B44C0E54CDAB}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Nootus.Fabric.Web.Security", "src\Nootus.Fabric.Web.Security\Nootus.Fabric.Web.Security.csproj", "{45A38980-8765-4F23-AADA-494FF80423A6}"
-EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Nootus.Fabric.Web", "src\Nootus.Fabric.Web\Nootus.Fabric.Web.csproj", "{1CA0AF65-E33A-441C-8C85-3C2528A0C267}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Nootus.Fabric.Web.Security.Core", "src\Nootus.Fabric.Web.Security.Core\Nootus.Fabric.Web.Security.Core.csproj", "{2AC6B01A-9356-496B-9379-B076E54C95EA}"
@@ -17,11 +15,11 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Nootus.Fabric.Web.Security.
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Nootus.Fabric.Web.Security.Cosmos", "src\Nootus.Fabric.Web.Security.Cosmos\Nootus.Fabric.Web.Security.Cosmos.csproj", "{DBA2E9CA-E134-4C72-878E-287188C71771}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Nootus.Fabric.Web.Core.SqlServer", "src\Nootus.Fabric.Web.Core.SqlServer\Nootus.Fabric.Web.Core.SqlServer.csproj", "{6406BCB0-E41B-4038-8755-D1BEDA1C3AAC}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Nootus.Fabric.Web.Core.SqlServer", "src\Nootus.Fabric.Web.Core.SqlServer\Nootus.Fabric.Web.Core.SqlServer.csproj", "{6406BCB0-E41B-4038-8755-D1BEDA1C3AAC}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Nootus.Fabric.Web.Core.Cosmos", "src\Nootus.Fabric.Web.Core.Cosmos\Nootus.Fabric.Web.Core.Cosmos.csproj", "{B7A7D112-2D41-4004-BEEF-998D8D725E69}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Nootus.Fabric.Web.Core.Cosmos", "src\Nootus.Fabric.Web.Core.Cosmos\Nootus.Fabric.Web.Core.Cosmos.csproj", "{B7A7D112-2D41-4004-BEEF-998D8D725E69}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Nootus.Fabric.Web.Dashboard", "src\Nootus.Fabric.Web.Dashboard\Nootus.Fabric.Web.Dashboard.csproj", "{C5E457FB-9728-4159-A2B2-2D12B16EB276}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Nootus.Fabric.Web.Dashboard", "src\Nootus.Fabric.Web.Dashboard\Nootus.Fabric.Web.Dashboard.csproj", "{C5E457FB-9728-4159-A2B2-2D12B16EB276}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -33,10 +31,6 @@ Global
 		{875DDB01-E836-4C2E-9462-B44C0E54CDAB}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{875DDB01-E836-4C2E-9462-B44C0E54CDAB}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{875DDB01-E836-4C2E-9462-B44C0E54CDAB}.Release|Any CPU.Build.0 = Release|Any CPU
-		{45A38980-8765-4F23-AADA-494FF80423A6}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{45A38980-8765-4F23-AADA-494FF80423A6}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{45A38980-8765-4F23-AADA-494FF80423A6}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{45A38980-8765-4F23-AADA-494FF80423A6}.Release|Any CPU.Build.0 = Release|Any CPU
 		{1CA0AF65-E33A-441C-8C85-3C2528A0C267}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{1CA0AF65-E33A-441C-8C85-3C2528A0C267}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{1CA0AF65-E33A-441C-8C85-3C2528A0C267}.Release|Any CPU.ActiveCfg = Release|Any CPU
@@ -71,7 +65,6 @@ Global
 	EndGlobalSection
 	GlobalSection(NestedProjects) = preSolution
 		{875DDB01-E836-4C2E-9462-B44C0E54CDAB} = {799E3072-47A2-4B1F-B985-B623D0D859DD}
-		{45A38980-8765-4F23-AADA-494FF80423A6} = {799E3072-47A2-4B1F-B985-B623D0D859DD}
 		{1CA0AF65-E33A-441C-8C85-3C2528A0C267} = {799E3072-47A2-4B1F-B985-B623D0D859DD}
 		{2AC6B01A-9356-496B-9379-B076E54C95EA} = {799E3072-47A2-4B1F-B985-B623D0D859DD}
 		{0276A21B-E4A2-4E2E-A1BB-DC2A4F2DD402} = {799E3072-47A2-4B1F-B985-B623D0D859DD}

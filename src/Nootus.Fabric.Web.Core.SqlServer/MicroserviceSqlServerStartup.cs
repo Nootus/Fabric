@@ -15,7 +15,7 @@ namespace Nootus.Fabric.Web.Core.SqlServer
     using Microsoft.Extensions.DependencyInjection;
     using Nootus.Fabric.Web.Core.Common;
 
-    public abstract class MicroserviceStartup<TContext> : MicroserviceStartup
+    public abstract class MicroserviceSqlServerStartup<TContext> : MicroserviceStartup
         where TContext : DbContext
     {
         public override void ConfigureServices(IServiceCollection services)

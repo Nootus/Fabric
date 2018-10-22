@@ -26,7 +26,7 @@ namespace Nootus.Fabric.Web.Core.SqlServer.Repositories
         where TContext : DbContext
     {
         private TContext dbContext;
-        private NTContextModel context;
+        private readonly NTContextModel context;
 
         public BaseRepository()
         {
