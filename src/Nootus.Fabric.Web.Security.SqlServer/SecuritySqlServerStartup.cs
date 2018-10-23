@@ -10,11 +10,11 @@ namespace Nootus.Fabric.Web.Security.SqlServer
 {
     using Microsoft.AspNetCore.Authentication;
     using Microsoft.AspNetCore.Builder;
-    using Microsoft.AspNetCore.Hosting;
     using Microsoft.AspNetCore.Identity;
     using Microsoft.Extensions.DependencyInjection;
     using Nootus.Fabric.Web.Core.SqlServer;
     using Nootus.Fabric.Web.Security.Core.Identity;
+    using Nootus.Fabric.Web.Security.Core.Domain;
     using Nootus.Fabric.Web.Security.SqlServer.Domain;
     using Nootus.Fabric.Web.Security.SqlServer.Entities;
     using Nootus.Fabric.Web.Security.SqlServer.Identity;
@@ -40,7 +40,7 @@ namespace Nootus.Fabric.Web.Security.SqlServer
             // claims transformation
             services.AddSingleton<IClaimsTransformation, ClaimsTransformer>();
 
-            services.AddTransient<AccountDomain>();
+            services.AddTransient<IAccountDomain, AccountDomain>();
             services.AddTransient<SecurityRepository>();
             services.AddScoped<SignInManager<ApplicationUser>, ApplicationSignInManager>();
         }

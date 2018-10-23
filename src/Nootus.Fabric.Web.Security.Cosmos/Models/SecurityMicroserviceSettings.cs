@@ -4,6 +4,6 @@ namespace Nootus.Fabric.Web.Security.Cosmos.Models
 {
     public static class SecurityMicroserviceSettings
     {
-        public static MicroserviceCosmosSettings ServiceSettings { get; set; }
+        public static MicroserviceCosmosSettings ServiceSettings { get; } = new MicroserviceCosmosSettings();
     }
 }

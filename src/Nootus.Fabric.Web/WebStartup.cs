@@ -21,7 +21,6 @@ namespace Nootus.Fabric.Web
     using Nootus.Fabric.Web.Core.Mapping;
     using Nootus.Fabric.Web.Security.Core.Extensions;
     using Nootus.Fabric.Web.Security.Core.Filters;
-    using Nootus.Fabric.Web.Security.SqlServer;
     using System.Collections.Generic;
 
     public class WebStartup
@@ -36,10 +35,10 @@ namespace Nootus.Fabric.Web
             this.Configuration = configuration;
 
             // initializing all modules
-            FabricSettings.ConnectionString = configuration.GetConnectionString("WebApp");
+            FabricSettings.ConnectionString = Configuration.GetConnectionString("WebApp");
             FabricSettings.EnvironmentName = env.EnvironmentName;
-            FabricSettings.SessionClaims = configuration.GetSection("FabricSettings").GetValue<bool>("SessionClaims");
-            FabricSettings.LoginDevEnvironment = configuration.GetSection("FabricSettings").GetValue<bool>("LoginDevEnvironment");
+            FabricSettings.SessionClaims = Configuration.GetValue<bool>("FabricSettings:SessionClaims");
+            FabricSettings.LoginDevEnvironment = Configuration.GetValue<bool>("FabricSettings:LoginDevEnvironment");
         }
 
         public IConfiguration Configuration { get; }
@@ -67,7 +66,7 @@ namespace Nootus.Fabric.Web
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_2)
                 .AddMvcOptions(options =>
                 {
-                    options.Filters.Add(new NTAuthorizeFilterAttribute());
+                    // options.Filters.Add(new NTAuthorizeFilterAttribute());
                 })
                 .AddJsonOptions(options =>
                 {

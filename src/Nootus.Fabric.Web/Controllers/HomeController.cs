@@ -1,9 +1,13 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using System.IO;
 
 namespace Nootus.Fabric.Web.Controllers
 {
-    public class HomeController: Controller
+    [AllowAnonymous]
+    [Route("api/[controller]/[action]")]
+    [ApiController]
+    public class HomeController: ControllerBase
     {
         public ActionResult<string> ServiceStart()
         {

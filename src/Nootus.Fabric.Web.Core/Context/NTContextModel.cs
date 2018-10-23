@@ -11,13 +11,9 @@ namespace Nootus.Fabric.Web.Core.Context
     public class NTContextModel
     {
         public string UserId { get; set; }
-
         public string FirstName { get; set; }
-
         public string LastName { get; set; }
-
         public string UserName { get; set; }
-
         public string FullName
         {
             get
@@ -25,11 +21,8 @@ namespace Nootus.Fabric.Web.Core.Context
                 return this.FirstName + " " + this.LastName;
             }
         }
-
         public int CompanyId { get; set; }
-
-        public int GroupCompanyId { get; set; }
-
+        // public int GroupCompanyId { get; set; }
         public int? DashboardPageId { get; set; }
     }
 }

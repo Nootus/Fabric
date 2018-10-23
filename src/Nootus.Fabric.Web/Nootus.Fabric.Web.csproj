@@ -13,7 +13,8 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\Nootus.Fabric.Web.Security.SqlServer\Nootus.Fabric.Web.Security.SqlServer.csproj" />
+    <ProjectReference Include="..\Nootus.Fabric.Web.Core\Nootus.Fabric.Web.Core.csproj" />
+    <ProjectReference Include="..\Nootus.Fabric.Web.Security.Core\Nootus.Fabric.Web.Security.Core.csproj" />
   </ItemGroup>
 
 </Project>

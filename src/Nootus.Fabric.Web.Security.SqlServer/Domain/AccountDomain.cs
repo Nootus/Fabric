@@ -12,6 +12,7 @@ namespace Nootus.Fabric.Web.Security.SqlServer.Domain
     using Nootus.Fabric.Web.Core.Context;
     using Nootus.Fabric.Web.Core.Exception;
     using Nootus.Fabric.Web.Security.Core.Common;
+    using Nootus.Fabric.Web.Security.Core.Domain;
     using Nootus.Fabric.Web.Security.Core.Models;
     using Nootus.Fabric.Web.Security.Identity;
     using Nootus.Fabric.Web.Security.SqlServer.Entities;
@@ -19,7 +20,7 @@ namespace Nootus.Fabric.Web.Security.SqlServer.Domain
     using System.Collections.Generic;
     using System.Threading.Tasks;
 
-    public class AccountDomain
+    public class AccountDomain: IAccountDomain
     {
         private readonly UserManager<ApplicationUser> userManager;
         private readonly SignInManager<ApplicationUser> signInManager;
@@ -89,9 +90,9 @@ namespace Nootus.Fabric.Web.Security.SqlServer.Domain
             }
         }
 
-        public async Task<int[]> GetGroupCompanyIds()
-        {
-            return await this.accountRepository.GetGroupCompanyIds();
-        }
+        //public async Task<int[]> GetGroupCompanyIds()
+        //{
+        //    return await this.accountRepository.GetGroupCompanyIds();
+        //}
     }
 }

@@ -182,12 +182,12 @@ namespace Nootus.Fabric.Web.Security.SqlServer.Repositories
             return hierarchy;
         }
 
-        public async Task<int[]> GetGroupCompanyIds()
-        {
-            return await (from cmp in this.DbContext.Companies
-                          where cmp.CompanyId == this.AppContext.GroupCompanyId || cmp.ParentCompanyId == this.AppContext.GroupCompanyId
-                          select cmp.CompanyId).ToArrayAsync();
-        }
+        //public async Task<int[]> GetGroupCompanyIds()
+        //{
+        //    return await (from cmp in this.DbContext.Companies
+        //                  where cmp.CompanyId == this.AppContext.GroupCompanyId || cmp.ParentCompanyId == this.AppContext.GroupCompanyId
+        //                  select cmp.CompanyId).ToArrayAsync();
+        //}
 
         private List<ListItem<string, string>> GetChildren(List<ListItem<string, string>> roles, ListItem<string, string> parent)
         {

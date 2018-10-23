@@ -8,42 +8,43 @@
 //-------------------------------------------------------------------------------------------------
 namespace Nootus.Fabric.Web.Controllers
 {
+    using Microsoft.AspNetCore.Authorization;
     using Microsoft.AspNetCore.Mvc;
     using Nootus.Fabric.Web.Core.Helpers.Web;
     using Nootus.Fabric.Web.Core.Models.Web;
     using Nootus.Fabric.Web.Security.Core.Common;
+    using Nootus.Fabric.Web.Security.Core.Domain;
     using Nootus.Fabric.Web.Security.Core.Models;
-    using Nootus.Fabric.Web.Security.SqlServer.Domain;
     using System.Threading.Tasks;
 
-    public class AccountController : Controller
+    [Route("api/[controller]/[action]")]
+    [ApiController]
+    public class AccountController : ControllerBase
     {
-        private readonly AccountDomain domain;
+        private readonly IAccountDomain domain;
 
-        public AccountController(AccountDomain domain)
+        public AccountController(IAccountDomain domain)
         {
             this.domain = domain;
         }
 
-        [HttpPost]
-        public async Task<AjaxModel<ProfileModel>> Validate([FromBody] LoginModel model)
+        [AllowAnonymous]
+        public async Task<AjaxModel<ProfileModel>> Validate(LoginModel model)
         {
             return await AjaxHelper.GetAsync(m => this.domain.Validate(model.UserName, model.UserPassword), SecurityMessages.LoginSuccess);
         }
 
-        [HttpGet]
+        [Authorize]
         public async Task<AjaxModel<NTModel>> Logout()
         {
             return await AjaxHelper.SaveAsync(m => this.domain.Logout(), SecurityMessages.LogoutSuccess);
         }
 
-        [HttpPost]
-        public async Task<AjaxModel<NTModel>> ChangePassword([FromBody] ChangePasswordModel model)
+        public async Task<AjaxModel<NTModel>> ChangePassword(ChangePasswordModel model)
         {
             return await AjaxHelper.SaveAsync(m => this.domain.ChangePassword(model), SecurityMessages.ChangePasswordSuccess);
         }
 
-        [HttpGet]
         public async Task<AjaxModel<ProfileModel>> ProfileGet()
         {
             return await AjaxHelper.GetAsync(m => this.domain.ProfileGet());

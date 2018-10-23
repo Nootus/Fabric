@@ -8,7 +8,6 @@
 //-------------------------------------------------------------------------------------------------
 namespace Nootus.Fabric.Web.Core.Cosmos.Extensions
 {
-    using Microsoft.AspNetCore.Builder;
     using Microsoft.Extensions.DependencyInjection;
     using Nootus.Fabric.Web.Core.Cosmos.Repositories;
 
@@ -18,8 +17,8 @@ namespace Nootus.Fabric.Web.Core.Cosmos.Extensions
             where TContext: CosmosDbContext
         {
             services.AddSingleton<TContext>();
-            TContext connection = services.BuildServiceProvider().GetRequiredService<TContext>();
-            connection.Initialize();
+            TContext context = services.BuildServiceProvider().GetRequiredService<TContext>();
+            context.Initialize();
         }
     }
 }
