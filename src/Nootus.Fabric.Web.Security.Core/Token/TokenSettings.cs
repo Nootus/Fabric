@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Text;
 
-namespace Nootus.Fabric.Web.Security.Cosmos.Models
+namespace Nootus.Fabric.Web.Security.Core.Token
 {
     public static class TokenSettings
     {

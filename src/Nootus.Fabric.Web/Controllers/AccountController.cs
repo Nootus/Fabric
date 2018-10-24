@@ -15,10 +15,12 @@ namespace Nootus.Fabric.Web.Controllers
     using Nootus.Fabric.Web.Security.Core.Common;
     using Nootus.Fabric.Web.Security.Core.Domain;
     using Nootus.Fabric.Web.Security.Core.Models;
+    using System;
     using System.Threading.Tasks;
 
     [Route("api/[controller]/[action]")]
     [ApiController]
+    [Authorize]
     public class AccountController : ControllerBase
     {
         private readonly IAccountDomain domain;
@@ -34,7 +36,6 @@ namespace Nootus.Fabric.Web.Controllers
             return await AjaxHelper.GetAsync(m => this.domain.Validate(model.UserName, model.UserPassword), SecurityMessages.LoginSuccess);
         }
 
-        [Authorize]
         public async Task<AjaxModel<NTModel>> Logout()
         {
             return await AjaxHelper.SaveAsync(m => this.domain.Logout(), SecurityMessages.LogoutSuccess);
@@ -48,6 +49,17 @@ namespace Nootus.Fabric.Web.Controllers
         public async Task<AjaxModel<ProfileModel>> ProfileGet()
         {
             return await AjaxHelper.GetAsync(m => this.domain.ProfileGet());
+        }
+
+        [AllowAnonymous]
+        public async Task<AjaxModel<NTModel>> RefreshToken(RefreshTokenModel model)
+        {
+            return await AjaxHelper.SaveAsync(m => domain.RefreshToken(model.JwtToken, model.RefreshToken), String.Empty);
+        }
+
+        public async Task<AjaxModel<ProfileModel>> RefreshTokenAndProfileGet(RefreshTokenModel model)
+        {
+            return await AjaxHelper.GetAsync(m => domain.RefreshToken(model.JwtToken, model.RefreshToken));
         }
     }
 }

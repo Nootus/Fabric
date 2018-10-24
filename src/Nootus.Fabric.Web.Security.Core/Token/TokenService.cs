@@ -2,14 +2,13 @@
 using Nootus.Fabric.Web.Core.Context;
 using Nootus.Fabric.Web.Security.Core.Identity;
 using Nootus.Fabric.Web.Security.Core.Models;
-using Nootus.Fabric.Web.Security.Cosmos.Models;
 using System;
 using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
 using System.Security.Cryptography;
 using System.Text;
 
-namespace Nootus.Fabric.Web.Security.Cosmos.Common
+namespace Nootus.Fabric.Web.Security.Core.Token
 {
     public static class TokenService
     {
@@ -33,7 +32,6 @@ namespace Nootus.Fabric.Web.Security.Cosmos.Common
 
             string jwtToken = new JwtSecurityTokenHandler().WriteToken(token);
             NTContext.HttpContext.Response.Headers.Add("JwtToken", jwtToken);
-
             return jwtToken;
         }
 
@@ -46,8 +44,6 @@ namespace Nootus.Fabric.Web.Security.Cosmos.Common
             }
 
             string refreshToken = Convert.ToBase64String(randomNumber);
-            NTContext.HttpContext.Response.Headers.Add("RefreshToken", refreshToken);
-
             return refreshToken;
         }
 
@@ -61,6 +57,7 @@ namespace Nootus.Fabric.Web.Security.Cosmos.Common
                 ValidateIssuerSigningKey = true,
                 ValidIssuer = TokenSettings.Issuer,
                 ValidAudience = TokenSettings.Issuer,
+                ClockSkew = TimeSpan.Zero,
                 IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(TokenSettings.SymmetricKey))
             };
         }

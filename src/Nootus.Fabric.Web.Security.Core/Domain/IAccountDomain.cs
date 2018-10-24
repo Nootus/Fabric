@@ -10,6 +10,6 @@ namespace Nootus.Fabric.Web.Security.Core.Domain
         Task<ProfileModel> ProfileGet();
         Task Logout();
         Task ChangePassword(ChangePasswordModel model);
-
+        Task<ProfileModel> RefreshToken(string jwtToken, string refreshToken);
     }
 }

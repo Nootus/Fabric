@@ -1,19 +1,14 @@
-﻿using Microsoft.AspNetCore.Authentication.JwtBearer;
-using Microsoft.AspNetCore.Builder;
-using Microsoft.AspNetCore.Hosting;
+﻿using Microsoft.AspNetCore.Builder;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
-using Microsoft.IdentityModel.Tokens;
 using Nootus.Fabric.Web.Core.Cosmos;
 using Nootus.Fabric.Web.Core.Cosmos.Extensions;
 using Nootus.Fabric.Web.Core.Cosmos.Models;
+using Nootus.Fabric.Web.Security.Core;
 using Nootus.Fabric.Web.Security.Core.Domain;
-using Nootus.Fabric.Web.Security.Cosmos.Common;
 using Nootus.Fabric.Web.Security.Cosmos.Domain;
 using Nootus.Fabric.Web.Security.Cosmos.Models;
 using Nootus.Fabric.Web.Security.Cosmos.Repositories;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Nootus.Fabric.Web.Security.Cosmos
 {
@@ -26,10 +21,8 @@ namespace Nootus.Fabric.Web.Security.Cosmos
             // initializing configuration
             SecurityMicroserviceSettings.ServiceSettings.ServiceName = Configuration.GetValue<string>("Microservices:Security:Name");
 
-            // Token settings
-            TokenSettings.SymmetricKey = Configuration.GetValue<string>("Microservices:Security:JWT:SymmetricKey");
-            TokenSettings.Issuer = Configuration.GetValue<string>("Microservices:Security:JWT:Issuer");
-            TokenSettings.Duration = Configuration.GetValue<int>("Microservices:Security:JWT:Duration");
+            // Token configuration
+            SecurityStartup.ConfigureTokenSettings(configuration);
 
             // Cosmos settings
             DatabaseSettings dbSettings = SecurityMicroserviceSettings.ServiceSettings.Database;
@@ -43,22 +36,7 @@ namespace Nootus.Fabric.Web.Security.Cosmos
         {
             base.ConfigureServices(services);
 
-            services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
-                .AddJwtBearer(options =>
-                {
-                    options.TokenValidationParameters = TokenService.GetTokenValidationParameters();
-                    options.Events = new JwtBearerEvents
-                    {
-                        OnAuthenticationFailed = context =>
-                        {
-                            if (context.Exception.GetType() == typeof(SecurityTokenExpiredException))
-                            {
-                                context.Response.Headers.Add("Token-Expired", "true");
-                            }
-                            return Task.CompletedTask;
-                        }
-                    };
-                });
+            SecurityStartup.ConfigureTokenServices(services);
 
             services.AddCosmosDb<SecurityDbContext>();
 

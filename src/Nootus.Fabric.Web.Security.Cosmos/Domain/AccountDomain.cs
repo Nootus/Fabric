@@ -1,9 +1,10 @@
-﻿using System.Threading.Tasks;
-using Nootus.Fabric.Web.Core.Context;
+﻿using Nootus.Fabric.Web.Core.Context;
+using Nootus.Fabric.Web.Core.Cosmos.Models;
 using Nootus.Fabric.Web.Security.Core.Domain;
 using Nootus.Fabric.Web.Security.Core.Models;
-using Nootus.Fabric.Web.Security.Cosmos.Common;
+using Nootus.Fabric.Web.Security.Core.Token;
 using Nootus.Fabric.Web.Security.Cosmos.Repositories;
+using System.Threading.Tasks;
 
 namespace Nootus.Fabric.Web.Security.Cosmos.Domain
 {
@@ -27,9 +28,9 @@ namespace Nootus.Fabric.Web.Security.Cosmos.Domain
             await Task.CompletedTask;
         }
 
-        public Task<ProfileModel> ProfileGet()
+        public async Task<ProfileModel> ProfileGet()
         {
-            throw new System.NotImplementedException();
+            return (await repository.UserProfileGet(NTContext.Context.UserName)).Document;
         }
 
         public Task<ProfileModel> Register(RegisterUserModel model)
@@ -40,13 +41,18 @@ namespace Nootus.Fabric.Web.Security.Cosmos.Domain
         public async Task<ProfileModel> Validate(string userName, string password)
         {
             // check user name and password from database
-            ProfileModel model = await repository.Validate(userName, password);
+            SharedCollectionDocument<ProfileModel> document = await repository.Validate(userName, password);
+            ProfileModel model = document.Document;
 
             // creating tokens
             string jwtToken = TokenService.GenerateJwtToken(model);
 
             // if no refresh token exists, then create one
-            string refreshToken = TokenService.GenerateRefreshToken();
+            if (string.IsNullOrEmpty(model.RefreshToken))
+            {
+                model.RefreshToken = TokenService.GenerateRefreshToken();
+                await repository.UserProfileSave(document);
+            }
 
             return await Task.FromResult(model);
         }
@@ -57,9 +63,13 @@ namespace Nootus.Fabric.Web.Security.Cosmos.Domain
             string userName = TokenService.GetUsernameFromExpiredToken(jwtToken);
 
             // getting profile from database
-            ProfileModel model = await repository.GetProfileModel(userName);
+            ProfileModel model = (await repository.UserProfileGet(userName)).Document;
 
             // checking refresh token validity
+            if(model.RefreshToken == refreshToken)
+            {
+                TokenService.GenerateJwtToken(model);
+            }
 
             return model;
         }

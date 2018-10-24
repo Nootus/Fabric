@@ -90,6 +90,11 @@ namespace Nootus.Fabric.Web.Security.SqlServer.Domain
             }
         }
 
+        public Task<ProfileModel> RefreshToken(string jwtToken, string refreshToken)
+        {
+            throw new System.NotImplementedException();
+        }
+
         //public async Task<int[]> GetGroupCompanyIds()
         //{
         //    return await this.accountRepository.GetGroupCompanyIds();

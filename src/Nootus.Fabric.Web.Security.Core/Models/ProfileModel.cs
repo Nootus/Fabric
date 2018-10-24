@@ -29,6 +29,7 @@ namespace Nootus.Fabric.Web.Security.Core.Models
         }
 
         public int CompanyId { get; set; }
+        public string RefreshToken { get; set; }
 
         public List<string> AdminRoles { get; set; }
 
