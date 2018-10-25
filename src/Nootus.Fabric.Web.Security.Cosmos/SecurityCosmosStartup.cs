@@ -19,17 +19,22 @@ namespace Nootus.Fabric.Web.Security.Cosmos
             base.Startup(configuration);
 
             // initializing configuration
-            SecurityMicroserviceSettings.ServiceSettings.ServiceName = Configuration.GetValue<string>("Microservices:Security:Name");
+            SecurityAppSettings.ServiceSettings.ServiceName = Configuration.GetValue<string>("Microservices:Security:Name");
 
             // Token configuration
             SecurityStartup.ConfigureTokenSettings(configuration);
 
             // Cosmos settings
-            DatabaseSettings dbSettings = SecurityMicroserviceSettings.ServiceSettings.Database;
+            DatabaseSettings dbSettings = SecurityAppSettings.ServiceSettings.Database;
             dbSettings.Endpoint = Configuration.GetValue<string>("Microservices:Security:Database:Endpoint");
             dbSettings.Key = Configuration.GetValue<string>("Microservices:Security:Database:Key");
             dbSettings.DatabaseId = Configuration.GetValue<string>("Microservices:Security:Database:DatabaseId");
             dbSettings.CollectionId = Configuration.GetValue<string>("Microservices:Security:Database:CollectionId");
+
+            // Document Types
+            SecurityDocumentTypes documentTypes = SecurityAppSettings.ServiceSettings.DocumentTypes;
+            documentTypes.UserProfile = Configuration.GetValue<string>("Microservices:Security:Database:DocumentTypes:UserProfile");
+            documentTypes.AuthUser = Configuration.GetValue<string>("Microservices:Security:Database:DocumentTypes:AuthUser");
         }
 
         public override void ConfigureServices(IServiceCollection services)

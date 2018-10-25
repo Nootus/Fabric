@@ -18,9 +18,9 @@ namespace Nootus.Fabric.Web.Security.Identity
 
     public static class UserProfile
     {
-        public static async Task<ProfileModel> Get(string userName, SecurityRepository accountRepository)
+        public static async Task<UserProfileModel> Get(string userName, SecurityRepository accountRepository)
         {
-            ProfileModel profile;
+            UserProfileModel profile;
             string profileContextName = "ProfileContextObject";
 
             if (NTContext.HttpContext.Items[profileContextName] == null)
@@ -51,7 +51,7 @@ namespace Nootus.Fabric.Web.Security.Identity
             }
             else
             {
-                profile = (ProfileModel)NTContext.HttpContext.Items[profileContextName];
+                profile = (UserProfileModel)NTContext.HttpContext.Items[profileContextName];
             }
 
             return profile;

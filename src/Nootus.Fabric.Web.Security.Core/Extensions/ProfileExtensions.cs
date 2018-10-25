@@ -16,7 +16,7 @@ namespace Nootus.Fabric.Web.Security.Core.Extensions
 
     public static class ProfileExtensions
     {
-        public static void SetMenu(this ProfileModel profile)
+        public static void SetMenu(this UserProfileModel profile)
         {
             List<PageModel> pages = PageService.Pages;
             List<MenuModel> menuPages = PageService.MenuPages;

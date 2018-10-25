@@ -10,7 +10,7 @@ namespace Nootus.Fabric.Web.Security.Core.Models
 {
     using System.Collections.Generic;
 
-    public class ProfileModel
+    public class UserProfileModel
     {
         public string UserId { get; set; }
 

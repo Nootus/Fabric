@@ -12,7 +12,7 @@ namespace Nootus.Fabric.Web.Security.Core.Token
 {
     public static class TokenService
     {
-        public static string GenerateJwtToken(ProfileModel model)
+        public static string GenerateJwtToken(UserProfileModel model)
         {            
             var claims = new[] {
                 new Claim(ClaimTypes.NameIdentifier, model.UserId),

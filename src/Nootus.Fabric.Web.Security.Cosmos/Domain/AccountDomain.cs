@@ -28,21 +28,21 @@ namespace Nootus.Fabric.Web.Security.Cosmos.Domain
             await Task.CompletedTask;
         }
 
-        public async Task<ProfileModel> ProfileGet()
+        public async Task<UserProfileModel> ProfileGet()
         {
             return (await repository.UserProfileGet(NTContext.Context.UserName)).Document;
         }
 
-        public Task<ProfileModel> Register(RegisterUserModel model)
+        public Task<UserProfileModel> Register(RegisterUserModel model)
         {
             throw new System.NotImplementedException();
         }
 
-        public async Task<ProfileModel> Validate(string userName, string password)
+        public async Task<UserProfileModel> Validate(string userName, string password)
         {
             // check user name and password from database
-            SharedCollectionDocument<ProfileModel> document = await repository.Validate(userName, password);
-            ProfileModel model = document.Document;
+            SharedCollectionDocument<UserProfileModel> document = await repository.Validate(userName, password);
+            UserProfileModel model = document.Document;
 
             // creating tokens
             string jwtToken = TokenService.GenerateJwtToken(model);
@@ -57,13 +57,13 @@ namespace Nootus.Fabric.Web.Security.Cosmos.Domain
             return await Task.FromResult(model);
         }
 
-        public async Task<ProfileModel> RefreshToken(string jwtToken, string refreshToken)
+        public async Task<UserProfileModel> RefreshToken(string jwtToken, string refreshToken)
         {
             // getting user name from token
             string userName = TokenService.GetUsernameFromExpiredToken(jwtToken);
 
             // getting profile from database
-            ProfileModel model = (await repository.UserProfileGet(userName)).Document;
+            UserProfileModel model = (await repository.UserProfileGet(userName)).Document;
 
             // checking refresh token validity
             if(model.RefreshToken == refreshToken)

@@ -20,7 +20,12 @@ namespace Nootus.Fabric.Web.Core.Cosmos.Repositories
 
         public void Initialize()
         {
-            Client = new DocumentClient(new Uri(Settings.Endpoint), Settings.Key);
+            Client = new DocumentClient(new Uri(Settings.Endpoint), Settings.Key,
+                new ConnectionPolicy
+                {
+                    ConnectionMode = ConnectionMode.Direct,
+                    ConnectionProtocol = Protocol.Tcp
+                });
         }
     }
 }

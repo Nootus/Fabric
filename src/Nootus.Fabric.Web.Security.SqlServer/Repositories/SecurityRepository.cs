@@ -35,13 +35,13 @@ namespace Nootus.Fabric.Web.Security.SqlServer.Repositories
             await this.DbContext.SaveChangesAsync();
         }
 
-        public async Task<ProfileModel> UserProfileGet(string userName, int companyId)
+        public async Task<UserProfileModel> UserProfileGet(string userName, int companyId)
         {
             var query = from users in this.DbContext.UserProfiles
                         join idn in this.DbContext.Users on users.UserProfileId equals idn.Id
                         where users.DeletedInd == false
                         && idn.UserName == userName
-                        select new ProfileModel
+                        select new UserProfileModel
                         {
                             UserId = users.UserProfileId,
                             FirstName = users.FirstName,
@@ -50,7 +50,7 @@ namespace Nootus.Fabric.Web.Security.SqlServer.Repositories
                             CompanyId = users.CompanyId,
                         };
 
-            ProfileModel model = await query.FirstOrDefaultAsync();
+            UserProfileModel model = await query.FirstOrDefaultAsync();
             if (companyId != 0 && model.CompanyId != companyId)
             {
                 model.CompanyId = companyId;
@@ -75,7 +75,7 @@ namespace Nootus.Fabric.Web.Security.SqlServer.Repositories
             return model;
         }
 
-        public async Task UserProfileGetRolesClaims(ProfileModel model)
+        public async Task UserProfileGetRolesClaims(UserProfileModel model)
         {
             int companyId = model.CompanyId;
             string userId = model.UserId;

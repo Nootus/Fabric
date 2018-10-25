@@ -6,6 +6,6 @@ namespace Nootus.Fabric.Web.Security.Cosmos.Repositories
 {
     public class SecurityDbContext : CosmosDbContext
     {
-        public override DatabaseSettings Settings { get; set; } = SecurityMicroserviceSettings.ServiceSettings.Database;
+        public override DatabaseSettings Settings { get; set; } = SecurityAppSettings.ServiceSettings.Database;
     }
 }

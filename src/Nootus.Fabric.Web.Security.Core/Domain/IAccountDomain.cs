@@ -5,11 +5,11 @@ namespace Nootus.Fabric.Web.Security.Core.Domain
 {
     public interface IAccountDomain
     {
-        Task<ProfileModel> Register(RegisterUserModel model);
-        Task<ProfileModel> Validate(string userName, string password);
-        Task<ProfileModel> ProfileGet();
+        Task<UserProfileModel> Register(RegisterUserModel model);
+        Task<UserProfileModel> Validate(string userName, string password);
+        Task<UserProfileModel> ProfileGet();
         Task Logout();
         Task ChangePassword(ChangePasswordModel model);
-        Task<ProfileModel> RefreshToken(string jwtToken, string refreshToken);
+        Task<UserProfileModel> RefreshToken(string jwtToken, string refreshToken);
     }
 }

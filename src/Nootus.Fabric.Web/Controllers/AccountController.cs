@@ -26,40 +26,28 @@ namespace Nootus.Fabric.Web.Controllers
         private readonly IAccountDomain domain;
 
         public AccountController(IAccountDomain domain)
-        {
-            this.domain = domain;
-        }
+            => this.domain = domain;
+        
 
         [AllowAnonymous]
-        public async Task<AjaxModel<ProfileModel>> Validate(LoginModel model)
-        {
-            return await AjaxHelper.GetAsync(m => this.domain.Validate(model.UserName, model.UserPassword), SecurityMessages.LoginSuccess);
-        }
-
+        public async Task<AjaxModel<UserProfileModel>> Validate(LoginModel model)
+            => await AjaxHelper.GetAsync(m => this.domain.Validate(model.UserName, model.UserPassword), SecurityMessages.LoginSuccess);
+        
         public async Task<AjaxModel<NTModel>> Logout()
-        {
-            return await AjaxHelper.SaveAsync(m => this.domain.Logout(), SecurityMessages.LogoutSuccess);
-        }
-
+            => await AjaxHelper.SaveAsync(m => this.domain.Logout(), SecurityMessages.LogoutSuccess);
+        
         public async Task<AjaxModel<NTModel>> ChangePassword(ChangePasswordModel model)
-        {
-            return await AjaxHelper.SaveAsync(m => this.domain.ChangePassword(model), SecurityMessages.ChangePasswordSuccess);
-        }
+            => await AjaxHelper.SaveAsync(m => this.domain.ChangePassword(model), SecurityMessages.ChangePasswordSuccess);       
 
-        public async Task<AjaxModel<ProfileModel>> ProfileGet()
-        {
-            return await AjaxHelper.GetAsync(m => this.domain.ProfileGet());
-        }
-
+        public async Task<AjaxModel<UserProfileModel>> ProfileGet()
+            => await AjaxHelper.GetAsync(m => this.domain.ProfileGet());
+        
         [AllowAnonymous]
         public async Task<AjaxModel<NTModel>> RefreshToken(RefreshTokenModel model)
-        {
-            return await AjaxHelper.SaveAsync(m => domain.RefreshToken(model.JwtToken, model.RefreshToken), String.Empty);
-        }
-
-        public async Task<AjaxModel<ProfileModel>> RefreshTokenAndProfileGet(RefreshTokenModel model)
-        {
-            return await AjaxHelper.GetAsync(m => domain.RefreshToken(model.JwtToken, model.RefreshToken));
-        }
+            => await AjaxHelper.SaveAsync(m => domain.RefreshToken(model.JwtToken, model.RefreshToken), String.Empty);
+        
+        public async Task<AjaxModel<UserProfileModel>> RefreshTokenAndProfileGet(RefreshTokenModel model)
+            => await AjaxHelper.GetAsync(m => domain.RefreshToken(model.JwtToken, model.RefreshToken));
+        
     }
 }

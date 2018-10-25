@@ -6,7 +6,7 @@ namespace Nootus.Fabric.Web.Security.Cosmos.Repositories
 {
     public class AccountRepository
     {
-        private static ProfileModel Model = new ProfileModel()
+        private static UserProfileModel Model = new UserProfileModel()
         {
             UserId = "123",
             UserName = "Prasanna@Nootus.com",
@@ -15,14 +15,14 @@ namespace Nootus.Fabric.Web.Security.Cosmos.Repositories
             CompanyId = 0
         };
 
-        public async Task<SharedCollectionDocument<ProfileModel>> Validate(string userName, string password)
+        public async Task<SharedCollectionDocument<UserProfileModel>> Validate(string userName, string password)
         {
             return await UserProfileGet(userName);
         }
 
-        public async Task<SharedCollectionDocument<ProfileModel>> UserProfileGet(string userName)
+        public async Task<SharedCollectionDocument<UserProfileModel>> UserProfileGet(string userName)
         {
-            SharedCollectionDocument<ProfileModel> document = new SharedCollectionDocument<ProfileModel>()
+            SharedCollectionDocument<UserProfileModel> document = new SharedCollectionDocument<UserProfileModel>()
             {
                 Document = AccountRepository.Model
         };
@@ -30,7 +30,7 @@ namespace Nootus.Fabric.Web.Security.Cosmos.Repositories
             return await Task.FromResult(document);
         }
 
-        public async Task UserProfileSave(SharedCollectionDocument<ProfileModel> document)
+        public async Task UserProfileSave(SharedCollectionDocument<UserProfileModel> document)
         {            
             await Task.CompletedTask;
         }
