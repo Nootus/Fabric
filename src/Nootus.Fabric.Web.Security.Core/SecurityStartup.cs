@@ -2,6 +2,7 @@
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.IdentityModel.Tokens;
+using Nootus.Fabric.Web.Security.Core.Common;
 using Nootus.Fabric.Web.Security.Core.Token;
 using System.Threading.Tasks;
 
@@ -35,6 +36,10 @@ namespace Nootus.Fabric.Web.Security.Core
                         }
                     };
                 });
+        }
+
+        public static void ConfigureDependencyInjection(IServiceCollection services)
+        {
         }
     }
 }

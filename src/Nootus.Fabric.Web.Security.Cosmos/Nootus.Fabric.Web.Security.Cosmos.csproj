@@ -16,4 +16,8 @@
     <ProjectReference Include="..\Nootus.Fabric.Web.Security.Core\Nootus.Fabric.Web.Security.Core.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="Account\" />
+  </ItemGroup>
+
 </Project>

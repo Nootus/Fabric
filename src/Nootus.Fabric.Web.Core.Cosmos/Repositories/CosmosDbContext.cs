@@ -14,11 +14,7 @@ namespace Nootus.Fabric.Web.Core.Cosmos.Repositories
 
     public abstract class CosmosDbContext
     {
-        public DocumentClient Client { get; set; }
-
-        public abstract DatabaseSettings Settings { get; set; }
-
-        public void Initialize()
+        public CosmosDbContext()
         {
             Client = new DocumentClient(new Uri(Settings.Endpoint), Settings.Key,
                 new ConnectionPolicy
@@ -27,5 +23,9 @@ namespace Nootus.Fabric.Web.Core.Cosmos.Repositories
                     ConnectionProtocol = Protocol.Tcp
                 });
         }
+
+        public DocumentClient Client { get; set; }
+
+        public abstract DatabaseSettings Settings { get; set; }
     }
 }

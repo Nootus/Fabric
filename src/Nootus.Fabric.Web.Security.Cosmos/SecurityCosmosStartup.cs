@@ -2,7 +2,6 @@
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Nootus.Fabric.Web.Core.Cosmos;
-using Nootus.Fabric.Web.Core.Cosmos.Extensions;
 using Nootus.Fabric.Web.Core.Cosmos.Models;
 using Nootus.Fabric.Web.Security.Core;
 using Nootus.Fabric.Web.Security.Core.Domain;
@@ -34,7 +33,7 @@ namespace Nootus.Fabric.Web.Security.Cosmos
             // Document Types
             SecurityDocumentTypes documentTypes = SecurityAppSettings.ServiceSettings.DocumentTypes;
             documentTypes.UserProfile = Configuration.GetValue<string>("Microservices:Security:Database:DocumentTypes:UserProfile");
-            documentTypes.AuthUser = Configuration.GetValue<string>("Microservices:Security:Database:DocumentTypes:AuthUser");
+            documentTypes.UserAuth = Configuration.GetValue<string>("Microservices:Security:Database:DocumentTypes:AuthUser");
         }
 
         public override void ConfigureServices(IServiceCollection services)
@@ -43,16 +42,16 @@ namespace Nootus.Fabric.Web.Security.Cosmos
 
             SecurityStartup.ConfigureTokenServices(services);
 
-            services.AddCosmosDb<SecurityDbContext>();
-
             // caching page claims
             //services.CachePageClaimsRoles();
         }
 
         public override void ConfigureDependencyInjection(IServiceCollection services)
         {
-            services.AddTransient<IAccountDomain, AccountDomain>();
-            services.AddTransient<AccountRepository>();
+            base.ConfigureDependencyInjection(services);
+
+            SecurityStartup.ConfigureDependencyInjection(services);
+            services.AddTransient<IAccountDomain, AccountService>();
         }
 
         public override void Configure(IApplicationBuilder app)
