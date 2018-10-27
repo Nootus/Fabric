@@ -1,35 +1,20 @@
-﻿using Nootus.Fabric.Web.Core.Context;
+﻿using Microsoft.AspNetCore.Identity;
+using Nootus.Fabric.Web.Core.Context;
 using Nootus.Fabric.Web.Core.Cosmos.Models;
+using Nootus.Fabric.Web.Core.Exception;
+using Nootus.Fabric.Web.Security.Core.Common;
 using Nootus.Fabric.Web.Security.Core.Domain;
 using Nootus.Fabric.Web.Security.Core.Models;
 using Nootus.Fabric.Web.Security.Core.Token;
+using Nootus.Fabric.Web.Security.Cosmos.Models;
 using Nootus.Fabric.Web.Security.Cosmos.Repositories;
+using System.Security.Claims;
 using System.Threading.Tasks;
 
 namespace Nootus.Fabric.Web.Security.Cosmos.Domain
 {
-    public class AccountService : IAccountDomain
+    public class AccountService : BaseService<SecurityDbContext>, IAccountDomain
     {
-
-        private static UserProfileModel Model = new UserProfileModel()
-        {
-            UserId = "123",
-            UserName = "Prasanna@Nootus.com",
-            FirstName = "Prasanna",
-            LastName = "Pattam",
-            CompanyId = 0
-        };
-
-
-
-
-        private readonly SecurityDbContext dbContext;
-
-        public AccountService(SecurityDbContext dbContext)
-        {
-            this.dbContext = dbContext;
-        }
-
         public Task ChangePassword(ChangePasswordModel model)
         {
             throw new System.NotImplementedException();
@@ -42,59 +27,59 @@ namespace Nootus.Fabric.Web.Security.Cosmos.Domain
         }
 
         public async Task<UserProfileModel> ProfileGet()
-        {
-            return (await this.UserProfileDocumentGet()).Document;
-        }
+            => await ProfileGet(NTContext.Context.UserName);
+
+        public async Task<UserProfileModel> ProfileGet(string username)
+            => await DbService.GetModelByKeyAsyc<UserProfileModel>(username, SecurityAppSettings.ServiceSettings.DocumentTypes.UserProfile);
 
         public Task<UserProfileModel> Register(RegisterUserModel model)
         {
             throw new System.NotImplementedException();
         }
 
-        public async Task<UserProfileModel> Validate(string userName, string password)
+        public async Task<UserProfileModel> Validate(LoginModel login)
         {
             // check user name and password from database
-            SharedCollectionDocument<UserProfileModel> document = await this.UserProfileDocumentGet();
-            UserProfileModel model = document.Document;
+            UserProfileModel model;
+            SharedCollectionDocument<UserAuthModel> userAuthDocument = await DbService.GetDocumentByKeyAsyc<UserAuthModel>(login.UserName, SecurityAppSettings.ServiceSettings.DocumentTypes.UserAuth);
+            if(userAuthDocument == null)
+            {
+                throw new NTException(SecurityMessages.InvalidUsernamePassword);
+            }
+
+            PasswordHasher<LoginModel> hasher = new PasswordHasher<LoginModel>();
+            PasswordVerificationResult result = hasher.VerifyHashedPassword(login, userAuthDocument.Model.PasswordHash, login.UserPassword);
+            if (result == PasswordVerificationResult.Failed)
+            {
+                throw new NTException(SecurityMessages.InvalidUsernamePassword);
+            }
+
+            model = await ProfileGet(login.UserName);
 
             // creating tokens
             string jwtToken = TokenService.GenerateJwtToken(model);
 
             // if no refresh token exists, then create one
-            if (string.IsNullOrEmpty(model.RefreshToken))
+            if (string.IsNullOrEmpty(userAuthDocument.Model.RefreshToken))
             {
-                model.RefreshToken = TokenService.GenerateRefreshToken();
-                // await repository.UserProfileSave(document);
-            }
-
-            return await Task.FromResult(model);
-        }
-
-        public async Task<UserProfileModel> RefreshToken(string jwtToken, string refreshToken)
-        {
-            // getting user name from token
-            string userName = TokenService.GetUsernameFromExpiredToken(jwtToken);
-
-            // getting profile from database
-            UserProfileModel model = await ProfileGet();
-
-            // checking refresh token validity
-            if(model.RefreshToken == refreshToken)
-            {
-                TokenService.GenerateJwtToken(model);
+                userAuthDocument.Model.RefreshToken = TokenService.GenerateRefreshToken();
+                await DbService.UpdateDocumentAsync(userAuthDocument);
             }
 
             return model;
         }
 
-        private async Task<SharedCollectionDocument<UserProfileModel>> UserProfileDocumentGet()
+        public async Task RefreshToken(string jwtToken, string refreshToken)
         {
-            SharedCollectionDocument<UserProfileModel> document = new SharedCollectionDocument<UserProfileModel>()
-            {
-                Document = AccountService.Model
-            };
+            // getting user name from token
+            ClaimsPrincipal principal = TokenService.GetPrincipalFromToken(jwtToken);
+            UserAuthModel authModel = await DbService.GetModelByKeyAsyc<UserAuthModel>(principal.Identity.Name, SecurityAppSettings.ServiceSettings.DocumentTypes.UserAuth);
 
-            return await Task.FromResult(document);
+            // checking refresh token validity
+            if(authModel.RefreshToken == refreshToken)
+            {
+                TokenService.GenerateJwtToken(principal);
+            }
         }
     }
 }

@@ -31,7 +31,7 @@ namespace Nootus.Fabric.Web.Controllers
 
         [AllowAnonymous]
         public async Task<AjaxModel<UserProfileModel>> Validate(LoginModel model)
-            => await AjaxHelper.GetAsync(m => this.domain.Validate(model.UserName, model.UserPassword), SecurityMessages.LoginSuccess);
+            => await AjaxHelper.GetAsync(m => this.domain.Validate(model), SecurityMessages.LoginSuccess);
         
         public async Task<AjaxModel<NTModel>> Logout()
             => await AjaxHelper.SaveAsync(m => this.domain.Logout(), SecurityMessages.LogoutSuccess);
@@ -47,7 +47,10 @@ namespace Nootus.Fabric.Web.Controllers
             => await AjaxHelper.SaveAsync(m => domain.RefreshToken(model.JwtToken, model.RefreshToken), String.Empty);
         
         public async Task<AjaxModel<UserProfileModel>> RefreshTokenAndProfileGet(RefreshTokenModel model)
-            => await AjaxHelper.GetAsync(m => domain.RefreshToken(model.JwtToken, model.RefreshToken));
+            => await AjaxHelper.GetAsync(async m => {
+                    await domain.RefreshToken(model.JwtToken, model.RefreshToken);
+                   return await domain.ProfileGet();
+               });
         
     }
 }

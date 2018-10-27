@@ -25,7 +25,6 @@ namespace Nootus.Fabric.Web.Core.Cosmos.Repositories
 
         public TDbContext DbContext { get; private set; }
 
-
         private Uri CreateDocumentCollectionUri(string collectionId)
             => UriFactory.CreateDocumentCollectionUri(DbContext.Settings.DatabaseId, collectionId);
         
@@ -94,15 +93,21 @@ namespace Nootus.Fabric.Web.Core.Cosmos.Repositories
             return await Task.FromResult(DbContext.Client.CreateDocumentQuery<TDocument>(defaultCollectionUri).Where(whereExpression).AsEnumerable().SingleOrDefault());
         }
 
-        public async Task<SharedCollectionDocument<TModel>> GetByKeyAsyc<TModel>(string key, string documentType)
+        public async Task<SharedCollectionDocument<TModel>> GetDocumentByKeyAsyc<TModel>(string key, string documentType)
         {
-            return await SingleOrDefaultAsync<SharedCollectionDocument<TModel>>(w => w.Key == key && w.DocumentType == documentType);
+            return await SingleOrDefaultAsync<SharedCollectionDocument<TModel>>(w => w.Key == key.ToLower() && w.DocumentType == documentType);
         }
 
+        public async Task<TModel> GetModelByKeyAsyc<TModel>(string key, string documentType)
+            where TModel: class
+            => (await GetDocumentByKeyAsyc<TModel>(key, documentType))?.Model;
+        
+
+
         public SharedCollectionDocument<TModel> CopyModel<TModel>(SharedCollectionDocument<TModel> source, 
-            SharedCollectionDocument<TModel> destination, TModel document, string key)
+            SharedCollectionDocument<TModel> destination, TModel model, string key)
         {
-            destination.Document = document;
+            destination.Model = model;
             destination.Key = key;
             destination.DocumentType = source.DocumentType;
             destination.Id = source.Id;

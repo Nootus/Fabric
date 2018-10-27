@@ -54,19 +54,19 @@ namespace Nootus.Fabric.Web.Security.SqlServer.Domain
                 throw new NTException(SecurityMessages.RegisterUserError, AutoMapper.Mapper.Map<List<NTError>>(result.Errors));
             }
 
-            return await this.Validate(model.UserName, model.Password);
+            return await this.Validate(new LoginModel() { UserName = model.UserName, UserPassword = model.Password });
         }
 
-        public async Task<UserProfileModel> Validate(string userName, string password)
+        public async Task<UserProfileModel> Validate(LoginModel login)
         {
-            var result = await this.signInManager.PasswordSignInAsync(userName, password, false, false);
+            var result = await this.signInManager.PasswordSignInAsync(login.UserName, login.UserPassword, false, false);
 
             if (!result.Succeeded)
             {
                 throw new NTException(SecurityMessages.InvalidUsernamePassword);
             }
 
-            return await UserProfile.Get(userName, this.accountRepository);
+            return await UserProfile.Get(login.UserName, this.accountRepository);
         }
 
         public async Task<UserProfileModel> ProfileGet()
@@ -90,7 +90,7 @@ namespace Nootus.Fabric.Web.Security.SqlServer.Domain
             }
         }
 
-        public Task<UserProfileModel> RefreshToken(string jwtToken, string refreshToken)
+        public Task RefreshToken(string jwtToken, string refreshToken)
         {
             throw new System.NotImplementedException();
         }

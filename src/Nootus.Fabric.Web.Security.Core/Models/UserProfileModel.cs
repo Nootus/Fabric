@@ -13,13 +13,9 @@ namespace Nootus.Fabric.Web.Security.Core.Models
     public class UserProfileModel
     {
         public string UserId { get; set; }
-
         public string FirstName { get; set; }
-
         public string LastName { get; set; }
-
         public string UserName { get; set; }
-
         public string FullName
         {
             get
@@ -29,14 +25,9 @@ namespace Nootus.Fabric.Web.Security.Core.Models
         }
 
         public int CompanyId { get; set; }
-        public string RefreshToken { get; set; }
-
         public List<string> AdminRoles { get; set; }
-
         public List<ClaimModel> Claims { get; set; }
-
         public List<CompanyModel> Companies { get; set; }
-
         public List<MenuModel> Menu { get; set; }
     }
 }

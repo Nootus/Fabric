@@ -3,7 +3,9 @@ using Nootus.Fabric.Web.Core.Context;
 using Nootus.Fabric.Web.Security.Core.Identity;
 using Nootus.Fabric.Web.Security.Core.Models;
 using System;
+using System.Collections.Generic;
 using System.IdentityModel.Tokens.Jwt;
+using System.Linq;
 using System.Security.Claims;
 using System.Security.Cryptography;
 using System.Text;
@@ -14,7 +16,7 @@ namespace Nootus.Fabric.Web.Security.Core.Token
     {
         public static string GenerateJwtToken(UserProfileModel model)
         {            
-            var claims = new[] {
+            Claim[] claims = new[] {
                 new Claim(ClaimTypes.NameIdentifier, model.UserId),
                 new Claim(ClaimTypes.Name, model.UserName),
                 new Claim(NTClaimTypes.FirstName, model.FirstName),
@@ -22,8 +24,23 @@ namespace Nootus.Fabric.Web.Security.Core.Token
                 new Claim(NTClaimTypes.CompanyId, model.CompanyId.ToString()),
                };
 
+            return GenerateJwtToken(claims);
+        }
+
+        public static string GenerateJwtToken(ClaimsPrincipal principal)
+        {
+            string[] claimTypes = new string[] {ClaimTypes.NameIdentifier, ClaimTypes.Name, NTClaimTypes.FirstName,
+                                    NTClaimTypes.LastName, NTClaimTypes.CompanyId };
+
+            Claim[] claims = principal.Claims.Where(c => claimTypes.Contains(c.Type)).Select(c => new Claim(c.Type, c.Value)).ToArray();
+
+            return GenerateJwtToken(claims);
+        }
+
+        public static string GenerateJwtToken(Claim[] claims)
+        {
             var key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(TokenSettings.SymmetricKey));
-            
+
             var token = new JwtSecurityToken(issuer: TokenSettings.Issuer,
               audience: TokenSettings.Issuer,
               claims: claims,
@@ -62,7 +79,7 @@ namespace Nootus.Fabric.Web.Security.Core.Token
             };
         }
 
-        public static string GetUsernameFromExpiredToken(string token)
+        public static ClaimsPrincipal GetPrincipalFromToken(string token)
         {
             TokenValidationParameters parameters = TokenService.GetTokenValidationParameters();
             parameters.ValidateLifetime = false; // ignore token expiry date
@@ -70,7 +87,7 @@ namespace Nootus.Fabric.Web.Security.Core.Token
             if (!(securityToken is JwtSecurityToken jwtSecurityToken) || !jwtSecurityToken.Header.Alg.Equals(SecurityAlgorithms.HmacSha256, StringComparison.InvariantCultureIgnoreCase))
                 throw new SecurityTokenException("Invalid token");
 
-            return principal.Identity.Name;
+            return principal;
         }
     }
 }
