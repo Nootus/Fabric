@@ -14,5 +14,6 @@ namespace Nootus.Fabric.Web.Security.Core.Identity
         public const string FirstName = "FirstName";
         public const string LastName = "LastName";
         public const string Companies = "Companies";
+        public const string Roles = "Roles";
     }
 }

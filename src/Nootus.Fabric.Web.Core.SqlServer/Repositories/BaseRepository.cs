@@ -273,7 +273,7 @@ namespace Nootus.Fabric.Web.Core.SqlServer.Repositories
 
             IKey key = entityType.FindPrimaryKey();
 
-            return key.Properties.First().Name;
+            return key.Properties.ToList().First().Name;
         }
     }
 }

@@ -6,10 +6,13 @@
 //  Contains role info
 // </description>
 //-------------------------------------------------------------------------------------------------
+using Newtonsoft.Json;
+
 namespace Nootus.Fabric.Web.Security.Core.Models
 {
     public class RoleModel
     {
+        [JsonIgnore]
         public string Id { get; set; }
 
         public string Name { get; set; }

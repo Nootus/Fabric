@@ -26,6 +26,7 @@ namespace Nootus.Fabric.Web.Security.Core.Models
 
         public int CompanyId { get; set; }
         public List<string> AdminRoles { get; set; }
+        public List<RoleModel> Roles { get; set; } = new List<RoleModel>();
         public List<ClaimModel> Claims { get; set; }
         public List<CompanyModel> Companies { get; set; }
         public List<MenuModel> Menu { get; set; }

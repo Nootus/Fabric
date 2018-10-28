@@ -23,9 +23,9 @@ namespace Nootus.Fabric.Web.Controllers
     [Authorize]
     public class AccountController : ControllerBase
     {
-        private readonly IAccountDomain domain;
+        private readonly IAccountService domain;
 
-        public AccountController(IAccountDomain domain)
+        public AccountController(IAccountService domain)
             => this.domain = domain;
         
 

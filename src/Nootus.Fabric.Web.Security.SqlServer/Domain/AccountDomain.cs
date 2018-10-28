@@ -20,7 +20,7 @@ namespace Nootus.Fabric.Web.Security.SqlServer.Domain
     using System.Collections.Generic;
     using System.Threading.Tasks;
 
-    public class AccountDomain: IAccountDomain
+    public class AccountDomain: IAccountService
     {
         private readonly UserManager<ApplicationUser> userManager;
         private readonly SignInManager<ApplicationUser> signInManager;

@@ -2,7 +2,6 @@
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.IdentityModel.Tokens;
-using Nootus.Fabric.Web.Security.Core.Common;
 using Nootus.Fabric.Web.Security.Core.Token;
 using System.Threading.Tasks;
 
@@ -15,7 +14,9 @@ namespace Nootus.Fabric.Web.Security.Core
             // Token settings
             TokenSettings.SymmetricKey = configuration.GetValue<string>("Microservices:Security:JWT:SymmetricKey");
             TokenSettings.Issuer = configuration.GetValue<string>("Microservices:Security:JWT:Issuer");
-            TokenSettings.Duration = configuration.GetValue<int>("Microservices:Security:JWT:Duration");
+            TokenSettings.LifeTime = configuration.GetValue<int>("Microservices:Security:JWT:LifeTime");
+            TokenSettings.MaxLifeTime = configuration.GetValue<int>("Microservices:Security:JWT:MaxLifeTime");
+            TokenSettings.ClockSkew = configuration.GetValue<int>("Microservices:Security:JWT:ClockSkew");
         }
 
         public static void ConfigureTokenServices(IServiceCollection services)
@@ -30,16 +31,17 @@ namespace Nootus.Fabric.Web.Security.Core
                         {
                             if (context.Exception.GetType() == typeof(SecurityTokenExpiredException))
                             {
-                                context.Response.Headers.Add("Token-Expired", "true");
+                                context.Response.Headers.Add(TokenHttpHeaders.TokenExpired, "true");
                             }
+                            return Task.CompletedTask;
+                        },
+                        OnTokenValidated = context =>
+                        {
+                            TokenService.GenerateJwtToken(context.Principal);
                             return Task.CompletedTask;
                         }
                     };
                 });
-        }
-
-        public static void ConfigureDependencyInjection(IServiceCollection services)
-        {
         }
     }
 }

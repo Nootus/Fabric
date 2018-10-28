@@ -1,5 +1,6 @@
 ﻿using Microsoft.IdentityModel.Tokens;
 using Nootus.Fabric.Web.Core.Context;
+using Nootus.Fabric.Web.Security.Core.Common;
 using Nootus.Fabric.Web.Security.Core.Identity;
 using Nootus.Fabric.Web.Security.Core.Models;
 using System;
@@ -15,13 +16,16 @@ namespace Nootus.Fabric.Web.Security.Core.Token
     public static class TokenService
     {
         public static string GenerateJwtToken(UserProfileModel model)
-        {            
+        {   
+            
+
             Claim[] claims = new[] {
                 new Claim(ClaimTypes.NameIdentifier, model.UserId),
                 new Claim(ClaimTypes.Name, model.UserName),
                 new Claim(NTClaimTypes.FirstName, model.FirstName),
                 new Claim(NTClaimTypes.LastName, model.LastName),
                 new Claim(NTClaimTypes.CompanyId, model.CompanyId.ToString()),
+                new Claim(NTClaimTypes.Roles, String.Join(",", model.Roles.Select(r => r.Name).ToArray()))
                };
 
             return GenerateJwtToken(claims);
@@ -30,7 +34,7 @@ namespace Nootus.Fabric.Web.Security.Core.Token
         public static string GenerateJwtToken(ClaimsPrincipal principal)
         {
             string[] claimTypes = new string[] {ClaimTypes.NameIdentifier, ClaimTypes.Name, NTClaimTypes.FirstName,
-                                    NTClaimTypes.LastName, NTClaimTypes.CompanyId };
+                                    NTClaimTypes.LastName, NTClaimTypes.CompanyId, NTClaimTypes.Roles };
 
             Claim[] claims = principal.Claims.Where(c => claimTypes.Contains(c.Type)).Select(c => new Claim(c.Type, c.Value)).ToArray();
 
@@ -44,11 +48,12 @@ namespace Nootus.Fabric.Web.Security.Core.Token
             var token = new JwtSecurityToken(issuer: TokenSettings.Issuer,
               audience: TokenSettings.Issuer,
               claims: claims,
-              expires: DateTime.Now.AddMinutes(TokenSettings.Duration),
+              notBefore: DateTime.Now,
+              expires: DateTime.Now.AddMinutes(TokenSettings.LifeTime),
               signingCredentials: new SigningCredentials(key, SecurityAlgorithms.HmacSha256));
 
             string jwtToken = new JwtSecurityTokenHandler().WriteToken(token);
-            NTContext.HttpContext.Response.Headers.Add("JwtToken", jwtToken);
+            NTContext.HttpContext.Response.Headers.Add(TokenHttpHeaders.JwtToken, jwtToken);
             return jwtToken;
         }
 
@@ -74,7 +79,7 @@ namespace Nootus.Fabric.Web.Security.Core.Token
                 ValidateIssuerSigningKey = true,
                 ValidIssuer = TokenSettings.Issuer,
                 ValidAudience = TokenSettings.Issuer,
-                ClockSkew = TimeSpan.Zero,
+                ClockSkew = TimeSpan.FromMinutes(TokenSettings.ClockSkew),
                 IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(TokenSettings.SymmetricKey))
             };
         }
@@ -84,8 +89,15 @@ namespace Nootus.Fabric.Web.Security.Core.Token
             TokenValidationParameters parameters = TokenService.GetTokenValidationParameters();
             parameters.ValidateLifetime = false; // ignore token expiry date
             ClaimsPrincipal principal = new JwtSecurityTokenHandler().ValidateToken(token, parameters, out SecurityToken securityToken);
-            if (!(securityToken is JwtSecurityToken jwtSecurityToken) || !jwtSecurityToken.Header.Alg.Equals(SecurityAlgorithms.HmacSha256, StringComparison.InvariantCultureIgnoreCase))
-                throw new SecurityTokenException("Invalid token");
+            if (!(securityToken is JwtSecurityToken jwtSecurityToken) 
+                || !jwtSecurityToken.Header.Alg.Equals(SecurityAlgorithms.HmacSha256, StringComparison.InvariantCultureIgnoreCase))
+                throw new SecurityTokenException(SecurityMessages.InvalidToken);
+
+            if((DateTime.UtcNow - securityToken.ValidTo).TotalMinutes > TokenSettings.MaxLifeTime)
+            {
+                NTContext.HttpContext.Response.Headers.Add(TokenHttpHeaders.TokenRefresh, "false");
+                return null;
+            }
 
             return principal;
         }

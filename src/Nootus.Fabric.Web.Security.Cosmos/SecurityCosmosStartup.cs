@@ -33,7 +33,10 @@ namespace Nootus.Fabric.Web.Security.Cosmos
             // Document Types
             SecurityDocumentTypes documentTypes = SecurityAppSettings.ServiceSettings.DocumentTypes;
             documentTypes.UserProfile = Configuration.GetValue<string>("Microservices:Security:Database:DocumentTypes:UserProfile");
-            documentTypes.UserAuth = Configuration.GetValue<string>("Microservices:Security:Database:DocumentTypes:AuthUser");
+            documentTypes.UserAuth = Configuration.GetValue<string>("Microservices:Security:Database:DocumentTypes:UserAuth");
+            documentTypes.Role = Configuration.GetValue<string>("Microservices:Security:Database:DocumentTypes:Role");
+            documentTypes.Claim = Configuration.GetValue<string>("Microservices:Security:Database:DocumentTypes:Claim");
+            documentTypes.Page = Configuration.GetValue<string>("Microservices:Security:Database:DocumentTypes:Page");
         }
 
         public override void ConfigureServices(IServiceCollection services)
@@ -50,8 +53,7 @@ namespace Nootus.Fabric.Web.Security.Cosmos
         {
             base.ConfigureDependencyInjection(services);
 
-            SecurityStartup.ConfigureDependencyInjection(services);
-            services.AddTransient<IAccountDomain, AccountService>();
+            services.AddTransient<IAccountService, AccountService>();
         }
 
         public override void Configure(IApplicationBuilder app)

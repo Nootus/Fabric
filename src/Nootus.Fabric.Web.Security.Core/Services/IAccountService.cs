@@ -3,7 +3,7 @@ using System.Threading.Tasks;
 
 namespace Nootus.Fabric.Web.Security.Core.Domain
 {
-    public interface IAccountDomain
+    public interface IAccountService
     {
         Task<UserProfileModel> Register(RegisterUserModel model);
         Task<UserProfileModel> Validate(LoginModel login);

@@ -40,7 +40,7 @@ namespace Nootus.Fabric.Web.Security.SqlServer
             // claims transformation
             services.AddSingleton<IClaimsTransformation, ClaimsTransformer>();
 
-            services.AddTransient<IAccountDomain, AccountDomain>();
+            services.AddTransient<IAccountService, AccountDomain>();
             services.AddTransient<SecurityRepository>();
             services.AddScoped<SignInManager<ApplicationUser>, ApplicationSignInManager>();
         }

@@ -13,7 +13,6 @@
 
   <ItemGroup>
     <Folder Include="Middleware\" />
-    <Folder Include="Token\" />
   </ItemGroup>
 
   <ItemGroup>

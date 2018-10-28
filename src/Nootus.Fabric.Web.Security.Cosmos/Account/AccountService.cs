@@ -5,6 +5,7 @@ using Nootus.Fabric.Web.Core.Exception;
 using Nootus.Fabric.Web.Security.Core.Common;
 using Nootus.Fabric.Web.Security.Core.Domain;
 using Nootus.Fabric.Web.Security.Core.Models;
+using Nootus.Fabric.Web.Security.Core.Services;
 using Nootus.Fabric.Web.Security.Core.Token;
 using Nootus.Fabric.Web.Security.Cosmos.Models;
 using Nootus.Fabric.Web.Security.Cosmos.Repositories;
@@ -13,7 +14,7 @@ using System.Threading.Tasks;
 
 namespace Nootus.Fabric.Web.Security.Cosmos.Domain
 {
-    public class AccountService : BaseService<SecurityDbContext>, IAccountDomain
+    public class AccountService : BaseService<SecurityDbContext>, IAccountService
     {
         public Task ChangePassword(ChangePasswordModel model)
         {
@@ -21,10 +22,8 @@ namespace Nootus.Fabric.Web.Security.Cosmos.Domain
         }
 
         public async Task Logout()
-        {
-            // there is no logout for JWT Tokens
+            => // there is no logout for JWT Tokens
             await Task.CompletedTask;
-        }
 
         public async Task<UserProfileModel> ProfileGet()
             => await ProfileGet(NTContext.Context.UserName);
@@ -33,9 +32,8 @@ namespace Nootus.Fabric.Web.Security.Cosmos.Domain
             => await DbService.GetModelByKeyAsyc<UserProfileModel>(username, SecurityAppSettings.ServiceSettings.DocumentTypes.UserProfile);
 
         public Task<UserProfileModel> Register(RegisterUserModel model)
-        {
-            throw new System.NotImplementedException();
-        }
+            => throw new System.NotImplementedException();
+        
 
         public async Task<UserProfileModel> Validate(LoginModel login)
         {
@@ -47,9 +45,8 @@ namespace Nootus.Fabric.Web.Security.Cosmos.Domain
                 throw new NTException(SecurityMessages.InvalidUsernamePassword);
             }
 
-            PasswordHasher<LoginModel> hasher = new PasswordHasher<LoginModel>();
-            PasswordVerificationResult result = hasher.VerifyHashedPassword(login, userAuthDocument.Model.PasswordHash, login.UserPassword);
-            if (result == PasswordVerificationResult.Failed)
+            bool result = PasswordService.VerifyHashedPassword(userAuthDocument.Model.PasswordHash, login.UserPassword);
+            if (!result)
             {
                 throw new NTException(SecurityMessages.InvalidUsernamePassword);
             }
@@ -65,6 +62,7 @@ namespace Nootus.Fabric.Web.Security.Cosmos.Domain
                 userAuthDocument.Model.RefreshToken = TokenService.GenerateRefreshToken();
                 await DbService.UpdateDocumentAsync(userAuthDocument);
             }
+            NTContext.HttpContext.Response.Headers.Add(TokenHttpHeaders.RefreshToken, userAuthDocument.Model.RefreshToken);
 
             return model;
         }
@@ -73,12 +71,19 @@ namespace Nootus.Fabric.Web.Security.Cosmos.Domain
         {
             // getting user name from token
             ClaimsPrincipal principal = TokenService.GetPrincipalFromToken(jwtToken);
-            UserAuthModel authModel = await DbService.GetModelByKeyAsyc<UserAuthModel>(principal.Identity.Name, SecurityAppSettings.ServiceSettings.DocumentTypes.UserAuth);
-
-            // checking refresh token validity
-            if(authModel.RefreshToken == refreshToken)
+            if(principal != null)
             {
-                TokenService.GenerateJwtToken(principal);
+                UserAuthModel authModel = await DbService.GetModelByKeyAsyc<UserAuthModel>(principal.Identity.Name, SecurityAppSettings.ServiceSettings.DocumentTypes.UserAuth);
+
+                // checking refresh token validity
+                if (authModel.RefreshToken == refreshToken)
+                {
+                    TokenService.GenerateJwtToken(principal);
+                }
+                else
+                {
+                    NTContext.HttpContext.Response.Headers.Add(TokenHttpHeaders.TokenRefresh, "false");
+                }
             }
         }
     }

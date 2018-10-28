@@ -49,7 +49,7 @@ namespace Nootus.Fabric.Web.Security.Core.Filters
             }
 
             // checking for annonymous claim
-            if (page.PageClaims.Any(p => p.ClaimType == SecuritySettings.AnonymouseClaimType && p.ClaimValue == SecuritySettings.AnonymousClaim))
+            if (page.Claims.Any(p => p.ClaimType == SecuritySettings.AnonymouseClaimType && p.ClaimValue == SecuritySettings.AnonymousClaim))
             {
                 return;
             }
@@ -76,7 +76,7 @@ namespace Nootus.Fabric.Web.Security.Core.Filters
             }
 
             // checking for annonymous claim for each module
-            if (page.PageClaims.Any(p => p.ClaimValue == SecuritySettings.AnonymousClaim))
+            if (page.Claims.Any(p => p.ClaimValue == SecuritySettings.AnonymousClaim))
             {
                 return;
             }
@@ -86,16 +86,16 @@ namespace Nootus.Fabric.Web.Security.Core.Filters
             roles = PageService.AdminRoles.Where(r => roles.Contains(r.Key)).Select(r => r.Item).ToArray();
 
             // checking whether user is an admin
-            if (!roles.Any(r => page.PageClaims.Any(p => r == p.ClaimType + SecuritySettings.AdminSuffix)))
+            if (!roles.Any(r => page.Claims.Any(p => r == p.ClaimType + SecuritySettings.AdminSuffix)))
             {
                 // checking for deny claim
-                if (userClaims.Any(c => page.PageClaims.Any(p => c.Type == p.ClaimType + SecuritySettings.DenySuffix && c.Value == p.ClaimValue)))
+                if (userClaims.Any(c => page.Claims.Any(p => c.Type == p.ClaimType + SecuritySettings.DenySuffix && c.Value == p.ClaimValue)))
                 {
                     context.Result = new StatusCodeResult(403);  // new HttpUnauthorizedResult();
                 }
 
                 // checking for current claim
-                else if (!userClaims.Any(c => page.PageClaims.Any(p => c.Type == p.ClaimType && c.Value == p.ClaimValue)))
+                else if (!userClaims.Any(c => page.Claims.Any(p => c.Type == p.ClaimType && c.Value == p.ClaimValue)))
                 {
                     context.Result = new StatusCodeResult(403);
                 }

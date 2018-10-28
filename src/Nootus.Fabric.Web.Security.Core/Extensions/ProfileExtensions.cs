@@ -26,7 +26,7 @@ namespace Nootus.Fabric.Web.Security.Core.Extensions
             // checking for the module admins
             var rolequery = from menupage in menuPages
                             join page in pages on menupage.PageId equals page.PageId
-                            where profile.AdminRoles.Any(r => page.PageClaims.Any(p => r == p.ClaimType + SecuritySettings.AdminSuffix))
+                            where profile.AdminRoles.Any(r => page.Claims.Any(p => r == p.ClaimType + SecuritySettings.AdminSuffix))
                             select menupage;
 
             var rolePages = rolequery.ToList();
@@ -34,7 +34,7 @@ namespace Nootus.Fabric.Web.Security.Core.Extensions
             // checking for permissions per user
             var userquery = from menupage in menuPages
                             join page in pages on menupage.PageId equals page.PageId
-                            where page.Claims.Any(p => profile.Claims.Any(c => p.PrimaryClaimInd == true && c.ClaimType == p.Claim.ClaimType && (p.Claim.ClaimValue == SecuritySettings.AnonymousClaim || c.ClaimValue == p.Claim.ClaimValue)))
+                            where profile.Claims.Any(c => c.ClaimType == page.PrimaryClaim.ClaimType && (page.PrimaryClaim.ClaimValue == SecuritySettings.AnonymousClaim || c.ClaimValue == page.PrimaryClaim.ClaimValue))
                             select menupage;
 
             var userPages = userquery.ToList();

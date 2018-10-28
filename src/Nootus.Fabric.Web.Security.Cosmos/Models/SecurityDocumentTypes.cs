@@ -8,5 +8,8 @@ namespace Nootus.Fabric.Web.Security.Cosmos.Models
     {
         public string UserProfile { get; set; }
         public string UserAuth { get; set; }
+        public string Role { get; set; }
+        public string Claim { get; set; }
+        public string Page { get; set; }
     }
 }

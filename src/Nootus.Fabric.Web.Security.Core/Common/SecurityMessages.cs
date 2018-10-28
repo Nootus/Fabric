@@ -20,5 +20,7 @@ namespace Nootus.Fabric.Web.Security.Core.Common
         public const string InvalidUsernamePassword = "Invalid Username and/or Password";
         public const string ChangePasswordSuccess = "Password Changed Successfully";
         public const string ChangePasswordError = "Unable to change password";
+
+        public const string InvalidToken = "Invalid Token";
     }
 }
