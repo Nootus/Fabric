@@ -14,5 +14,10 @@ namespace Nootus.Fabric.Web.Core.Cosmos.Models
         {
             DbService = (CosmosDbService<TDbContext> ) NTContext.HttpContext.RequestServices.GetService(typeof(CosmosDbService<TDbContext>));
         }
+
+        public BaseService(CosmosDbService<TDbContext> dbService)
+        {
+            DbService = dbService;
+        }
     }
 }

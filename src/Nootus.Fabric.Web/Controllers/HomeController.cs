@@ -4,7 +4,6 @@ using System.IO;
 
 namespace Nootus.Fabric.Web.Controllers
 {
-    [AllowAnonymous]
     [Route("api/[controller]/[action]")]
     [ApiController]
     public class HomeController: ControllerBase

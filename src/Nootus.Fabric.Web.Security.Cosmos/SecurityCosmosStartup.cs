@@ -6,6 +6,7 @@ using Nootus.Fabric.Web.Core.Cosmos.Models;
 using Nootus.Fabric.Web.Security.Core;
 using Nootus.Fabric.Web.Security.Core.Domain;
 using Nootus.Fabric.Web.Security.Cosmos.Domain;
+using Nootus.Fabric.Web.Security.Cosmos.Middleware;
 using Nootus.Fabric.Web.Security.Cosmos.Models;
 using Nootus.Fabric.Web.Security.Cosmos.Repositories;
 
@@ -46,7 +47,7 @@ namespace Nootus.Fabric.Web.Security.Cosmos
             SecurityStartup.ConfigureTokenServices(services);
 
             // caching page claims
-            //services.CachePageClaimsRoles();
+            services.CachePageClaimsRoles();
         }
 
         public override void ConfigureDependencyInjection(IServiceCollection services)
@@ -54,6 +55,7 @@ namespace Nootus.Fabric.Web.Security.Cosmos
             base.ConfigureDependencyInjection(services);
 
             services.AddTransient<IAccountService, AccountService>();
+            services.AddTransient<RepositoryService>();
         }
 
         public override void Configure(IApplicationBuilder app)

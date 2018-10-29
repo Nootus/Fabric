@@ -7,6 +7,7 @@
 // </description>
 //-------------------------------------------------------------------------------------------------
 using Newtonsoft.Json;
+using System.Collections.Generic;
 
 namespace Nootus.Fabric.Web.Security.Core.Models
 {
@@ -14,11 +15,10 @@ namespace Nootus.Fabric.Web.Security.Core.Models
     {
         [JsonIgnore]
         public string Id { get; set; }
-
         public string Name { get; set; }
-
         public int CompanyId { get; set; }
-
         public int RoleType { get; set; }
+        public List<ClaimModel> Claims { get; set; }
+        public List<string> RoleHierarchy { get; set; }
     }
 }

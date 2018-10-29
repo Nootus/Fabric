@@ -15,10 +15,9 @@ namespace Nootus.Fabric.Web.Security.Core.Middleware
     public static class PageService
     {
         public static List<PageModel> Pages { get; set; }
-
         public static List<MenuModel> MenuPages { get; set; }
-
         public static List<ListItem<string, string>> AdminRoles { get; set; }
+        public static List<RoleModel> RoleClaims { get; set; }
 
         //public static Dictionary<int, CompanyEntity> CompanyClaims { get; set; }
     }

@@ -25,6 +25,7 @@ namespace Nootus.Fabric.Web.Security.Core.Token
                 new Claim(NTClaimTypes.FirstName, model.FirstName),
                 new Claim(NTClaimTypes.LastName, model.LastName),
                 new Claim(NTClaimTypes.CompanyId, model.CompanyId.ToString()),
+                new Claim(NTClaimTypes.Companies, model.CompanyId.ToString()),
                 new Claim(NTClaimTypes.Roles, String.Join(",", model.Roles.Select(r => r.Name).ToArray()))
                };
 
@@ -34,7 +35,7 @@ namespace Nootus.Fabric.Web.Security.Core.Token
         public static string GenerateJwtToken(ClaimsPrincipal principal)
         {
             string[] claimTypes = new string[] {ClaimTypes.NameIdentifier, ClaimTypes.Name, NTClaimTypes.FirstName,
-                                    NTClaimTypes.LastName, NTClaimTypes.CompanyId, NTClaimTypes.Roles };
+                                    NTClaimTypes.LastName, NTClaimTypes.CompanyId, NTClaimTypes.Companies, NTClaimTypes.Roles };
 
             Claim[] claims = principal.Claims.Where(c => claimTypes.Contains(c.Type)).Select(c => new Claim(c.Type, c.Value)).ToArray();
 

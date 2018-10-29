@@ -15,6 +15,7 @@ namespace Nootus.Fabric.Web.Security.Core.Filters
     using Nootus.Fabric.Web.Security.Core.Common;
     using Nootus.Fabric.Web.Security.Core.Identity;
     using Nootus.Fabric.Web.Security.Core.Middleware;
+    using Nootus.Fabric.Web.Security.Core.Models;
     using System;
     using System.Linq;
     using System.Security.Claims;
@@ -34,7 +35,7 @@ namespace Nootus.Fabric.Web.Security.Core.Filters
             string action = context.RouteData.Values["action"].ToString().ToLower();
             string controller = context.RouteData.Values["controller"].ToString().ToLower() + "controller";
 
-            var page = PageService.Pages.Where(c => string.Compare(c.Controller, controller, true) == 0 && string.Compare(c.ActionMethod, action, true) == 0).FirstOrDefault();
+            PageModel page = PageService.Pages?.Where(c => string.Compare(c.Controller, controller, true) == 0 && string.Compare(c.ActionMethod, action, true) == 0).FirstOrDefault();
 
             if (page == null)
             {
@@ -51,6 +52,12 @@ namespace Nootus.Fabric.Web.Security.Core.Filters
             // checking for annonymous claim
             if (page.Claims.Any(p => p.ClaimType == SecuritySettings.AnonymouseClaimType && p.ClaimValue == SecuritySettings.AnonymousClaim))
             {
+                return;
+            }
+
+            if (!context.HttpContext.User.Identity.IsAuthenticated)
+            {
+                context.Result = new StatusCodeResult(401);
                 return;
             }
 
@@ -83,21 +90,25 @@ namespace Nootus.Fabric.Web.Security.Core.Filters
 
             // getting current roles and then get all the child roles
             string[] roles = userClaims.Where(c => c.Type == ClaimTypes.Role).Select(c => c.Value).ToArray();
-            roles = PageService.AdminRoles.Where(r => roles.Contains(r.Key)).Select(r => r.Item).ToArray();
+            roles = roles.Concat(userClaims.Where(c => c.Type == NTClaimTypes.Roles).Select(c => c.Value).Single().Split(",")).ToArray();
+            string[] adminRoles = PageService.AdminRoles.Where(r => roles.Contains(r.Key)).Select(r => r.Item).ToArray();
 
             // checking whether user is an admin
-            if (!roles.Any(r => page.Claims.Any(p => r == p.ClaimType + SecuritySettings.AdminSuffix)))
+            if (!adminRoles.Any(r => page.Claims.Any(p => r == p.ClaimType + SecuritySettings.AdminSuffix)))
             {
                 // checking for deny claim
                 if (userClaims.Any(c => page.Claims.Any(p => c.Type == p.ClaimType + SecuritySettings.DenySuffix && c.Value == p.ClaimValue)))
                 {
                     context.Result = new StatusCodeResult(403);  // new HttpUnauthorizedResult();
                 }
-
-                // checking for current claim
-                else if (!userClaims.Any(c => page.Claims.Any(p => c.Type == p.ClaimType && c.Value == p.ClaimValue)))
+                // checking for role
+                if(!PageService.RoleClaims.Any(r => roles.Contains(r.Name) && r.Claims.Any(c => page.Claims.Any(p => p.Claim == c.Claim))))
                 {
-                    context.Result = new StatusCodeResult(403);
+                    // checking for current claim
+                    if (!userClaims.Any(c => page.Claims.Any(p => c.Type == p.ClaimType && c.Value == p.ClaimValue)))
+                    {
+                        context.Result = new StatusCodeResult(403);
+                    }
                 }
             }
         }

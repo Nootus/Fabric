@@ -20,7 +20,6 @@ namespace Nootus.Fabric.Web.Controllers
 
     [Route("api/[controller]/[action]")]
     [ApiController]
-    [Authorize]
     public class AccountController : ControllerBase
     {
         private readonly IAccountService domain;
@@ -29,7 +28,6 @@ namespace Nootus.Fabric.Web.Controllers
             => this.domain = domain;
         
 
-        [AllowAnonymous]
         public async Task<AjaxModel<UserProfileModel>> Validate(LoginModel model)
             => await AjaxHelper.GetAsync(m => this.domain.Validate(model), SecurityMessages.LoginSuccess);
         
@@ -42,7 +40,6 @@ namespace Nootus.Fabric.Web.Controllers
         public async Task<AjaxModel<UserProfileModel>> ProfileGet()
             => await AjaxHelper.GetAsync(m => this.domain.ProfileGet());
         
-        [AllowAnonymous]
         public async Task<AjaxModel<NTModel>> RefreshToken(RefreshTokenModel model)
             => await AjaxHelper.SaveAsync(m => domain.RefreshToken(model.JwtToken, model.RefreshToken), String.Empty);
         

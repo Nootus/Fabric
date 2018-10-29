@@ -66,7 +66,7 @@ namespace Nootus.Fabric.Web
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_2)
                 .AddMvcOptions(options =>
                 {
-                    // options.Filters.Add(new NTAuthorizeFilterAttribute());
+                    options.Filters.Add(new NTAuthorizeFilterAttribute());
                 })
                 .AddJsonOptions(options =>
                 {
