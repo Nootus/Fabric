@@ -5,7 +5,7 @@ using System.Runtime.CompilerServices;
 
 namespace Nootus.Fabric.Mobile.Core
 {
-    public class BaseViewModel : INotifyPropertyChanged
+    public class MobileViewModel : INotifyPropertyChanged
     {
         bool isBusy = false;
         public bool IsBusy
