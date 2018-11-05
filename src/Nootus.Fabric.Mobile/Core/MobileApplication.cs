@@ -1,15 +1,13 @@
 ﻿using Autofac;
-using Autofac.Core;
 using Xamarin.Forms;
 
 namespace Nootus.Fabric.Mobile.Core
 {
     public class MobileApplication: Application
     {
-        public static Container Container;
         public MobileApplication()
         {
-            Initialize();
+            // Initialize();
         }
 
         protected virtual void Initialize()
@@ -25,6 +23,7 @@ namespace Nootus.Fabric.Mobile.Core
 
         protected virtual void ConfigureDependencyInjection(ContainerBuilder builder)
         {
+            builder.RegisterType<UserProfile>().SingleInstance();
         }
 
         protected override void OnStart()

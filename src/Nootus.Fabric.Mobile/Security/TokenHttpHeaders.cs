@@ -1,4 +1,4 @@
-﻿namespace Nootus.Fabric.Web.Security.Core.Token
+﻿namespace Nootus.Fabric.Mobile.Security
 {
     public static class TokenHttpHeaders
     {
