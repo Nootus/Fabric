@@ -2,10 +2,11 @@
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Runtime.CompilerServices;
+using System.Threading.Tasks;
 
 namespace Nootus.Fabric.Mobile.Core
 {
-    public class MobileViewModel : INotifyPropertyChanged
+    public abstract class BaseViewModel : INotifyPropertyChanged
     {
         bool isBusy = false;
         public bool IsBusy
@@ -33,6 +34,9 @@ namespace Nootus.Fabric.Mobile.Core
             OnPropertyChanged(propertyName);
             return true;
         }
+
+        public abstract Task InitializeAsync();
+
 
         #region INotifyPropertyChanged
         public event PropertyChangedEventHandler PropertyChanged;

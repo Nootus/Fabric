@@ -7,7 +7,7 @@ namespace Nootus.Fabric.Mobile.Core
     {
         public MobileApplication()
         {
-            // Initialize();
+            Initialize();
         }
 
         protected virtual void Initialize()
@@ -17,8 +17,12 @@ namespace Nootus.Fabric.Mobile.Core
 
         private void ConfigureDependencyInjection()
         {
-            ConfigureDependencyInjection(DependencyInjection.Builder);
-            DependencyInjection.Builder.Build();
+            if(!DependencyInjection.IsBuilt)
+            {
+                ConfigureDependencyInjection(DependencyInjection.Builder);
+                DependencyInjection.Container = DependencyInjection.Builder.Build();
+                DependencyInjection.IsBuilt = true;
+            }
         }
 
         protected virtual void ConfigureDependencyInjection(ContainerBuilder builder)
