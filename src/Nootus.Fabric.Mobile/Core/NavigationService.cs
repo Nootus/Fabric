@@ -10,79 +10,39 @@ namespace Nootus.Fabric.Mobile.Core
 {
     public static class NavigationService
     {
-        public static BaseViewModel PreviousPageViewModel
+        public static INavigation Navigation
         {
             get
             {
-                var mainPage = Application.Current.MainPage as CustomNavigationView;
-                var viewModel = mainPage.Navigation.NavigationStack[mainPage.Navigation.NavigationStack.Count - 2].BindingContext;
-                return viewModel as BaseViewModel;
+                return (Application.Current.MainPage as CustomNavigationView).Navigation;
             }
         }
 
-        public static Task NavigateToAsync<TViewModel>() where TViewModel : BaseViewModel
+        public static async Task NavigateToAsync<TViewModel>() where TViewModel : BaseViewModel
         {
-            return InternalNavigateToAsync(typeof(TViewModel));
-        }
+            Page page = await CreatePage(typeof(TViewModel));
 
-        public static Task RemoveLastFromBackStackAsync()
-        {
-            CustomNavigationView mainPage = Application.Current.MainPage as CustomNavigationView;
-
-            if (mainPage != null)
+            if (Application.Current.MainPage is CustomNavigationView mainPage)
             {
-                mainPage.Navigation.RemovePage(
-                    mainPage.Navigation.NavigationStack[mainPage.Navigation.NavigationStack.Count - 2]);
-            }
-
-            return Task.FromResult(true);
-        }
-
-        public static Task RemoveBackStackAsync()
-        {
-            CustomNavigationView mainPage = Application.Current.MainPage as CustomNavigationView;
-
-            if (mainPage != null)
-            {
-                for (int i = 0; i < mainPage.Navigation.NavigationStack.Count - 1; i++)
-                {
-                    var page = mainPage.Navigation.NavigationStack[i];
-                    mainPage.Navigation.RemovePage(page);
-                }
-            }
-
-            return Task.FromResult(true);
-        }
-
-        private static async Task InternalNavigateToAsync(Type viewModelType)
-        {
-            Page page = CreatePage(viewModelType);
-
-            CustomNavigationView navigationPage = Application.Current.MainPage as CustomNavigationView;
-            if (navigationPage != null)
-            {
-                await navigationPage.PushAsync(page);
+                await mainPage.PushAsync(page);
             }
             else
             {
                 Application.Current.MainPage = new CustomNavigationView(page);
             }
-
-            await (page.BindingContext as BaseViewModel).InitializeAsync();
         }
 
-        private static Type GetPageTypeForViewModel(Type viewModelType)
+        public static async Task InsertPageBeforeLastAsync<TViewModel>() where TViewModel : BaseViewModel
         {
-            var viewName = viewModelType.FullName.Replace("Model", string.Empty);
-            var viewModelAssemblyName = viewModelType.GetTypeInfo().Assembly.FullName;
-            var viewAssemblyName = string.Format(CultureInfo.InvariantCulture, "{0}, {1}", viewName, viewModelAssemblyName);
-            var viewType = Type.GetType(viewAssemblyName);
-            return viewType;
+            Page page = await CreatePage(typeof(TViewModel));
+            CustomNavigationView mainPage = Application.Current.MainPage as CustomNavigationView;
+            Page currentPage = mainPage.Navigation.NavigationStack[mainPage.Navigation.NavigationStack.Count - 1];
+            mainPage.Navigation.InsertPageBefore(page, currentPage);
+            await mainPage.PopAsync();
         }
 
-        private static Page CreatePage(Type viewModelType)
+        private static async Task<Page> CreatePage(Type viewModelType)
         {
-
             Type pageType = GetPageTypeForViewModel(viewModelType);
             if (pageType == null)
             {
@@ -92,8 +52,18 @@ namespace Nootus.Fabric.Mobile.Core
             BaseViewModel viewModel = DependencyInjection.Container.Resolve(viewModelType) as BaseViewModel;
             Page page = DependencyInjection.Container.Resolve(pageType) as Page;
             page.BindingContext = viewModel;
+            await viewModel.InitializeAsync();
 
             return page;
+        }
+
+        private static Type GetPageTypeForViewModel(Type viewModelType)
+        {
+            var viewName = viewModelType.FullName.Replace("Model", string.Empty);
+            var viewModelAssemblyName = viewModelType.GetTypeInfo().Assembly.FullName;
+            var viewAssemblyName = string.Format(CultureInfo.InvariantCulture, "{0}, {1}", viewName, viewModelAssemblyName);
+            var viewType = Type.GetType(viewAssemblyName);
+            return viewType;
         }
     }
 }
