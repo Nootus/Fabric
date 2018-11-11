@@ -3,9 +3,9 @@ using Xamarin.Forms;
 
 namespace Nootus.Fabric.Mobile.Core
 {
-    public class MobileApplication: Application
+    public class BaseApplication: Application
     {
-        public MobileApplication()
+        public BaseApplication()
         {
             Initialize();
         }
