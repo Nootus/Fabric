@@ -5,13 +5,13 @@ using Xamarin.Forms;
 
 namespace Nootus.Fabric.Mobile.Validations
 {
-    public class ValidatableObject<T> : BaseNotifyPropertyChanged
+    public class ValidatableText<T> : BaseNotifyPropertyChanged
     {
         private readonly List<IValidationRule<T>> validations;
 
-        public ValidatableObject(): this(default(T)) { }
+        public ValidatableText(): this(default(T)) { }
 
-        public ValidatableObject(T value)
+        public ValidatableText(T value)
         {
             _value = value;
             isValid = true;
