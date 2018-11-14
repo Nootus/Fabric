@@ -23,25 +23,44 @@ namespace Nootus.Fabric.Mobile.Views
             set { Header.Text = headerText = value; }
         }
 
-        private Style headerStyle;
-        public Style HeaderStyle
+        public static readonly BindableProperty HeaderStyleProperty = BindableProperty.Create(
+                                                         propertyName: "HeaderStyle",
+                                                         returnType: typeof(Style),
+                                                         declaringType: typeof(FormField),
+                                                         defaultBindingMode: BindingMode.OneTime,
+                                                         propertyChanged: HeaderStyleChanged);
+
+        private static void HeaderStyleChanged(BindableObject bindable, object oldValue, object newValue)
         {
-            get { return headerStyle; }
-            set { Header.Style = headerStyle = value; }
+            FormField control = (FormField)bindable;
+            control.Header.Style = (Style)newValue;
         }
 
-        private Style errorStyle;
-        public Style ErrorStyle
+        public static readonly BindableProperty ErrorStyleProperty = BindableProperty.Create(
+                                                         propertyName: "ErrorStyle",
+                                                         returnType: typeof(Style),
+                                                         declaringType: typeof(FormField),
+                                                         defaultBindingMode: BindingMode.OneTime,
+                                                         propertyChanged: ErrorStyleChanged);
+
+        private static void ErrorStyleChanged(BindableObject bindable, object oldValue, object newValue)
         {
-            get { return errorStyle; }
-            set { Error.Style = errorStyle = value; }
+            FormField control = (FormField)bindable;
+            control.Error.Style = (Style)newValue;
         }
 
-        private Color errorLineColor;
-        public Color ErrorLineColor
+        public Color ErrorLineColor { get; set; }
+        public static readonly BindableProperty ErrorLineColorProperty = BindableProperty.Create(
+                                                         propertyName: "ErrorLineColor",
+                                                         returnType: typeof(Color),
+                                                         declaringType: typeof(FormField),
+                                                         defaultBindingMode: BindingMode.OneTime,
+                                                         propertyChanged: ErrorLineColorChanged);
+
+        private static void ErrorLineColorChanged(BindableObject bindable, object oldValue, object newValue)
         {
-            get { return errorLineColor; }
-            set { errorLineColor = value; }
+            FormField control = (FormField)bindable;
+            control.ErrorLineColor = (Color)newValue;
         }
 
         public static readonly BindableProperty FieldProperty = BindableProperty.Create(
@@ -59,7 +78,7 @@ namespace Nootus.Fabric.Mobile.Views
 
         private static void FieldPropertyChanged(BindableObject bindable, object oldValue, object newValue)
         {
-            var control = (FormField)bindable;
+            FormField control = (FormField)bindable;
             ValidatableText<string> field = (ValidatableText<string>) newValue;
             control.Entry.SetBinding(Entry.TextProperty, new Binding("Value", source: field));            
             control.Error.SetBinding(Label.TextProperty, new Binding("Errors", source: field, converter: new FirstValidationErrorConverter()));
@@ -89,7 +108,7 @@ namespace Nootus.Fabric.Mobile.Views
 
         private static void TextChangedCommandPropertyChanged(BindableObject bindable, object oldValue, object newValue)
         {
-            var control = (FormField)bindable;
+            FormField control = (FormField)bindable;
             control.CommandBehavior.Command = (ICommand) newValue;
         }
     }
