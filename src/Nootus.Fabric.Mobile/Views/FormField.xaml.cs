@@ -16,11 +16,16 @@ namespace Nootus.Fabric.Mobile.Views
 			InitializeComponent ();
 		}
 
-        private string headerText;
         public string HeaderText
         {
-            get { return headerText;  }
-            set { Header.Text = headerText = value; }
+            get { return Header.Text; }
+            set { Header.Text = value; }
+        }
+
+        public Keyboard Keyboard
+        {
+            get { return Entry.Keyboard; }
+            set { Entry.Keyboard = value; }
         }
 
         public static readonly BindableProperty HeaderStyleProperty = BindableProperty.Create(
@@ -67,7 +72,7 @@ namespace Nootus.Fabric.Mobile.Views
                                                          propertyName: "Field",
                                                          returnType: typeof(ValidatableText<string>),
                                                          declaringType: typeof(FormField),
-                                                         defaultBindingMode: BindingMode.TwoWay,
+                                                         defaultBindingMode: BindingMode.OneWay,
                                                          propertyChanged: FieldPropertyChanged);
 
         public ValidatableText<string> Field
