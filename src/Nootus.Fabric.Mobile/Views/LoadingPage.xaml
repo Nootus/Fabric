@@ -5,14 +5,14 @@
     <ContentPage.Content>
         <StackLayout
             Padding="30"
-            BackgroundColor="Black"
+            BackgroundColor="Transparent"
             HorizontalOptions="Center"
             VerticalOptions="Center">
-            <ActivityIndicator IsRunning="True" Color="White" />
+            <ActivityIndicator IsRunning="True" Color="Black" />
             <Label
                 FontAttributes="Bold"
                 Text="Loading..."
-                TextColor="White" />
+                TextColor="Black" />
         </StackLayout>
     </ContentPage.Content>
 </ContentPage>
