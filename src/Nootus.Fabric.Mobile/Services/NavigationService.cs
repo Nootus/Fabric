@@ -1,4 +1,5 @@
 ﻿using Autofac;
+using Nootus.Fabric.Mobile.Core;
 using Nootus.Fabric.Mobile.Views;
 using System;
 using System.Globalization;
@@ -6,7 +7,7 @@ using System.Reflection;
 using System.Threading.Tasks;
 using Xamarin.Forms;
 
-namespace Nootus.Fabric.Mobile.Core
+namespace Nootus.Fabric.Mobile.Services
 {
     public static class NavigationService
     {
@@ -41,6 +42,18 @@ namespace Nootus.Fabric.Mobile.Core
             await mainPage.PopAsync();
         }
 
+        public static async Task BindViewModel<TViewModel>(Page page)
+        {
+            await BindViewModel(page, typeof(TViewModel));
+        }
+
+        private static async Task BindViewModel(Page page, Type viewModelType)
+        {
+            BaseViewModel viewModel = DependencyInjection.Container.Resolve(viewModelType) as BaseViewModel;
+            page.BindingContext = viewModel;
+            await viewModel.InitializeAsync(page);
+        }
+
         private static async Task<Page> CreatePage(Type viewModelType)
         {
             Type pageType = GetPageTypeForViewModel(viewModelType);
@@ -49,10 +62,8 @@ namespace Nootus.Fabric.Mobile.Core
                 throw new Exception($"Cannot locate page type for {viewModelType}");
             }
 
-            BaseViewModel viewModel = DependencyInjection.Container.Resolve(viewModelType) as BaseViewModel;
             Page page = DependencyInjection.Container.Resolve(pageType) as Page;
-            page.BindingContext = viewModel;
-            await viewModel.InitializeAsync();
+            await BindViewModel(page, viewModelType);
 
             return page;
         }

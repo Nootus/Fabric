@@ -34,11 +34,14 @@ namespace Nootus.Fabric.Web.Security.Cosmos.Domain
         public Task<UserProfileModel> Register(RegisterUserModel model)
             => throw new System.NotImplementedException();
         
+        //public async Task<int> SendOtp(string mobileNumber)
+        //{
+
+        //}
 
         public async Task<UserProfileModel> Validate(LoginModel login)
         {
             // check user name and password from database
-            UserProfileModel model;
             SharedCollectionDocument<UserAuthModel> userAuthDocument = await DbService.GetDocumentByKeyAsyc<UserAuthModel>(login.UserName, SecurityAppSettings.ServiceSettings.DocumentTypes.UserAuth);
             if(userAuthDocument == null)
             {
@@ -51,7 +54,13 @@ namespace Nootus.Fabric.Web.Security.Cosmos.Domain
                 throw new NTException(SecurityMessages.InvalidUsernamePassword);
             }
 
-            model = await ProfileGet(login.UserName);
+            return await CreateToken(login.UserName, userAuthDocument);
+
+        }
+
+        private async Task<UserProfileModel> CreateToken(string userName, SharedCollectionDocument<UserAuthModel> userAuthDocument)
+        {
+            UserProfileModel model = await ProfileGet(userName);
 
             // creating tokens
             string jwtToken = TokenService.GenerateJwtToken(model);

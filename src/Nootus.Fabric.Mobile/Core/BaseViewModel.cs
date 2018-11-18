@@ -3,17 +3,13 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.Runtime.CompilerServices;
 using System.Threading.Tasks;
+using Xamarin.Forms;
 
 namespace Nootus.Fabric.Mobile.Core
 {
     public abstract class BaseViewModel : BaseNotifyPropertyChanged
     {
-        bool isBusy = false;
-        public bool IsBusy
-        {
-            get { return isBusy; }
-            set { SetProperty(ref isBusy, value); }
-        }
+        protected Page Page;
 
         string title = string.Empty;
         public string Title
@@ -22,6 +18,10 @@ namespace Nootus.Fabric.Mobile.Core
             set { SetProperty(ref title, value); }
         }
 
-        public abstract Task InitializeAsync();
+        public virtual Task InitializeAsync(Page page)
+        {
+            Page = page;
+            return Task.FromResult(true);
+        }
     }
 }
