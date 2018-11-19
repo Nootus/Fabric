@@ -16,6 +16,7 @@ namespace Nootus.Fabric.Web.Security.Core.Models
         public string FirstName { get; set; }
         public string LastName { get; set; }
         public string UserName { get; set; }
+        public bool IsRegistered { get; set; }
         public string FullName
         {
             get

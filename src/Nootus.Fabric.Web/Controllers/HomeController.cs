@@ -8,6 +8,7 @@ namespace Nootus.Fabric.Web.Controllers
     [ApiController]
     public class HomeController: ControllerBase
     {
+        [AllowAnonymous]
         public ActionResult<string> ServiceStart()
         {
             return "Service Started";

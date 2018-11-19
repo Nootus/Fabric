@@ -72,6 +72,18 @@ namespace Nootus.Fabric.Web.Core.Cosmos.Repositories
             }
         }
 
+        public async Task<SharedCollectionDocument<TModel>> CreateDocumentAsync<TModel>(string key, TModel model, string documentType)
+        {
+            SharedCollectionDocument<TModel> document = new SharedCollectionDocument<TModel>()
+            {
+                Key = key,
+                DocumentType = documentType,
+                Model = model
+            };
+
+            return await CreateDocumentAsync(document);
+        }
+
         public async Task<SharedCollectionDocument<TModel>> CreateDocumentAsync<TModel>(SharedCollectionDocument<TModel> document)
         {
             Document doc = await DbContext.Client.CreateDocumentAsync(CreateDocumentCollectionUri(defaultCollectionId), document);
