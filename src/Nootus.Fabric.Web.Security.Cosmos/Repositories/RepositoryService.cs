@@ -25,7 +25,9 @@ namespace Nootus.Fabric.Web.Security.Cosmos.Repositories
         public async Task<List<RoleModel>> RoleClaimsGet()
         {
             string roleDocumentType = SecurityAppSettings.ServiceSettings.DocumentTypes.Role;
-            return await DbService.GetModelByKeyAsyc<List<RoleModel>>(roleDocumentType, roleDocumentType);
+            List<RoleModel> roleClaims = await DbService.GetModelByKeyAsyc<List<RoleModel>>(roleDocumentType, roleDocumentType);
+            roleClaims = roleClaims ?? new List<RoleModel>();
+            return roleClaims;
         }
 
         public List<ListItem<string, string>> AdminRolesGet()

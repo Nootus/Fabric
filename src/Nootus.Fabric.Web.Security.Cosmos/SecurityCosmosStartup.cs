@@ -47,7 +47,7 @@ namespace Nootus.Fabric.Web.Security.Cosmos
             SecurityStartup.ConfigureTokenServices(services);
 
             // caching page claims
-            //services.CachePageClaimsRoles();
+            services.CachePageClaimsRoles();
         }
 
         public override void ConfigureDependencyInjection(IServiceCollection services)

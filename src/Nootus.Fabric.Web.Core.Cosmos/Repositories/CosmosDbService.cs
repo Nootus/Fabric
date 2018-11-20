@@ -3,6 +3,7 @@ using Microsoft.Azure.Documents.Client;
 using Microsoft.EntityFrameworkCore;
 using Nootus.Fabric.Web.Core.Cosmos.Models;
 using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Linq.Expressions;
 using System.Threading.Tasks;
@@ -60,16 +61,36 @@ namespace Nootus.Fabric.Web.Core.Cosmos.Repositories
             {
                 if (e.StatusCode == System.Net.HttpStatusCode.NotFound)
                 {
-                    await DbContext.Client.CreateDocumentCollectionAsync(
-                        UriFactory.CreateDatabaseUri(DbContext.Settings.DatabaseId),
-                        new DocumentCollection { Id = defaultCollectionId },
-                        new RequestOptions { OfferThroughput = 400 });
+                    await CreateCollectionAsync();
                 }
                 else
                 {
                     throw;
                 }
             }
+        }
+
+        public async Task CreateCollectionAsync()
+            => await DbContext.Client.CreateDocumentCollectionAsync(
+                UriFactory.CreateDatabaseUri(DbContext.Settings.DatabaseId),
+                new DocumentCollection { Id = defaultCollectionId },
+                new RequestOptions { OfferThroughput = 400 });
+
+        public async Task DeleteDocumentCollectionAsync()
+            => await DbContext.Client.DeleteDocumentCollectionAsync(UriFactory.CreateDocumentCollectionUri(DbContext.Settings.DatabaseId, defaultCollectionId));
+        
+
+        public async Task<SharedCollectionDocument<TModel>> CreateDocumentAsync<TModel>(string id, string key, TModel model, string documentType)
+        {
+            SharedCollectionDocument<TModel> document = new SharedCollectionDocument<TModel>()
+            {
+                Id = id,
+                Key = key,
+                DocumentType = documentType,
+                Model = model
+            };
+
+            return await CreateDocumentAsync(document);
         }
 
         public async Task<SharedCollectionDocument<TModel>> CreateDocumentAsync<TModel>(string key, TModel model, string documentType)
@@ -97,25 +118,25 @@ namespace Nootus.Fabric.Web.Core.Cosmos.Repositories
         public async Task UpdateDocumentAsync<TModel>(SharedCollectionDocument<TModel> document)
             => await DbContext.Client.ReplaceDocumentAsync(document.SelfLink, document);
    
-        public async Task<Document> DeleteItemAsync(string id) 
+        public async Task<Document> DeleteDocumentAsync(string id) 
             => await DbContext.Client.DeleteDocumentAsync(CreateDocumentUri(defaultCollectionId, id));
 
+        public async Task<Document> DeleteDocumentAsync<TModel>(SharedCollectionDocument<TModel> document)
+            => await DbContext.Client.DeleteDocumentAsync(document.SelfLink);
+
         public async Task<TDocument> SingleOrDefaultAsync<TDocument>(Expression<Func<TDocument, bool>> whereExpression)
-        {
-            return await Task.FromResult(DbContext.Client.CreateDocumentQuery<TDocument>(defaultCollectionUri).Where(whereExpression).AsEnumerable().SingleOrDefault());
-        }
+            => await Task.FromResult(DbContext.Client.CreateDocumentQuery<TDocument>(defaultCollectionUri).Where(whereExpression).AsEnumerable().SingleOrDefault());
+
+        public async Task<List<TDocument>> ToListAsync<TDocument>(Expression<Func<TDocument, bool>> whereExpression)
+            => await Task.FromResult(DbContext.Client.CreateDocumentQuery<TDocument>(defaultCollectionUri).Where(whereExpression).ToList());
 
         public async Task<SharedCollectionDocument<TModel>> GetDocumentByKeyAsyc<TModel>(string key, string documentType)
-        {
-            return await SingleOrDefaultAsync<SharedCollectionDocument<TModel>>(w => w.Key == key.ToLower() && w.DocumentType == documentType);
-        }
+            => await SingleOrDefaultAsync<SharedCollectionDocument<TModel>>(w => w.Key == key.ToLower() && w.DocumentType == documentType);
 
         public async Task<TModel> GetModelByKeyAsyc<TModel>(string key, string documentType)
             where TModel: class
             => (await GetDocumentByKeyAsyc<TModel>(key, documentType))?.Model;
         
-
-
         public SharedCollectionDocument<TModel> CopyModel<TModel>(SharedCollectionDocument<TModel> source, 
             SharedCollectionDocument<TModel> destination, TModel model, string key)
         {

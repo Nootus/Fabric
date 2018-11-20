@@ -12,7 +12,7 @@ namespace Nootus.Fabric.Web.Security.Cosmos.Middleware
         public static IServiceCollection CachePageClaimsRoles(this IServiceCollection services)
         {
             RepositoryService repository = services.BuildServiceProvider().GetRequiredService<RepositoryService>();
-            CacheService.CachePageClaimsRoles(repository);
+            CachePageClaimsRoles(repository);
             return services;
         }
 
