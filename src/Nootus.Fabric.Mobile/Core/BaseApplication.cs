@@ -1,4 +1,5 @@
 ﻿using Autofac;
+using Nootus.Fabric.Mobile.WebApi;
 using Xamarin.Forms;
 
 namespace Nootus.Fabric.Mobile.Core
@@ -28,6 +29,7 @@ namespace Nootus.Fabric.Mobile.Core
         protected virtual void ConfigureDependencyInjection(ContainerBuilder builder)
         {
             builder.RegisterType<UserProfile>().SingleInstance();
+            builder.RegisterType<ApiRequest>().SingleInstance();
         }
 
         protected override void OnStart()
