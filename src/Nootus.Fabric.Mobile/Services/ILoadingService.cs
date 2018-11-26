@@ -4,7 +4,8 @@ namespace Nootus.Fabric.Mobile.Services
 {
     public interface ILoadingService
     {
-        void InitLoading(ContentPage loadingIndicatorPage = null);
+        void InitializeLoading(ContentPage loadingPage);
+        void InitializeParent();
 
         void ShowLoading();
 

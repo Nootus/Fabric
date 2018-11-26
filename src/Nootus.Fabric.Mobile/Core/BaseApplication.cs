@@ -1,4 +1,5 @@
 ﻿using Autofac;
+using Nootus.Fabric.Mobile.Settings;
 using Nootus.Fabric.Mobile.WebApi;
 using Xamarin.Forms;
 
@@ -29,6 +30,7 @@ namespace Nootus.Fabric.Mobile.Core
         protected virtual void ConfigureDependencyInjection(ContainerBuilder builder)
         {
             builder.RegisterType<UserProfile>().SingleInstance();
+            builder.RegisterType<SettingsService>().SingleInstance();
             builder.RegisterType<ApiRequest>().SingleInstance();
         }
 

@@ -1,11 +1,16 @@
 ﻿using Newtonsoft.Json;
 using Newtonsoft.Json.Converters;
+using Nootus.Fabric.Mobile.Security;
+using Nootus.Fabric.Mobile.Services;
 using Nootus.Fabric.Mobile.Settings;
+using Nootus.Fabric.Mobile.Views;
+using System;
 using System.Linq;
 using System.Net;
 using System.Net.Http;
 using System.Net.Http.Headers;
 using System.Threading.Tasks;
+using Xamarin.Forms;
 
 namespace Nootus.Fabric.Mobile.WebApi
 {
@@ -13,6 +18,8 @@ namespace Nootus.Fabric.Mobile.WebApi
     {
         private readonly JsonSerializerSettings serializerSettings;
         private readonly AppSettings settings;
+        private ILoadingService loadingService;
+
         public ApiRequest(AppSettings settings)
         {
             serializerSettings = new JsonSerializerSettings
@@ -21,27 +28,43 @@ namespace Nootus.Fabric.Mobile.WebApi
                 NullValueHandling = NullValueHandling.Ignore
             };
             serializerSettings.Converters.Add(new StringEnumConverter());
+
+            this.settings = settings;
+            loadingService = DependencyService.Get<ILoadingService>();
+            loadingService.InitializeLoading(new LoadingPage());
         }
 
         public async Task<TResult> GetAsync<TResult>(string uri)
         {
+            loadingService.ShowLoading();
             HttpClient httpClient = CreateHttpClient();
             HttpResponseMessage response = await httpClient.GetAsync(uri);
 
             await HandleResponse(response);
             string serialized = await response.Content.ReadAsStringAsync();
 
+            loadingService.HideLoading();
             return JsonConvert.DeserializeObject<TResult>(serialized, serializerSettings);
         }
 
         public async Task<TResult> PostAsync<TResult>(string uri, TResult data)
         {
+            // loadingService.ShowLoading();
             HttpClient httpClient = CreateHttpClient();
-
             var content = new StringContent(JsonConvert.SerializeObject(data));
             content.Headers.ContentType = new MediaTypeHeaderValue("application/json");
-            HttpResponseMessage response = await httpClient.PostAsync(uri, content);
+            HttpResponseMessage response;
+            try
+            {
+                 response = await httpClient.PostAsync(uri, content);
 
+            }
+            catch(Exception exp)
+            {
+                throw;
+            }
+
+            loadingService.HideLoading();
             await HandleResponse(response);
             string serialized = await response.Content.ReadAsStringAsync();
 
@@ -54,10 +77,10 @@ namespace Nootus.Fabric.Mobile.WebApi
             var httpClient = new HttpClient();
             httpClient.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
 
-            string token = settings.JwtToken;
-            if (!string.IsNullOrEmpty(token))
+            Token token = settings.Token;
+            if (token != null)
             {
-                httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", token);
+                httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", token.JwtToken);
                 // httpClient.DefaultRequestHeaders.Add(parameter, value);
             }
             return httpClient;
@@ -82,13 +105,14 @@ namespace Nootus.Fabric.Mobile.WebApi
 
         private void ExtractTokens(HttpResponseHeaders headers)
         {
-            if (headers.Contains(AppSettings.AuthToken))
+            Token token = settings.Token;
+            if (headers.Contains(TokenHttpHeaders.JwtToken))
             {
-                settings.JwtToken = headers.GetValues(AppSettings.AuthToken).FirstOrDefault();
+                token.JwtToken = headers.GetValues(TokenHttpHeaders.JwtToken).FirstOrDefault();
             }
-            if (headers.Contains(AppSettings.AuthRefreshToken))
+            if (headers.Contains(TokenHttpHeaders.RefreshToken))
             {
-                settings.RefreshToken = headers.GetValues(AppSettings.AuthRefreshToken).FirstOrDefault();
+                token.RefreshToken = headers.GetValues(TokenHttpHeaders.RefreshToken).FirstOrDefault();
             }
         }
     }

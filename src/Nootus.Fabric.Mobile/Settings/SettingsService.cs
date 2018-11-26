@@ -5,14 +5,11 @@ namespace Nootus.Fabric.Mobile.Settings
 {
     public class SettingsService
     {
-        public Task AddOrUpdateValue(string key, bool value) => AddOrUpdateValueInternal(key, value);
-        public Task AddOrUpdateValue(string key, string value) => AddOrUpdateValueInternal(key, value);
-        public bool GetValueOrDefault(string key, bool defaultValue) => GetValueOrDefaultInternal(key, defaultValue);
-        public string GetValueOrDefault(string key, string defaultValue) => GetValueOrDefaultInternal(key, defaultValue);
-
+        public Task AddOrUpdateValue<TValue>(string key, TValue value) => AddOrUpdateValueInternal(key, value);
+        public TValue GetValueOrDefault<TValue>(string key, TValue defaultValue) => GetValueOrDefaultInternal(key, defaultValue);
         public TValue GetValue<TValue>(string key) => GetValueOrDefaultInternal(key, default(TValue));
 
-        async Task AddOrUpdateValueInternal<T>(string key, T value)
+        private async Task AddOrUpdateValueInternal<TValue>(string key, TValue value)
         {
             if (value == null)
             {
@@ -25,17 +22,17 @@ namespace Nootus.Fabric.Mobile.Settings
             }
         }
 
-        T GetValueOrDefaultInternal<T>(string key, T defaultValue = default(T))
+        private TValue GetValueOrDefaultInternal<TValue>(string key, TValue defaultValue = default(TValue))
         {
             object value = null;
             if (Application.Current.Properties.ContainsKey(key))
             {
                 value = Application.Current.Properties[key];
             }
-            return null != value ? (T)value : defaultValue;
+            return null != value ? (TValue)value : defaultValue;
         }
 
-        async Task Remove(string key)
+        private async Task Remove(string key)
         {
             if (Application.Current.Properties[key] != null)
             {

@@ -1,41 +1,28 @@
-﻿namespace Nootus.Fabric.Mobile.Settings
+﻿using Nootus.Fabric.Mobile.Security;
+
+namespace Nootus.Fabric.Mobile.Settings
 {
     public abstract class AppSettings
     {
-        public const string AuthToken = "JwtToken";
-        public const string AuthRefreshToken = "RefreshToken";
+        private const string AuthToken = "Token";
 
         protected SettingsService service;
-        private string jwtToken;
-        private string refreshToken;
+        private Token token;
 
         public AppSettings(SettingsService service)
         {
             this.service = service;
 
-            jwtToken = service.GetValue<string>(AuthToken);
-            refreshToken = service.GetValue<string>(AuthRefreshToken);
+            token = service.GetValue<Token>(AuthToken);
         }
 
-        public abstract string ApiEndPoint { get; }
-
-        public string JwtToken
+        public Token Token
         {
-            get => jwtToken;
+            get => token;
             set
             {
-                jwtToken = value;
-                service.AddOrUpdateValue(AuthToken, jwtToken);
-            }
-        }
-
-        public string RefreshToken
-        {
-            get => refreshToken;
-            set
-            {
-                refreshToken = value;
-                service.AddOrUpdateValue(AuthRefreshToken, refreshToken);
+                token = value;
+                service.AddOrUpdateValue(AuthToken, token);
             }
         }
     }

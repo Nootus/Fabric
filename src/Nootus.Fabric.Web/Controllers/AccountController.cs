@@ -25,8 +25,7 @@ namespace Nootus.Fabric.Web.Controllers
         private readonly IAccountService domain;
 
         public AccountController(IAccountService domain)
-            => this.domain = domain;
-        
+            => this.domain = domain;       
 
         public async Task<AjaxModel<UserProfileModel>> Validate(LoginModel model)
             => await AjaxHelper.GetAsync(m => this.domain.Validate(model), SecurityMessages.LoginSuccess);
