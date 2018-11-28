@@ -1,10 +1,11 @@
 ﻿using Newtonsoft.Json;
 using Newtonsoft.Json.Converters;
+using Nootus.Fabric.Mobile.Exception;
 using Nootus.Fabric.Mobile.Security;
 using Nootus.Fabric.Mobile.Services;
 using Nootus.Fabric.Mobile.Settings;
 using Nootus.Fabric.Mobile.Views;
-using System;
+using Nootus.Fabric.Mobile.WebApi.Models;
 using System.Linq;
 using System.Net;
 using System.Net.Http;
@@ -40,14 +41,17 @@ namespace Nootus.Fabric.Mobile.WebApi
             HttpClient httpClient = CreateHttpClient();
             HttpResponseMessage response = await httpClient.GetAsync(uri);
 
-            await HandleResponse(response);
-            string serialized = await response.Content.ReadAsStringAsync();
-
+            TResult result = await ProcessResponse<TResult>(response);
             loadingService.HideLoading();
-            return JsonConvert.DeserializeObject<TResult>(serialized, serializerSettings);
+            return result;
         }
 
-        public async Task<TResult> PostAsync<TResult>(string uri, TResult data)
+        public async Task<NTModel> PostAsync<TContent>(string uri, TContent data)
+        {
+            return await PostAsync<TContent, NTModel>(uri, data);
+        }
+
+        public async Task<TResult> PostAsync<TContent, TResult>(string uri, TContent data)
         {
             // loadingService.ShowLoading();
             HttpClient httpClient = CreateHttpClient();
@@ -59,16 +63,14 @@ namespace Nootus.Fabric.Mobile.WebApi
                  response = await httpClient.PostAsync(uri, content);
 
             }
-            catch(Exception exp)
+            catch(System.Exception exp)
             {
                 throw;
             }
 
+            TResult result = await ProcessResponse<TResult>(response);
             loadingService.HideLoading();
-            await HandleResponse(response);
-            string serialized = await response.Content.ReadAsStringAsync();
-
-            return JsonConvert.DeserializeObject<TResult>(serialized, serializerSettings);
+            return result;
         }
 
 
@@ -86,9 +88,10 @@ namespace Nootus.Fabric.Mobile.WebApi
             return httpClient;
         }
 
-        private async Task HandleResponse(HttpResponseMessage response)
+        private async Task<TResult> ProcessResponse<TResult>(HttpResponseMessage response)
         {
             ExtractTokens(response.Headers);
+
             if (!response.IsSuccessStatusCode)
             {
                 var content = await response.Content.ReadAsStringAsync();
@@ -100,6 +103,22 @@ namespace Nootus.Fabric.Mobile.WebApi
                 }
 
                 throw new HttpRequestException(content);
+            }
+            else
+            {
+                string content = await response.Content.ReadAsStringAsync();
+                AjaxModel<TResult> ajax = JsonConvert.DeserializeObject<AjaxModel<TResult>>(content, serializerSettings);
+
+                switch (ajax.Result)
+                {
+                    case AjaxResult.Exception:
+                        throw new System.Exception(ajax.Message);
+
+                    case AjaxResult.ValidationException:
+                        throw new NTException(ajax.Message, ajax.Errors);
+                }
+
+                return ajax.Model;
             }
         }
 

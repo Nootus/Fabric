@@ -7,7 +7,7 @@
             Padding="30"
             BackgroundColor="Transparent"
             HorizontalOptions="Center"
-            VerticalOptions="Center">
+            VerticalOptions="End">
             <ActivityIndicator IsRunning="True" Color="Black" />
             <Label
                 FontAttributes="Bold"

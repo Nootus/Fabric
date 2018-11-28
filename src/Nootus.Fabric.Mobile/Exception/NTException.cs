@@ -1,15 +1,7 @@
-﻿//-------------------------------------------------------------------------------------------------
-// <copyright file="NTException.cs" company="Nootus">
-//  Copyright (c) Nootus. All rights reserved.
-// </copyright>
-// <description>
-//  Used to raise warnings/validations to the Angular. Also to carry unknown exceptions
-// </description>
-//-------------------------------------------------------------------------------------------------
-namespace Nootus.Fabric.Web.Core.Exception
-{
-    using System.Collections.Generic;
+﻿using System.Collections.Generic;
 
+namespace Nootus.Fabric.Mobile.Exception
+{
     public class NTException : System.Exception
     {
         private readonly string message;

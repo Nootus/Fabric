@@ -59,7 +59,7 @@ namespace Nootus.Fabric.Mobile.Services
             Type pageType = GetPageTypeForViewModel(viewModelType);
             if (pageType == null)
             {
-                throw new Exception($"Cannot locate page type for {viewModelType}");
+                throw new System.Exception($"Cannot locate page type for {viewModelType}");
             }
 
             Page page = DependencyInjection.Container.Resolve(pageType) as Page;
