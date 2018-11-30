@@ -32,6 +32,7 @@ namespace Nootus.Fabric.Mobile.Core
             builder.RegisterType<UserProfile>().SingleInstance();
             builder.RegisterType<SettingsService>().SingleInstance();
             builder.RegisterType<ApiRequest>().SingleInstance();
+            builder.RegisterType<Session>().SingleInstance();
         }
 
         protected override void OnStart()

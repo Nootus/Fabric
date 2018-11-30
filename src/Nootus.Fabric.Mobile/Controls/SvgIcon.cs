@@ -1,6 +1,9 @@
 ﻿using System;
 using System.IO;
 using System.Reflection;
+using Autofac;
+using Nootus.Fabric.Mobile.Core;
+using Nootus.Fabric.Mobile.Settings;
 using SkiaSharp;
 using SkiaSharp.Views.Forms;
 using Xamarin.Forms;
@@ -11,7 +14,6 @@ namespace Nootus.Fabric.Mobile.Controls
     public class SvgIcon : Frame
     {
         private readonly SKCanvasView canvasView = new SKCanvasView();
-        private readonly Assembly iconAssembly;
 
         public static readonly BindableProperty ResourceIdProperty = BindableProperty.Create(
             nameof(ResourceId), typeof(string), typeof(SvgIcon), default(string), propertyChanged: RedrawCanvas);
@@ -22,10 +24,7 @@ namespace Nootus.Fabric.Mobile.Controls
             set => SetValue(ResourceIdProperty, value);
         }
 
-        public Color Color
-        {
-            get; set;
-        }
+        public Color Color { get; set; }
 
         public SvgIcon()
         {
@@ -34,8 +33,7 @@ namespace Nootus.Fabric.Mobile.Controls
             HasShadow = false;
             Content = canvasView;
             canvasView.PaintSurface += CanvasViewOnPaintSurface;
-            iconAssembly = Assembly.GetCallingAssembly();
-            
+
         }
 
         private static void RedrawCanvas(BindableObject bindable, object oldvalue, object newvalue)
@@ -46,47 +44,17 @@ namespace Nootus.Fabric.Mobile.Controls
 
         private void CanvasViewOnPaintSurface(object sender, SKPaintSurfaceEventArgs args)
         {
-            //SKCanvas canvas = args.Surface.Canvas;
-            //canvas.Clear();
-
-            //if (string.IsNullOrEmpty(ResourceId))
-            //    return;
-
-            //using (Stream stream = iconAssembly.GetManifestResourceStream(ResourceId))
-            //{
-            //    SKSvg svg = new SKSvg();
-            //    svg.Load(stream);
-
-            //    SKImageInfo info = args.Info;
-            //    canvas.Translate(info.Width / 2f, info.Height / 2f);
-
-            //    SKRect bounds = svg.ViewBox;
-            //    float xRatio = info.Width / bounds.Width;
-            //    float yRatio = info.Height / bounds.Height;
-
-            //    float ratio = Math.Min(xRatio, yRatio);
-
-            //    canvas.Scale(ratio);
-            //    canvas.Translate(-bounds.MidX, -bounds.MidY);
-
-            //    var paint = new SKPaint()
-            //    {
-            //        ColorFilter = SKColorFilter.CreateBlendMode(Color.ToSKColor(), SKBlendMode.SrcIn)
-            //    };
-
-            //    canvas.DrawPicture(svg.Picture, paint);                
-            //}
-
-            SvgIcon.DrawPicture(args.Surface.Canvas, iconAssembly, ResourceId, args.Info.Width, args.Info.Height, Color);
+            SvgIcon.DrawPicture(args.Surface.Canvas, ResourceId, args.Info.Width, args.Info.Height, Color);
         }
 
-        private static void DrawPicture(SKCanvas canvas, Assembly assembly, string resourceId, int width, int height, Color color)
+        private static void DrawPicture(SKCanvas canvas, string resourceId, int width, int height, Color color)
         {
             canvas.Clear();
 
             if (string.IsNullOrEmpty(resourceId))
                 return;
 
+            Assembly assembly = DependencyInjection.Container.Resolve<Session>().ResourceAssembly;
             using (Stream stream = assembly.GetManifestResourceStream(resourceId))
             {
                 SKSvg svg = new SKSvg();
@@ -103,37 +71,53 @@ namespace Nootus.Fabric.Mobile.Controls
                 canvas.Scale(ratio);
                 canvas.Translate(-bounds.MidX, -bounds.MidY);
 
-                var paint = new SKPaint()
-                {
-                    ColorFilter = SKColorFilter.CreateBlendMode(color.ToSKColor(), SKBlendMode.SrcIn)
-                };
+                SKPaint paint = GetPaint(color);
 
                 canvas.DrawPicture(svg.Picture, paint);
             }
         }
 
-        public static ImageSource GetSvgImageSource(Assembly assembly, string resourceId, int width, int height, Color color)
+        public static ImageSource GetSvgImageSource(string resourceId, int width, int height)
         {
-            var scaleFactor = 0;
+            return GetSvgImageSource(resourceId, width, height, new Color());
+        }
 
-#if __IOS__
-                scaleFactor = (int)UIKit.UIScreen.MainScreen.Scale;
-#elif __ANDROID__
-                 //I have added a static Current property to my MainActivity.
-                 scaleFactor = MainApplication.CurrentContext.Resources.DisplayMetrics.Density
-#endif
+        public static ImageSource GetSvgImageSource(string resourceId, int width, int height, Color color)
+        {
+            Assembly assembly = DependencyInjection.Container.Resolve<Session>().ResourceAssembly;
+            using (Stream stream = assembly.GetManifestResourceStream(resourceId))
+            {
 
-            var bitmap = new SKBitmap((int)(width * scaleFactor), (int)(height * scaleFactor));
-            var canvas = new SKCanvas(bitmap);
+                var svg = new SKSvg(new SKSize(width, height));
+                svg.Load(stream);
 
-            DrawPicture(canvas, assembly, resourceId, width, height, color);
+                var bitmap = new SKBitmap(width, height);
+                var canvas = new SKCanvas(bitmap);
+                canvas.Clear();
 
-            var image = SKImage.FromBitmap(bitmap);
-            var encoded = image.Encode();
-            var stream = encoded.AsStream();
-            var source = ImageSource.FromStream(() => stream);
+                SKPaint paint = GetPaint(color);
 
-            return source;
+                canvas.DrawPicture(svg.Picture, paint);
+
+                return (SKBitmapImageSource)bitmap;
+            }
+        }
+
+        private static SKPaint GetPaint(Color color)
+        {
+            if (!color.IsDefault)
+            {
+                return new SKPaint()
+                {
+                    ColorFilter = SKColorFilter.CreateBlendMode(color.ToSKColor(), SKBlendMode.SrcIn)
+                };
+            }
+            else
+            {
+                return null;
+            }
+
+
         }
     }
 }
