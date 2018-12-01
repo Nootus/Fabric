@@ -84,6 +84,12 @@ namespace Nootus.Fabric.Mobile.Controls
 
         public static ImageSource GetSvgImageSource(string resourceId, int width, int height, Color color)
         {
+
+            return (SKBitmapImageSource)GetSvgBitmap(resourceId, width, height, color);
+        }
+
+        public static SKBitmap GetSvgBitmap(string resourceId, int width, int height, Color color)
+        {
             Assembly assembly = DependencyInjection.Container.Resolve<Session>().ResourceAssembly;
             using (Stream stream = assembly.GetManifestResourceStream(resourceId))
             {
@@ -96,10 +102,8 @@ namespace Nootus.Fabric.Mobile.Controls
                 canvas.Clear();
 
                 SKPaint paint = GetPaint(color);
-
                 canvas.DrawPicture(svg.Picture, paint);
-
-                return (SKBitmapImageSource)bitmap;
+                return bitmap;
             }
         }
 
