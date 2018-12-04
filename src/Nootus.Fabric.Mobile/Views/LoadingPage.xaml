@@ -3,16 +3,9 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="Nootus.Fabric.Mobile.Views.LoadingPage">
     <ContentPage.Content>
-        <StackLayout
-            Padding="30"
-            BackgroundColor="Transparent"
-            HorizontalOptions="Center"
-            VerticalOptions="End">
+        <StackLayout Padding="30" BackgroundColor="Transparent" HorizontalOptions="Center" VerticalOptions="Center">
             <ActivityIndicator IsRunning="True" Color="Black" />
-            <Label
-                FontAttributes="Bold"
-                Text="Loading..."
-                TextColor="Black" />
+            <Label FontAttributes="Bold" Text="Loading..." TextColor="Black" />
         </StackLayout>
     </ContentPage.Content>
 </ContentPage>

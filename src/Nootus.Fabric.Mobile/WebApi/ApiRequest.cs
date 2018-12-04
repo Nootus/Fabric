@@ -32,7 +32,6 @@ namespace Nootus.Fabric.Mobile.WebApi
 
             this.settings = settings;
             loadingService = DependencyService.Get<ILoadingService>();
-            loadingService.InitializeLoading(new LoadingPage());
         }
 
         public async Task<TResult> GetAsync<TResult>(string uri)
@@ -53,17 +52,28 @@ namespace Nootus.Fabric.Mobile.WebApi
 
         public async Task<TResult> PostAsync<TContent, TResult>(string uri, TContent data)
         {
-            // loadingService.ShowLoading();
-            HttpClient httpClient = CreateHttpClient();
-            var content = new StringContent(JsonConvert.SerializeObject(data));
+            StringContent content = new StringContent(JsonConvert.SerializeObject(data));
             content.Headers.ContentType = new MediaTypeHeaderValue("application/json");
+
+            return await PostAsync<TResult>(uri, content);
+        }
+
+        public async Task<TResult> PostAsync<TResult>(string uri)
+        {
+            return await PostAsync<TResult>(uri, null);
+        }
+
+        public async Task<TResult> PostAsync<TResult>(string uri, HttpContent content)
+        {
+            loadingService.ShowLoading();
+            HttpClient httpClient = CreateHttpClient();
             HttpResponseMessage response;
             try
             {
-                 response = await httpClient.PostAsync(uri, content);
+                response = await httpClient.PostAsync(uri, content);
 
             }
-            catch(System.Exception exp)
+            catch (System.Exception exp)
             {
                 throw;
             }
@@ -125,6 +135,7 @@ namespace Nootus.Fabric.Mobile.WebApi
         private void ExtractTokens(HttpResponseHeaders headers)
         {
             Token token = settings.Token;
+            if (token == null) token = new Token();
             if (headers.Contains(TokenHttpHeaders.JwtToken))
             {
                 token.JwtToken = headers.GetValues(TokenHttpHeaders.JwtToken).FirstOrDefault();
@@ -132,6 +143,7 @@ namespace Nootus.Fabric.Mobile.WebApi
             if (headers.Contains(TokenHttpHeaders.RefreshToken))
             {
                 token.RefreshToken = headers.GetValues(TokenHttpHeaders.RefreshToken).FirstOrDefault();
+                settings.Token = token; // updating the refresh token
             }
         }
     }
