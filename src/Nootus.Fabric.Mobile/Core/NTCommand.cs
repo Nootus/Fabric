@@ -1,0 +1,24 @@
+﻿using System;
+using System.Threading.Tasks;
+using Xamarin.Forms;
+
+namespace Nootus.Fabric.Mobile.Core
+{
+    public class NTCommand: Command
+    {
+        public NTCommand(Func<Task> execute): base(async () => 
+                                            {
+                                                try
+                                                {
+                                                    await execute();
+                                                }
+                                                catch(System.Exception exp)
+                                                {
+                                                    await Application.Current.MainPage.DisplayAlert("Error Command", exp.Message, "OK");
+                                                }
+                                            })
+        {
+
+        }
+    }
+}

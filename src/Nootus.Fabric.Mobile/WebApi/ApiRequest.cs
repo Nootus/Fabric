@@ -71,16 +71,13 @@ namespace Nootus.Fabric.Mobile.WebApi
             try
             {
                 response = await httpClient.PostAsync(uri, content);
-
+                TResult result = await ProcessResponse<TResult>(response);
+                return result;
             }
-            catch (System.Exception exp)
+            finally
             {
-                throw;
+                loadingService.HideLoading();
             }
-
-            TResult result = await ProcessResponse<TResult>(response);
-            loadingService.HideLoading();
-            return result;
         }
 
 
