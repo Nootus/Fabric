@@ -1,10 +1,9 @@
 ﻿using Newtonsoft.Json;
 using Newtonsoft.Json.Converters;
+using Nootus.Fabric.Mobile.Dialog;
 using Nootus.Fabric.Mobile.Exception;
 using Nootus.Fabric.Mobile.Security;
-using Nootus.Fabric.Mobile.Services;
 using Nootus.Fabric.Mobile.Settings;
-using Nootus.Fabric.Mobile.Views;
 using Nootus.Fabric.Mobile.WebApi.Models;
 using System.Linq;
 using System.Net;
@@ -19,7 +18,7 @@ namespace Nootus.Fabric.Mobile.WebApi
     {
         private readonly JsonSerializerSettings serializerSettings;
         private readonly AppSettings settings;
-        private ILoadingService loadingService;
+        private IDialogService loadingService;
 
         public ApiRequest(AppSettings settings)
         {
@@ -31,7 +30,7 @@ namespace Nootus.Fabric.Mobile.WebApi
             serializerSettings.Converters.Add(new StringEnumConverter());
 
             this.settings = settings;
-            loadingService = DependencyService.Get<ILoadingService>();
+            loadingService = DependencyService.Get<IDialogService>();
         }
 
         public async Task<TResult> GetAsync<TResult>(string uri)
@@ -41,7 +40,7 @@ namespace Nootus.Fabric.Mobile.WebApi
             HttpResponseMessage response = await httpClient.GetAsync(uri);
 
             TResult result = await ProcessResponse<TResult>(response);
-            loadingService.HideLoading();
+            loadingService.Hide();
             return result;
         }
 
@@ -76,7 +75,7 @@ namespace Nootus.Fabric.Mobile.WebApi
             }
             finally
             {
-                loadingService.HideLoading();
+                loadingService.Hide();
             }
         }
 
