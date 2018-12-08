@@ -35,7 +35,7 @@ namespace Nootus.Fabric.Mobile.WebApi
 
         public async Task<TResult> GetAsync<TResult>(string uri)
         {
-            loadingService.ShowLoading();
+            loadingService.DisplayLoading();
             HttpClient httpClient = CreateHttpClient();
             HttpResponseMessage response = await httpClient.GetAsync(uri);
 
@@ -64,7 +64,7 @@ namespace Nootus.Fabric.Mobile.WebApi
 
         public async Task<TResult> PostAsync<TResult>(string uri, HttpContent content)
         {
-            loadingService.ShowLoading();
+            loadingService.DisplayLoading();
             HttpClient httpClient = CreateHttpClient();
             HttpResponseMessage response;
             try
@@ -78,7 +78,6 @@ namespace Nootus.Fabric.Mobile.WebApi
                 loadingService.Hide();
             }
         }
-
 
         private HttpClient CreateHttpClient()
         {

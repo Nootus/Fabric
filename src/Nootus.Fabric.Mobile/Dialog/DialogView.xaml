@@ -3,19 +3,21 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="Nootus.Fabric.Mobile.Dialog.DialogView">
     <ContentPage.Content>
-        <StackLayout Margin="20" BackgroundColor="Transparent" 
+        <StackLayout x:Name="ParentStack" Margin="20" BackgroundColor="Transparent" 
                      HorizontalOptions="FillAndExpand" VerticalOptions="Center">
-            <StackLayout BackgroundColor="White" Padding="20" HorizontalOptions="Center" VerticalOptions="Center"
-                       x:Name="LoadingStack">
+            <StackLayout x:Name="LoadingStack" BackgroundColor="White" Padding="20" 
+                         Orientation="Horizontal" HorizontalOptions="Center" VerticalOptions="Center">
                 <ActivityIndicator IsRunning="True" Color="Black" />
-                <Label FontAttributes="Bold" Text="Loading..." TextColor="Black" />
+                <Label FontAttributes="Bold" Text="Loading..." TextColor="Black" VerticalOptions="Center" Margin="10, 0, 0, 0" />
             </StackLayout>
-            <StackLayout BackgroundColor="White" Padding="20" Orientation="Horizontal" HorizontalOptions="Center"  
-                         VerticalOptions="Center" x:Name="AlertStack">
-                <ActivityIndicator IsRunning="True" Color="Black" />
-                <Label FontAttributes="Bold" Text="Message" TextColor="Black" HorizontalOptions="FillAndExpand" VerticalOptions="Center" />
+            <StackLayout x:Name="AlertStack" BackgroundColor="White" Padding="20">
+                <StackLayout Orientation="Horizontal" HorizontalOptions="Center" VerticalOptions="Center">
+                    <Image x:Name="AlertIcon" HeightRequest="32" WidthRequest="32" />
+                    <Label x:Name="AlertMessage"  FontAttributes="Bold" Text="Message" TextColor="Black" 
+                       HorizontalOptions="FillAndExpand" VerticalOptions="Center" Margin="10, 0, 0, 0" />
+                </StackLayout>
+                <Button x:Name="AlertButton" HorizontalOptions="End" Text="Close" Clicked="Close_Clicked" Margin="0, 30, 50, 0"></Button>
             </StackLayout>
         </StackLayout>
     </ContentPage.Content>
 </ContentPage>
- 

@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Nootus.Fabric.Mobile.Dialog;
+using System;
 using System.Threading.Tasks;
 using Xamarin.Forms;
 
@@ -14,7 +15,7 @@ namespace Nootus.Fabric.Mobile.Core
                                                 }
                                                 catch(System.Exception exp)
                                                 {
-                                                    await Application.Current.MainPage.DisplayAlert("Error Command", exp.Message, "OK");
+                                                    DependencyService.Get<IDialogService>().DisplayAlert(AlertMode.Error, exp.Message);
                                                 }
                                             })
         {
