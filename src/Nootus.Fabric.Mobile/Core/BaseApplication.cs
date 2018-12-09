@@ -1,4 +1,5 @@
 ﻿using Autofac;
+using Nootus.Fabric.Mobile.Security;
 using Nootus.Fabric.Mobile.Settings;
 using Nootus.Fabric.Mobile.WebApi;
 using Xamarin.Forms;
@@ -32,6 +33,7 @@ namespace Nootus.Fabric.Mobile.Core
             builder.RegisterType<UserProfile>().SingleInstance();
             builder.RegisterType<SettingsService>().SingleInstance();
             builder.RegisterType<ApiRequest>().SingleInstance();
+            builder.RegisterType<TokenService>().SingleInstance();
             builder.RegisterType<Session>().SingleInstance();
         }
 

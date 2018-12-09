@@ -5,6 +5,7 @@ using Nootus.Fabric.Mobile.Exception;
 using Nootus.Fabric.Mobile.Security;
 using Nootus.Fabric.Mobile.Settings;
 using Nootus.Fabric.Mobile.WebApi.Models;
+using System;
 using System.Linq;
 using System.Net;
 using System.Net.Http;
@@ -18,9 +19,13 @@ namespace Nootus.Fabric.Mobile.WebApi
     {
         private readonly JsonSerializerSettings serializerSettings;
         private readonly AppSettings settings;
-        private IDialogService loadingService;
+        private readonly Session session;
+        private readonly TokenService tokenService;
+        private IDialogService dialogService;
 
-        public ApiRequest(AppSettings settings)
+        private string refreshApi = "";
+
+        public ApiRequest(AppSettings settings, Session session, TokenService tokenService)
         {
             serializerSettings = new JsonSerializerSettings
             {
@@ -30,17 +35,19 @@ namespace Nootus.Fabric.Mobile.WebApi
             serializerSettings.Converters.Add(new StringEnumConverter());
 
             this.settings = settings;
-            loadingService = DependencyService.Get<IDialogService>();
+            this.session = session;
+            this.tokenService = tokenService;
+            dialogService = DependencyService.Get<IDialogService>();
         }
 
         public async Task<TResult> GetAsync<TResult>(string uri)
         {
-            loadingService.DisplayLoading();
+            dialogService.DisplayLoading();
             HttpClient httpClient = CreateHttpClient();
             HttpResponseMessage response = await httpClient.GetAsync(uri);
 
             TResult result = await ProcessResponse<TResult>(response);
-            loadingService.Hide();
+            dialogService.Hide();
             return result;
         }
 
@@ -64,7 +71,7 @@ namespace Nootus.Fabric.Mobile.WebApi
 
         public async Task<TResult> PostAsync<TResult>(string uri, HttpContent content)
         {
-            loadingService.DisplayLoading();
+            dialogService.DisplayLoading();
             HttpClient httpClient = CreateHttpClient();
             HttpResponseMessage response;
             try
@@ -75,7 +82,7 @@ namespace Nootus.Fabric.Mobile.WebApi
             }
             finally
             {
-                loadingService.Hide();
+                dialogService.Hide();
             }
         }
 
@@ -83,19 +90,22 @@ namespace Nootus.Fabric.Mobile.WebApi
         {
             var httpClient = new HttpClient();
             httpClient.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
+            if(session.Token == null)
+            {
+                session.Token = settings.Token ?? new Token();
+            }
 
-            Token token = settings.Token;
+            Token token = session.Token;
             if (token != null)
             {
                 httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", token.JwtToken);
-                // httpClient.DefaultRequestHeaders.Add(parameter, value);
             }
             return httpClient;
         }
 
         private async Task<TResult> ProcessResponse<TResult>(HttpResponseMessage response)
         {
-            ExtractTokens(response.Headers);
+            await tokenService.ExtractTokens(response.Headers);
 
             if (!response.IsSuccessStatusCode)
             {
@@ -127,19 +137,5 @@ namespace Nootus.Fabric.Mobile.WebApi
             }
         }
 
-        private void ExtractTokens(HttpResponseHeaders headers)
-        {
-            Token token = settings.Token;
-            if (token == null) token = new Token();
-            if (headers.Contains(TokenHttpHeaders.JwtToken))
-            {
-                token.JwtToken = headers.GetValues(TokenHttpHeaders.JwtToken).FirstOrDefault();
-            }
-            if (headers.Contains(TokenHttpHeaders.RefreshToken))
-            {
-                token.RefreshToken = headers.GetValues(TokenHttpHeaders.RefreshToken).FirstOrDefault();
-                settings.Token = token; // updating the refresh token
-            }
-        }
     }
 }
