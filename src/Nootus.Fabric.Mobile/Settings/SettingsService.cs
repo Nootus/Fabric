@@ -1,4 +1,5 @@
-﻿using System.Threading.Tasks;
+﻿using Newtonsoft.Json;
+using System.Threading.Tasks;
 using Xamarin.Forms;
 
 namespace Nootus.Fabric.Mobile.Settings
@@ -17,7 +18,7 @@ namespace Nootus.Fabric.Mobile.Settings
             }
             else
             {
-                Application.Current.Properties[key] = value;
+                Application.Current.Properties[key] = JsonConvert.SerializeObject(value);
                 await Application.Current.SavePropertiesAsync();
             }
         }
@@ -27,7 +28,7 @@ namespace Nootus.Fabric.Mobile.Settings
             object value = null;
             if (Application.Current.Properties.ContainsKey(key))
             {
-                value = Application.Current.Properties[key];
+                value = JsonConvert.DeserializeObject<TValue>(Application.Current.Properties[key] as string);
             }
             return null != value ? (TValue)value : defaultValue;
         }

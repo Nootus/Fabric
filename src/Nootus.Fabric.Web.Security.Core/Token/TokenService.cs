@@ -94,7 +94,7 @@ namespace Nootus.Fabric.Web.Security.Core.Token
 
             if((DateTime.UtcNow - securityToken.ValidTo).TotalMinutes > TokenSettings.MaxLifeTime)
             {
-                NTContext.HttpContext.Response.Headers.Add(TokenHttpHeaders.TokenRefresh, "false");
+                NTContext.HttpContext.Response.Headers.Add(TokenHttpHeaders.RefreshTokenExpired, "true");
                 return null;
             }
 

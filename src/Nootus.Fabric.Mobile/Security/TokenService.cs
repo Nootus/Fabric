@@ -35,7 +35,7 @@ namespace Nootus.Fabric.Mobile.Security
 
             if (session.IsAuthenticated)
             {
-                if(session.Token.TokenExpiryDate < DateTime.Now)
+                if(session.Token.RefreshTokenExpiryDate < DateTime.Now)
                 {
                     session.Token = new Token();
                 }
@@ -50,12 +50,12 @@ namespace Nootus.Fabric.Mobile.Security
         {
             Token token = session.Token;
 
-            if(headers.GetTokenHeader(TokenHttpHeaders.TokenRefresh) == "false")
+            if(headers.GetTokenHeader(TokenHttpHeaders.RefreshTokenExpired) == "false")
             {
                 // redirect to login page
             }
 
-            if (headers.GetTokenHeader(TokenHttpHeaders.TokenExpired) == "true")
+            if (headers.GetTokenHeader(TokenHttpHeaders.JwtTokenExpired) == "true")
             {
                 await RefreshToken();
             }
@@ -63,12 +63,12 @@ namespace Nootus.Fabric.Mobile.Security
             token.JwtToken = headers.GetTokenHeader(TokenHttpHeaders.JwtToken) ?? token.JwtToken;
             token.RefreshToken = headers.GetTokenHeader(TokenHttpHeaders.RefreshToken) ?? token.RefreshToken;
 
-            if (headers.Contains(TokenHttpHeaders.TokenLifeTime))
+            if (headers.Contains(TokenHttpHeaders.RefreshTokenLifeTime))
             {
-                token.TokenExpiryDate = DateTime.Now.AddMinutes(Convert.ToInt32(headers.GetValues(TokenHttpHeaders.TokenLifeTime).FirstOrDefault()));
+                token.RefreshTokenExpiryDate = DateTime.Now.AddMinutes(Convert.ToInt32(headers.GetValues(TokenHttpHeaders.RefreshTokenLifeTime).FirstOrDefault()));
             }
 
-            if (appSettings.Token != null && appSettings.Token.RefreshToken != token.RefreshToken)
+            if (token.RefreshToken != null && appSettings.Token?.RefreshToken != token.RefreshToken)
             {
                 appSettings.Token = token; // updating the settings
             }

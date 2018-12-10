@@ -142,6 +142,7 @@ namespace Nootus.Fabric.Web.Security.Cosmos.Domain
                 await DbService.UpdateDocumentAsync(userAuthDocument);
             }
             NTContext.HttpContext.Response.Headers.Add(TokenHttpHeaders.RefreshToken, userAuthDocument.Model.RefreshToken);
+            NTContext.HttpContext.Response.Headers.Add(TokenHttpHeaders.RefreshTokenLifeTime, TokenSettings.MaxLifeTime.ToString());
 
             return userProfile;
         }
@@ -161,7 +162,7 @@ namespace Nootus.Fabric.Web.Security.Cosmos.Domain
                 }
                 else
                 {
-                    NTContext.HttpContext.Response.Headers.Add(TokenHttpHeaders.TokenRefresh, "false");
+                    NTContext.HttpContext.Response.Headers.Add(TokenHttpHeaders.RefreshTokenExpired, "true");
                 }
             }
         }

@@ -31,7 +31,7 @@ namespace Nootus.Fabric.Web.Security.Core
                         {
                             if (context.Exception.GetType() == typeof(SecurityTokenExpiredException))
                             {
-                                context.Response.Headers.Add(TokenHttpHeaders.TokenExpired, "true");
+                                context.Response.Headers.Add(TokenHttpHeaders.JwtTokenExpired, "true");
                             }
                             return Task.CompletedTask;
                         },

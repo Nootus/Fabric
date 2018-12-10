@@ -54,6 +54,7 @@ namespace Nootus.Fabric.Web.Security.Cosmos
         {
             base.ConfigureDependencyInjection(services);
 
+            services.AddTransient<IAccountService, AccountService>();
             services.AddTransient<AccountService>();
             services.AddTransient<RepositoryService>();
         }

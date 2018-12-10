@@ -5,8 +5,7 @@ using Nootus.Fabric.Mobile.Exception;
 using Nootus.Fabric.Mobile.Security;
 using Nootus.Fabric.Mobile.Settings;
 using Nootus.Fabric.Mobile.WebApi.Models;
-using System;
-using System.Linq;
+using Polly;
 using System.Net;
 using System.Net.Http;
 using System.Net.Http.Headers;
@@ -19,11 +18,9 @@ namespace Nootus.Fabric.Mobile.WebApi
     {
         private readonly JsonSerializerSettings serializerSettings;
         private readonly AppSettings settings;
-        private readonly Session session;
+         private readonly Session session;
         private readonly TokenService tokenService;
         private IDialogService dialogService;
-
-        private string refreshApi = "";
 
         public ApiRequest(AppSettings settings, Session session, TokenService tokenService)
         {
@@ -42,13 +39,7 @@ namespace Nootus.Fabric.Mobile.WebApi
 
         public async Task<TResult> GetAsync<TResult>(string uri)
         {
-            dialogService.DisplayLoading();
-            HttpClient httpClient = CreateHttpClient();
-            HttpResponseMessage response = await httpClient.GetAsync(uri);
-
-            TResult result = await ProcessResponse<TResult>(response);
-            dialogService.Hide();
-            return result;
+            return await GetPostAsync<TResult>(HttpMethod.Get, uri, null);
         }
 
         public async Task<NTModel> PostAsync<TContent>(string uri, TContent data)
@@ -71,14 +62,25 @@ namespace Nootus.Fabric.Mobile.WebApi
 
         public async Task<TResult> PostAsync<TResult>(string uri, HttpContent content)
         {
+            return await GetPostAsync<TResult>(HttpMethod.Post, uri, content);
+        }
+
+        private async Task<TResult> GetPostAsync<TResult>(HttpMethod method, string uri, HttpContent content)
+        {
+
             dialogService.DisplayLoading();
-            HttpClient httpClient = CreateHttpClient();
-            HttpResponseMessage response;
             try
-            {
-                response = await httpClient.PostAsync(uri, content);
-                TResult result = await ProcessResponse<TResult>(response);
-                return result;
+            {            
+                return await Policy
+                    .Handle<HttpRequestException>()
+                    .RetryAsync(3)
+                    .ExecuteAsync<TResult>(async () =>
+                    {
+                        HttpClient httpClient = CreateHttpClient();
+                        HttpResponseMessage response = method == HttpMethod.Post ?
+                            await httpClient.PostAsync(uri, content) : await httpClient.GetAsync(uri);
+                        return await ProcessResponse<TResult>(response);
+                    });
             }
             finally
             {
@@ -90,15 +92,10 @@ namespace Nootus.Fabric.Mobile.WebApi
         {
             var httpClient = new HttpClient();
             httpClient.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
-            if(session.Token == null)
-            {
-                session.Token = settings.Token ?? new Token();
-            }
 
-            Token token = session.Token;
-            if (token != null)
+            if (session.Token.JwtToken != null)
             {
-                httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", token.JwtToken);
+                httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", session.Token.JwtToken);
             }
             return httpClient;
         }
@@ -136,6 +133,5 @@ namespace Nootus.Fabric.Mobile.WebApi
                 return ajax.Model;
             }
         }
-
     }
 }

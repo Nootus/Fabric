@@ -4,8 +4,8 @@
     {
         public const string JwtToken = "JwtToken";
         public const string RefreshToken = "RefreshToken";
-        public const string TokenExpired = "TokenExpired";
-        public const string TokenRefresh = "TokenRefresh";
-        public const string TokenLifeTime = "TokenLifeTime";
+        public const string JwtTokenExpired = "JwtTokenExpired";
+        public const string RefreshTokenExpired = "RefreshTokenExpired";
+        public const string RefreshTokenLifeTime = "RefreshTokenLifeTime";
     }
 }
