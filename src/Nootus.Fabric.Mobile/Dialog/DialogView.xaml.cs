@@ -13,7 +13,7 @@ namespace Nootus.Fabric.Mobile.Dialog
 
         public DialogView(IDialogService service)
 		{
-			InitializeComponent ();
+			InitializeComponent();
             this.service = service;
 		}
 

@@ -67,25 +67,42 @@ namespace Nootus.Fabric.Mobile.WebApi
 
         private async Task<TResult> GetPostAsync<TResult>(HttpMethod method, string uri, HttpContent content)
         {
-
-            dialogService.DisplayLoading();
+            /*
             try
-            {            
-                return await Policy
-                    .Handle<HttpRequestException>()
-                    .RetryAsync(3)
-                    .ExecuteAsync<TResult>(async () =>
-                    {
-                        HttpClient httpClient = CreateHttpClient();
-                        HttpResponseMessage response = method == HttpMethod.Post ?
-                            await httpClient.PostAsync(uri, content) : await httpClient.GetAsync(uri);
-                        return await ProcessResponse<TResult>(response);
-                    });
-            }
-            finally
             {
-                dialogService.Hide();
+                HttpClient httpClient = CreateHttpClient();
+                HttpResponseMessage response = method == HttpMethod.Post ?
+                    await httpClient.PostAsync(uri, content) : await httpClient.GetAsync(uri);
+                return await ProcessResponse<TResult>(response);
             }
+            catch (System.Exception exp)
+            {
+                HttpClient httpClient = CreateHttpClient();
+                HttpResponseMessage response = method == HttpMethod.Post ?
+                    await httpClient.PostAsync(uri, content) : await httpClient.GetAsync(uri);
+                return await ProcessResponse<TResult>(response);
+            }
+            */
+
+            
+                // dialogService.DisplayLoading();
+                try
+                {            
+                    return await Policy
+                        .Handle<HttpRequestException>()
+                        .RetryAsync(1)
+                        .ExecuteAsync<TResult>(async () =>
+                        {
+                            HttpClient httpClient = CreateHttpClient();
+                            HttpResponseMessage response = method == HttpMethod.Post ?
+                                await httpClient.PostAsync(uri, content) : await httpClient.GetAsync(uri);
+                            return await ProcessResponse<TResult>(response);
+                        });
+                }
+                finally
+                {
+                    // dialogService.Hide();
+                }
         }
 
         private HttpClient CreateHttpClient()
@@ -108,13 +125,17 @@ namespace Nootus.Fabric.Mobile.WebApi
             {
                 var content = await response.Content.ReadAsStringAsync();
 
-                if (response.StatusCode == HttpStatusCode.Forbidden ||
-                    response.StatusCode == HttpStatusCode.Unauthorized)
+                switch (response.StatusCode)
                 {
-                    throw new HttpRequestException(content);
-                }
+                    case HttpStatusCode.Unauthorized:
+                        throw new HttpRequestException(content);
 
-                throw new HttpRequestException(content);
+                    case HttpStatusCode.Forbidden:
+                        throw new System.Exception(content);
+
+                    default:
+                        throw new HttpRequestException(content);
+                }
             }
             else
             {

@@ -1,4 +1,5 @@
 ﻿using Microsoft.IdentityModel.Tokens;
+using Newtonsoft.Json;
 using Nootus.Fabric.Web.Core.Context;
 using Nootus.Fabric.Web.Security.Core.Common;
 using Nootus.Fabric.Web.Security.Core.Identity;
@@ -52,7 +53,8 @@ namespace Nootus.Fabric.Web.Security.Core.Token
               signingCredentials: new SigningCredentials(key, SecurityAlgorithms.HmacSha256));
 
             string jwtToken = new JwtSecurityTokenHandler().WriteToken(token);
-            NTContext.HttpContext.Response.Headers.Add(TokenHttpHeaders.JwtToken, jwtToken);
+
+            SetTokenHeader(jwtToken);
             return jwtToken;
         }
 
@@ -94,11 +96,38 @@ namespace Nootus.Fabric.Web.Security.Core.Token
 
             if((DateTime.UtcNow - securityToken.ValidTo).TotalMinutes > TokenSettings.MaxLifeTime)
             {
-                NTContext.HttpContext.Response.Headers.Add(TokenHttpHeaders.RefreshTokenExpired, "true");
                 return null;
             }
 
             return principal;
+        }
+
+        public static void SetTokenHeader(string jwtToken, string refreshToken = null)
+        {
+            SetTokenHeader(new TokenHttpHeader() { JwtToken = jwtToken, RefreshToken = refreshToken });
+        }
+
+        public static void SetTokenHeader(bool jwtTokenExpired = false, bool refreshTokenExpired = false)
+        {
+            SetTokenHeader(new TokenHttpHeader() { JwtTokenExpired = jwtTokenExpired, RefreshTokenExpired = refreshTokenExpired });
+        }
+
+        public static void SetTokenHeader(TokenHttpHeader tokenHeader)
+        {
+            string tokenHeaderName = "Token";
+
+            if(tokenHeader.JwtToken != null)
+            {
+                tokenHeader.JwtLifeTime = TokenSettings.LifeTime;
+                tokenHeader.MaxLifeTime = TokenSettings.MaxLifeTime;
+            }
+
+            if(NTContext.HttpContext.Response.Headers.Keys.Contains(tokenHeaderName))
+            {
+                NTContext.HttpContext.Response.Headers.Remove(tokenHeaderName);
+            }
+
+            NTContext.HttpContext.Response.Headers.Add(tokenHeaderName, JsonConvert.SerializeObject(tokenHeader));
         }
     }
 }

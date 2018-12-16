@@ -1,4 +1,5 @@
 ﻿using Autofac;
+using Newtonsoft.Json;
 using Nootus.Fabric.Mobile.Core;
 using Nootus.Fabric.Mobile.Security.Models;
 using Nootus.Fabric.Mobile.Settings;
@@ -35,42 +36,38 @@ namespace Nootus.Fabric.Mobile.Security
 
             if (session.IsAuthenticated)
             {
-                if(session.Token.RefreshTokenExpiryDate < DateTime.Now)
-                {
-                    session.Token = new Token();
-                }
-                else
-                {
-                    await RefreshTokenProfile();
-                }
+                await RefreshTokenProfile();
             }
         }
 
         public async Task ExtractTokens(HttpResponseHeaders headers)
         {
-            Token token = session.Token;
+            string tokenHeaderName = "Token";
 
-            if(headers.GetTokenHeader(TokenHttpHeaders.RefreshTokenExpired) == "false")
+            if (headers.Contains(tokenHeaderName))
             {
-                // redirect to login page
-            }
+                TokenHttpHeader tokenHeader = JsonConvert.DeserializeObject<TokenHttpHeader>(headers.GetValues(tokenHeaderName).FirstOrDefault());
 
-            if (headers.GetTokenHeader(TokenHttpHeaders.JwtTokenExpired) == "true")
-            {
-                await RefreshToken();
-            }
+                if (tokenHeader.RefreshTokenExpired)
+                {
+                    // redirect to login page
+                    session.Token = new Token();
+                }
 
-            token.JwtToken = headers.GetTokenHeader(TokenHttpHeaders.JwtToken) ?? token.JwtToken;
-            token.RefreshToken = headers.GetTokenHeader(TokenHttpHeaders.RefreshToken) ?? token.RefreshToken;
+                if (tokenHeader.JwtTokenExpired)
+                {
+                    await RefreshToken();
+                }
 
-            if (headers.Contains(TokenHttpHeaders.RefreshTokenLifeTime))
-            {
-                token.RefreshTokenExpiryDate = DateTime.Now.AddMinutes(Convert.ToInt32(headers.GetValues(TokenHttpHeaders.RefreshTokenLifeTime).FirstOrDefault()));
-            }
-
-            if (token.RefreshToken != null && appSettings.Token?.RefreshToken != token.RefreshToken)
-            {
-                appSettings.Token = token; // updating the settings
+                if (tokenHeader.JwtToken != null)
+                {
+                    Token token = session.Token;
+                    token.JwtToken = tokenHeader.JwtToken;
+                    token.JwtTokenExpiry = DateTime.Now.AddMinutes(tokenHeader.JwtLifeTime);
+                    token.RefreshToken = tokenHeader.RefreshToken ?? token.RefreshToken;
+                    token.RefreshTokenExpiry = DateTime.Now.AddMinutes(tokenHeader.MaxLifeTime + tokenHeader.JwtLifeTime);
+                    appSettings.Token = token; // updating the settings
+                }
             }
         }
 
@@ -93,7 +90,7 @@ namespace Nootus.Fabric.Mobile.Security
                 RefreshToken = session.Token.RefreshToken
             };
 
-            return await api.PostAsync<RefreshTokenModel, TReturn>(refreshProfileUri, refreshModel);
+            return await api.PostAsync<RefreshTokenModel, TReturn>(uri, refreshModel);
         }
     }
     public static class HeaderExtensions

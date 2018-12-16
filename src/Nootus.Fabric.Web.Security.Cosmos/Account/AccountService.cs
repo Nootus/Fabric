@@ -28,7 +28,12 @@ namespace Nootus.Fabric.Web.Security.Cosmos.Domain
             await Task.CompletedTask;
 
         public async Task<UserProfileModel> ProfileGet()
-            => await ProfileGet(NTContext.Context.UserName);
+        {
+            if (NTContext.Context.UserName == null)
+                return null;
+
+            return await ProfileGet(NTContext.Context.UserName);
+        }
 
         public async Task<UserProfileModel> ProfileGet(string username)
             => await DbService.GetModelByKeyAsyc<UserProfileModel>(username, SecurityAppSettings.ServiceSettings.DocumentTypes.UserProfile);
@@ -141,9 +146,8 @@ namespace Nootus.Fabric.Web.Security.Cosmos.Domain
                 userAuthDocument.Model.RefreshToken = TokenService.GenerateRefreshToken();
                 await DbService.UpdateDocumentAsync(userAuthDocument);
             }
-            NTContext.HttpContext.Response.Headers.Add(TokenHttpHeaders.RefreshToken, userAuthDocument.Model.RefreshToken);
-            NTContext.HttpContext.Response.Headers.Add(TokenHttpHeaders.RefreshTokenLifeTime, TokenSettings.MaxLifeTime.ToString());
 
+            TokenService.SetTokenHeader(jwtToken, userAuthDocument.Model.RefreshToken);
             return userProfile;
         }
 
@@ -153,6 +157,7 @@ namespace Nootus.Fabric.Web.Security.Cosmos.Domain
             ClaimsPrincipal principal = TokenService.GetPrincipalFromToken(jwtToken);
             if(principal != null)
             {
+                NTContext.Context.UserName = principal.Identity.Name;
                 UserAuthModel authModel = await DbService.GetModelByKeyAsyc<UserAuthModel>(principal.Identity.Name, SecurityAppSettings.ServiceSettings.DocumentTypes.UserAuth);
 
                 // checking refresh token validity
@@ -162,8 +167,12 @@ namespace Nootus.Fabric.Web.Security.Cosmos.Domain
                 }
                 else
                 {
-                    NTContext.HttpContext.Response.Headers.Add(TokenHttpHeaders.RefreshTokenExpired, "true");
+                    TokenService.SetTokenHeader(refreshTokenExpired: true);
                 }
+            }
+            else
+            {
+                TokenService.SetTokenHeader(refreshTokenExpired: true);
             }
         }
     }
