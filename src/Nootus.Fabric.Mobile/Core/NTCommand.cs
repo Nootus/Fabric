@@ -21,5 +21,20 @@ namespace Nootus.Fabric.Mobile.Core
         {
 
         }
+
+        public NTCommand(Action execute) : base(() =>
+        {
+            try
+            {
+                execute();
+            }
+            catch (System.Exception exp)
+            {
+                DependencyService.Get<IDialogService>().DisplayAlert(AlertMode.Error, exp.Message);
+            }
+        })
+        {
+
+        }
     }
 }

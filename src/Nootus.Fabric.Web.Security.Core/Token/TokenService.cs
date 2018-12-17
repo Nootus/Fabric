@@ -94,10 +94,10 @@ namespace Nootus.Fabric.Web.Security.Core.Token
                 || !jwtSecurityToken.Header.Alg.Equals(SecurityAlgorithms.HmacSha256, StringComparison.InvariantCultureIgnoreCase))
                 throw new SecurityTokenException(SecurityMessages.InvalidToken);
 
-            if((DateTime.UtcNow - securityToken.ValidTo).TotalMinutes > TokenSettings.MaxLifeTime)
-            {
-                return null;
-            }
+            //if((DateTime.UtcNow - securityToken.ValidTo).TotalMinutes > TokenSettings.MaxLifeTime)
+            //{
+            //    return null;
+            //}
 
             return principal;
         }

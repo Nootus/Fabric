@@ -126,7 +126,7 @@ namespace Nootus.Fabric.Mobile.Controls
             int raisInd = raised ? 1 : 0;
             for (int i = 1 - raisInd; i < Children.Count - raisInd; i++)
             {
-                Children[i].TranslateTo(0, -60 * (i + raisInd), (uint)time);
+                await Children[i].TranslateTo(0, -60 * (i + raisInd), (uint)time);
             }
             await Task.Delay(time);
             for (int i = 1 - raisInd; i < Children.Count - raisInd; i++)

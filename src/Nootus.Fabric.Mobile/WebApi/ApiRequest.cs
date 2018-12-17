@@ -6,6 +6,7 @@ using Nootus.Fabric.Mobile.Security;
 using Nootus.Fabric.Mobile.Settings;
 using Nootus.Fabric.Mobile.WebApi.Models;
 using Polly;
+using System;
 using System.Net;
 using System.Net.Http;
 using System.Net.Http.Headers;
@@ -67,42 +68,26 @@ namespace Nootus.Fabric.Mobile.WebApi
 
         private async Task<TResult> GetPostAsync<TResult>(HttpMethod method, string uri, HttpContent content)
         {
-            /*
+            dialogService.DisplayLoading();
             try
-            {
-                HttpClient httpClient = CreateHttpClient();
-                HttpResponseMessage response = method == HttpMethod.Post ?
-                    await httpClient.PostAsync(uri, content) : await httpClient.GetAsync(uri);
-                return await ProcessResponse<TResult>(response);
+            {            
+                return await Policy
+                    .Handle<HttpRequestException>()
+                    .RetryAsync(1)
+                    .ExecuteAsync<TResult>(async () =>
+                    {
+                        HttpClient httpClient = CreateHttpClient();
+                        if(settings.HttpClientTimeout > 0)
+                            httpClient.Timeout = TimeSpan.FromSeconds(settings.HttpClientTimeout);
+                        HttpResponseMessage response = method == HttpMethod.Post ?
+                            await httpClient.PostAsync(uri, content) : await httpClient.GetAsync(uri);
+                        return await ProcessResponse<TResult>(response);
+                    });
             }
-            catch (System.Exception exp)
+            finally
             {
-                HttpClient httpClient = CreateHttpClient();
-                HttpResponseMessage response = method == HttpMethod.Post ?
-                    await httpClient.PostAsync(uri, content) : await httpClient.GetAsync(uri);
-                return await ProcessResponse<TResult>(response);
+                dialogService.Hide();
             }
-            */
-
-            
-                // dialogService.DisplayLoading();
-                try
-                {            
-                    return await Policy
-                        .Handle<HttpRequestException>()
-                        .RetryAsync(1)
-                        .ExecuteAsync<TResult>(async () =>
-                        {
-                            HttpClient httpClient = CreateHttpClient();
-                            HttpResponseMessage response = method == HttpMethod.Post ?
-                                await httpClient.PostAsync(uri, content) : await httpClient.GetAsync(uri);
-                            return await ProcessResponse<TResult>(response);
-                        });
-                }
-                finally
-                {
-                    // dialogService.Hide();
-                }
         }
 
         private HttpClient CreateHttpClient()

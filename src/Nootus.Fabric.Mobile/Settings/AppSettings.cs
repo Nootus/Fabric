@@ -25,5 +25,7 @@ namespace Nootus.Fabric.Mobile.Settings
                 service.AddOrUpdateValue(AuthToken, token);
             }
         }
+
+        public int HttpClientTimeout { get; set; }
     }
 }

@@ -27,17 +27,17 @@ namespace Nootus.Fabric.Mobile.Security
             session.Token = appSettings.Token;
         }
 
-        public async Task Initialize(string refreshUri, string refreshProfileUri)
+        public void Initialize(string refreshUri, string refreshProfileUri)
         {
             session.Token = session.Token ?? new Token();
 
             this.refreshUri = refreshUri;
             this.refreshProfileUri = refreshProfileUri;
 
-            if (session.IsAuthenticated)
-            {
-                await RefreshTokenProfile();
-            }
+            //if (session.IsAuthenticated)
+            //{
+            //    await RefreshTokenProfile();
+            //}
         }
 
         public async Task ExtractTokens(HttpResponseHeaders headers)
@@ -76,7 +76,7 @@ namespace Nootus.Fabric.Mobile.Security
             await RefreshTokenInternal<NTModel>(refreshUri);
         }
 
-        private async Task RefreshTokenProfile()
+        public async Task RefreshTokenProfile()
         {
             session.UserProfile = await RefreshTokenInternal<UserProfileModel>(refreshProfileUri);
         }

@@ -64,9 +64,11 @@ namespace Nootus.Fabric.Mobile.Dialog
             AlertMessage.Text = message;
         }
 
+        public bool IsInitialized => Application.Current.MainPage != null;
+
         private void InitializeDialog()
         {
-            Page mainPage = Xamarin.Forms.Application.Current.MainPage;
+            Page mainPage = Application.Current.MainPage;
 
             Parent = mainPage;
             Layout(new Rectangle(0, 0, mainPage.Width, mainPage.Height));
