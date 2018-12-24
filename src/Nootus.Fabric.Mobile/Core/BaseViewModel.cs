@@ -18,10 +18,10 @@ namespace Nootus.Fabric.Mobile.Core
             set { SetProperty(ref title, value); }
         }
 
-        public virtual Task InitializeAsync(Page page)
+        public virtual async Task InitializeAsync(Page page)
         {
             Page = page;
-            return Task.FromResult(true);
+            await Task.FromResult(true);
         }
     }
 }
