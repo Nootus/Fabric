@@ -34,11 +34,16 @@ namespace Nootus.Fabric.Web
         {
             this.Configuration = configuration;
 
-            // initializing all modules
             FabricSettings.ConnectionString = Configuration.GetConnectionString("WebApp");
             FabricSettings.EnvironmentName = env.EnvironmentName;
             FabricSettings.SessionClaims = Configuration.GetValue<bool>("FabricSettings:SessionClaims");
             FabricSettings.LoginDevEnvironment = Configuration.GetValue<bool>("FabricSettings:LoginDevEnvironment");
+
+            // SMS Settings
+            SmsSettings.Enabled = Configuration.GetValue<bool>("Notification:Sms:Enabled");
+            SmsSettings.AuthKey = Configuration.GetValue<string>("Notification:Sms:AuthKey");
+            SmsSettings.Route = Configuration.GetValue<string>("Notification:Sms:Route");
+            SmsSettings.SenderId = Configuration.GetValue<string>("Notification:Sms:SenderId");
         }
 
         public IConfiguration Configuration { get; }

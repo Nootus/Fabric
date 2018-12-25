@@ -23,5 +23,16 @@ namespace Nootus.Fabric.Mobile.Core
             Page = page;
             await Task.FromResult(true);
         }
+
+        protected virtual void OnAppearing()
+        {
+            
+        }
+
+        public void PageAppearing(object sender, EventArgs e)
+        {
+            OnAppearing();
+        }
+
     }
 }

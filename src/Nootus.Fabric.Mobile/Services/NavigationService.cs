@@ -51,8 +51,10 @@ namespace Nootus.Fabric.Mobile.Services
         {
             BaseViewModel viewModel = DependencyInjection.Container.Resolve(viewModelType) as BaseViewModel;
             page.BindingContext = viewModel;
+            page.Appearing += viewModel.PageAppearing;
             await viewModel.InitializeAsync(page);
         }
+
 
         private static async Task<Page> CreatePage(Type viewModelType)
         {

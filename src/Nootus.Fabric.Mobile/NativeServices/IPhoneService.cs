@@ -1,7 +1,9 @@
-﻿namespace Nootus.Fabric.Mobile.NativeServices
+﻿using System;
+
+namespace Nootus.Fabric.Mobile.NativeServices
 {
     public interface IPhoneService
     {
-        string GetPhoneNumber();
+        void GetPhoneNumber(Action<string> callback);
     }
 }

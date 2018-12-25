@@ -23,7 +23,7 @@ namespace Nootus.Fabric.Mobile.Droid.Services
 
             nativeView = renderer.View;
 
-            dialog = new Android.App.Dialog(AndroidApplication.MainActivity);
+            dialog = new Android.App.Dialog(BaseApplication.MainActivity);
             dialog.RequestWindowFeature((int)WindowFeatures.NoTitle);
             dialog.SetCancelable(false);
             dialog.SetContentView(nativeView);
@@ -75,7 +75,7 @@ namespace Nootus.Fabric.Mobile.Droid.Services
             var renderer = Platform.GetRenderer(bindable);
             if (renderer == null)
             {
-                renderer = Platform.CreateRendererWithContext(bindable, AndroidApplication.MainActivity);
+                renderer = Platform.CreateRendererWithContext(bindable, BaseApplication.MainActivity);
                 Platform.SetRenderer(bindable, renderer);
             }
             return renderer;
