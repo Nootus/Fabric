@@ -52,5 +52,15 @@ namespace Nootus.Fabric.Web.Core.Notification
 
             return responseString;
         }
+
+        public static string OtpTemplate
+        {
+            get
+            {
+                return @"<#> To get stated in Kheling use {0} as your verification code!
+
+{1}";
+            }
+        }
     }
 }

@@ -2,6 +2,7 @@
 using Nootus.Fabric.Web.Core.Context;
 using Nootus.Fabric.Web.Core.Cosmos.Models;
 using Nootus.Fabric.Web.Core.Exception;
+using Nootus.Fabric.Web.Core.Notification;
 using Nootus.Fabric.Web.Security.Core.Common;
 using Nootus.Fabric.Web.Security.Core.Domain;
 using Nootus.Fabric.Web.Security.Core.Models;
@@ -74,6 +75,11 @@ namespace Nootus.Fabric.Web.Security.Cosmos.Domain
                 userAuthDocument.Model.Otp = otp;
                 await DbService.UpdateDocumentAsync(userAuthDocument);
             }
+
+            string appHash = "sP8qnF042oW";
+            string message = String.Format(SmsManager.OtpTemplate, otp, appHash);
+
+            SmsManager.SendSms(mobileNumber, message);
         }
 
         public async Task<UserProfileModel> ValidateOtp(LoginModel login)

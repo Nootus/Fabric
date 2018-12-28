@@ -49,9 +49,12 @@
     <Compile Include="Renderers\SvgTabbedPageRenderer.cs" />
     <Compile Include="Resources\Resource.designer.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Services\AppSignatureService.cs" />
     <Compile Include="Services\DialogService.cs" />
+    <Compile Include="Services\OtpBroadcastReceiver.cs" />
     <Compile Include="Services\PhoneService.cs" />
     <Compile Include="Services\RequestCode.cs" />
+    <Compile Include="Services\SignatureService.cs" />
     <Compile Include="Services\ToastService.cs" />
   </ItemGroup>
   <ItemGroup>
