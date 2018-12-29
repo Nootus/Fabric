@@ -27,6 +27,7 @@ namespace Nootus.Fabric.Mobile.Droid.Services
             {
                 case CommonStatusCodes.Success:
                     string message = (string)extras.Get(SmsRetriever.ExtraSmsMessage);
+                    BaseApplication.MainActivity.OtpCallback(message);
                     break;
                 case CommonStatusCodes.Timeout:
                     break;

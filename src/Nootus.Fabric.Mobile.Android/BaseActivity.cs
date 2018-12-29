@@ -10,6 +10,7 @@ namespace Nootus.Fabric.Mobile.Droid
     public class BaseActivity : global::Xamarin.Forms.Platform.Android.FormsAppCompatActivity
     {
         private Action<string> phoneNumberCallback;
+        public Action<string> OtpCallback { get; set; }
 
         public void StartIntentSender<TCallBack>(IntentSender intent, int requestCode, Action<TCallBack> callback)
             where TCallBack: class

@@ -9,5 +9,6 @@ namespace Nootus.Fabric.Mobile.Dialog
         void DisplayAlert(AlertMode mode, string message);
         void DisplayToast(AlertMode mode, string message);
         void Hide();
+        void Dismiss();
     }
 }

@@ -55,6 +55,7 @@ namespace Nootus.Fabric.Web.Security.Cosmos.Domain
         public async Task SendOtp(string mobileNumber)
         {
             int otp = 123456;
+            //int otp = new Random().Next(100000, 999999); // random OTP
 
             SharedCollectionDocument<UserAuthModel> userAuthDocument = await DbService.GetDocumentByKeyAsyc<UserAuthModel>(mobileNumber, SecurityAppSettings.ServiceSettings.DocumentTypes.UserAuth);
 

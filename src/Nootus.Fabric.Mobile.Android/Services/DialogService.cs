@@ -66,6 +66,11 @@ namespace Nootus.Fabric.Mobile.Droid.Services
                 dialog.Hide();
             }
         }
+
+        public void Dismiss()
+        {
+            dialog.Dismiss();
+        }
     }
 
     internal static class PlatformExtension
