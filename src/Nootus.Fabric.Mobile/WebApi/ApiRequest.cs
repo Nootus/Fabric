@@ -3,6 +3,7 @@ using Newtonsoft.Json.Converters;
 using Nootus.Fabric.Mobile.Dialog;
 using Nootus.Fabric.Mobile.Exception;
 using Nootus.Fabric.Mobile.Security;
+using Nootus.Fabric.Mobile.Services;
 using Nootus.Fabric.Mobile.Settings;
 using Nootus.Fabric.Mobile.WebApi.Models;
 using Polly;
@@ -134,6 +135,11 @@ namespace Nootus.Fabric.Mobile.WebApi
 
                     case AjaxResult.ValidationException:
                         throw new NTException(ajax.Message, ajax.Errors);
+                }
+
+                if (!string.IsNullOrEmpty(ajax.Message))
+                {
+                    DependencyService.Get<IToastService>().LongToast(ajax.Message);
                 }
 
                 return ajax.Model;

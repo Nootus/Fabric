@@ -15,6 +15,7 @@
   <ItemGroup>
     <ProjectReference Include="..\Nootus.Fabric.Web.Core\Nootus.Fabric.Web.Core.csproj" />
     <ProjectReference Include="..\Nootus.Fabric.Web.Security.Core\Nootus.Fabric.Web.Security.Core.csproj" />
+    <ProjectReference Include="..\Nootus.Fabric.Web.Security.Cosmos\Nootus.Fabric.Web.Security.Cosmos.csproj" />
   </ItemGroup>
 
 </Project>

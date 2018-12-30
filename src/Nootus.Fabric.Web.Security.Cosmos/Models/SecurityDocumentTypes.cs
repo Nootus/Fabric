@@ -11,5 +11,6 @@ namespace Nootus.Fabric.Web.Security.Cosmos.Models
         public string Role { get; set; }
         public string Claim { get; set; }
         public string Page { get; set; }
+        public string AndroidSettings { get; set; }
     }
 }

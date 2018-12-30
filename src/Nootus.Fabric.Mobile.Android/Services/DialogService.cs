@@ -6,6 +6,7 @@ using Nootus.Fabric.Mobile.Dialog;
 using System.Threading.Tasks;
 using Xamarin.Forms;
 using Xamarin.Forms.Platform.Android;
+using System.Collections.Generic;
 
 [assembly: Dependency(typeof(DialogService))]
 namespace Nootus.Fabric.Mobile.Droid.Services
@@ -15,6 +16,7 @@ namespace Nootus.Fabric.Mobile.Droid.Services
         private Android.Views.View nativeView;
         private DialogView dialogView;
         private Android.App.Dialog dialog;
+        private Stack<int> dialogStack = new Stack<int>();
 
         public void InitializeDialog()
         {
@@ -35,7 +37,7 @@ namespace Nootus.Fabric.Mobile.Droid.Services
 
         public void DisplayLoading()
         {
-            if (dialogView.IsInitialized)
+            if (StackDialog())
             {
                 dialogView.InitializeLoading();
                 dialog.Show();
@@ -60,7 +62,7 @@ namespace Nootus.Fabric.Mobile.Droid.Services
 
         public void Hide()
         {
-            if (dialogView.IsInitialized)
+            if (PopDialog())
             {
                 dialogView.Hide();
                 dialog.Hide();
@@ -70,6 +72,19 @@ namespace Nootus.Fabric.Mobile.Droid.Services
         public void Dismiss()
         {
             dialog.Dismiss();
+        }
+
+        private bool StackDialog()
+        {
+            dialogStack.Push(0);
+            return dialogStack.Count == 1;
+        }
+
+        private bool PopDialog()
+        {
+            if(dialogStack.Count > 0)
+                dialogStack.Pop();
+            return dialogStack.Count == 0;
         }
     }
 

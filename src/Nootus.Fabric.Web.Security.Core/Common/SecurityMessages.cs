@@ -25,5 +25,7 @@ namespace Nootus.Fabric.Web.Security.Core.Common
 
 
         public const string InvalidToken = "Invalid Token";
+
+        public const string SignatureHashSuccess = "Signature Hash saved successfully";
     }
 }

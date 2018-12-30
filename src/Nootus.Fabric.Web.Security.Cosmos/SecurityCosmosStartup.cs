@@ -5,6 +5,7 @@ using Nootus.Fabric.Web.Core.Cosmos;
 using Nootus.Fabric.Web.Core.Cosmos.Models;
 using Nootus.Fabric.Web.Security.Core;
 using Nootus.Fabric.Web.Security.Core.Domain;
+using Nootus.Fabric.Web.Security.Cosmos.Device;
 using Nootus.Fabric.Web.Security.Cosmos.Domain;
 using Nootus.Fabric.Web.Security.Cosmos.Middleware;
 using Nootus.Fabric.Web.Security.Cosmos.Models;
@@ -38,6 +39,7 @@ namespace Nootus.Fabric.Web.Security.Cosmos
             documentTypes.Role = Configuration.GetValue<string>("Microservices:Security:Database:DocumentTypes:Role");
             documentTypes.Claim = Configuration.GetValue<string>("Microservices:Security:Database:DocumentTypes:Claim");
             documentTypes.Page = Configuration.GetValue<string>("Microservices:Security:Database:DocumentTypes:Page");
+            documentTypes.AndroidSettings = Configuration.GetValue<string>("Microservices:Security:Database:DocumentTypes:AndroidSettings");
         }
 
         public override void ConfigureServices(IServiceCollection services)
@@ -56,6 +58,7 @@ namespace Nootus.Fabric.Web.Security.Cosmos
 
             services.AddTransient<IAccountService, AccountService>();
             services.AddTransient<AccountService>();
+            services.AddTransient<AndroidService>();            
             services.AddTransient<RepositoryService>();
         }
 

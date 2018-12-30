@@ -97,6 +97,7 @@ namespace Nootus.Fabric.Web.Core.Cosmos.Repositories
         {
             SharedCollectionDocument<TModel> document = new SharedCollectionDocument<TModel>()
             {
+                Id = key == documentType ? key : null,
                 Key = key,
                 DocumentType = documentType,
                 Model = model
@@ -115,9 +116,34 @@ namespace Nootus.Fabric.Web.Core.Cosmos.Repositories
             return document;
         }
                    
-        public async Task UpdateDocumentAsync<TModel>(SharedCollectionDocument<TModel> document)
+        public async Task ReplaceDocumentAsync<TModel>(SharedCollectionDocument<TModel> document)
             => await DbContext.Client.ReplaceDocumentAsync(document.SelfLink, document);
-   
+
+        public async Task ReplaceDocumentAsync<TModel>(string id, SharedCollectionDocument<TModel> document)
+            => await DbContext.Client.ReplaceDocumentAsync(CreateDocumentUri(defaultCollectionId, id), document);
+
+        public async Task ReplaceDocumentAsync<TModel>(string key, TModel model, string documentType)
+        {
+            var document = await GetDocumentByKeyAsyc<TModel>(key, documentType);
+            document.Model = model;
+            await ReplaceDocumentAsync(document);
+        }
+
+        public async Task CreateReplaceDocumentAsync<TModel>(string key, TModel model, string documentType)
+        {
+            var document = await GetDocumentByKeyAsyc<TModel>(key, documentType);
+            if(document == null)
+            {
+                await CreateDocumentAsync<TModel>(key, model, documentType);
+            }
+            else
+            {
+                document.Model = model;
+                await ReplaceDocumentAsync(document);
+            }
+        }
+
+
         public async Task<Document> DeleteDocumentAsync(string id) 
             => await DbContext.Client.DeleteDocumentAsync(CreateDocumentUri(defaultCollectionId, id));
 

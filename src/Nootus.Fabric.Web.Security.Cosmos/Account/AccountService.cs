@@ -47,7 +47,7 @@ namespace Nootus.Fabric.Web.Security.Cosmos.Domain
             profileModel.LastName = model.LastName;
             profileModel.IsRegistered = true;
 
-            await DbService.UpdateDocumentAsync(profileDocument);
+            await DbService.ReplaceDocumentAsync(profileDocument);
 
             return profileModel;
         }
@@ -74,7 +74,7 @@ namespace Nootus.Fabric.Web.Security.Cosmos.Domain
             else
             {
                 userAuthDocument.Model.Otp = otp;
-                await DbService.UpdateDocumentAsync(userAuthDocument);
+                await DbService.ReplaceDocumentAsync(userAuthDocument);
             }
 
             string appHash = "sP8qnF042oW";
@@ -151,7 +151,7 @@ namespace Nootus.Fabric.Web.Security.Cosmos.Domain
             if (string.IsNullOrEmpty(userAuthDocument.Model.RefreshToken))
             {
                 userAuthDocument.Model.RefreshToken = TokenService.GenerateRefreshToken();
-                await DbService.UpdateDocumentAsync(userAuthDocument);
+                await DbService.ReplaceDocumentAsync(userAuthDocument);
             }
 
             TokenService.SetTokenHeader(jwtToken, userAuthDocument.Model.RefreshToken);
