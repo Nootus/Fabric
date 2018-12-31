@@ -16,7 +16,7 @@ namespace Nootus.Fabric.Web.Controllers
         public AndroidController(AndroidService service)
             => this.service = service;
 
-        public async Task<AjaxModel<NTModel>> SignatureHashSave(string hash)
+        public async Task<AjaxModel<NTModel>> SignatureHashSave([FromBody] string hash)
             => await AjaxHelper.SaveAsync(m => this.service.SignatureHashSave(hash), SecurityMessages.SignatureHashSuccess);
     }
 }

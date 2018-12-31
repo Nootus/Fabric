@@ -162,7 +162,11 @@ namespace Nootus.Fabric.Web.Core.Cosmos.Repositories
         public async Task<TModel> GetModelByKeyAsyc<TModel>(string key, string documentType)
             where TModel: class
             => (await GetDocumentByKeyAsyc<TModel>(key, documentType))?.Model;
-        
+
+        public async Task<TModel> GetModelByKeyAsyc<TModel>(string key)
+            where TModel : class
+            => (await GetDocumentByKeyAsyc<TModel>(key, key))?.Model;
+
         public SharedCollectionDocument<TModel> CopyModel<TModel>(SharedCollectionDocument<TModel> source, 
             SharedCollectionDocument<TModel> destination, TModel model, string key)
         {

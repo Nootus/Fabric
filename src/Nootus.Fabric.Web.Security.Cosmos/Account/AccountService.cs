@@ -8,6 +8,7 @@ using Nootus.Fabric.Web.Security.Core.Domain;
 using Nootus.Fabric.Web.Security.Core.Models;
 using Nootus.Fabric.Web.Security.Core.Services;
 using Nootus.Fabric.Web.Security.Core.Token;
+using Nootus.Fabric.Web.Security.Cosmos.Middleware;
 using Nootus.Fabric.Web.Security.Cosmos.Models;
 using Nootus.Fabric.Web.Security.Cosmos.Repositories;
 using System;
@@ -77,7 +78,7 @@ namespace Nootus.Fabric.Web.Security.Cosmos.Domain
                 await DbService.ReplaceDocumentAsync(userAuthDocument);
             }
 
-            string appHash = "sP8qnF042oW";
+            string appHash = CacheService.AndroidSignatureHash;
             string message = String.Format(SmsManager.OtpTemplate, otp, appHash);
 
             SmsManager.SendSms(mobileNumber, message);
