@@ -77,7 +77,6 @@ namespace Nootus.Fabric.Mobile.Controls
             }
             else if (propertyName == IconSrcProperty.PropertyName)
             {
-                // Icon.Source = IconSrc;
                 Icon.Source = SvgIcon.GetSvgImageSource(IconSrc, 60, 60);
             }
             else if (propertyName == CommandProperty.PropertyName

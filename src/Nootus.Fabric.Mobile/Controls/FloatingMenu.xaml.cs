@@ -10,6 +10,7 @@ namespace Nootus.Fabric.Mobile.Controls
 
         bool isRevealed = false;
         bool raised = false;
+        double buttonHeight = 60, buttonWidth = 60;
 
         public static readonly BindableProperty BGColorProperty = BindableProperty.Create(nameof(BGColor), typeof(Color), typeof(FloatingMenu), default(Color), Xamarin.Forms.BindingMode.OneWay);
         public Color BGColor
@@ -98,10 +99,6 @@ namespace Nootus.Fabric.Mobile.Controls
                     Expand(AnimationTime);
                 }
                 isRevealed = !isRevealed;
-                if (isRevealed)
-                    MainButton.IconSrc = CloseIcon;
-                else
-                    MainButton.IconSrc = OpenIcon;
                 if (ExtraCommand != null)
                     ExtraCommand.Execute(null);
             });
@@ -109,24 +106,33 @@ namespace Nootus.Fabric.Mobile.Controls
 
         void ArrangeChildren(object sender, EventArgs evt)
         {
+            Rectangle bounds = GetLayoutBounds(this);
+            buttonHeight = bounds.Height;
+            buttonWidth = bounds.Width;
+
             for (int i = 1; i < Children.Count; i++)
             {
                 Children[i].Scale = 0.7;
-                AbsoluteLayout.SetLayoutBounds(Children[i], new Rectangle(0, (60 * i), 60, 60));
+                SetLayoutBounds(Children[i], new Rectangle(0, (buttonHeight * i), buttonWidth, buttonHeight));
+                SetLayoutFlags(this, GetLayoutFlags(this));
                 Children[i].Rotation = 180;
                 ((FloatingButton)Children[i]).ExtraCommand = new Command(() => { Collapse(AnimationTime); });
+                Children[i].IsVisible = false;
+                Children[i].InputTransparent = true;
             }
-
-            Collapse(1);
         }
 
 
         public async void Collapse(int time)
         {
+            double adj = buttonHeight * Children.Count;
+            SetLayoutBounds(this, new Rectangle(this.X, this.Y + adj, buttonWidth, buttonHeight));
+            SetLayoutFlags(this, AbsoluteLayoutFlags.None);
+
             int raisInd = raised ? 1 : 0;
             for (int i = 1 - raisInd; i < Children.Count - raisInd; i++)
             {
-                await Children[i].TranslateTo(0, -60 * (i + raisInd), (uint)time);
+                await Children[i].TranslateTo(0, -buttonHeight * (i + raisInd), (uint)time);
             }
             await Task.Delay(time);
             for (int i = 1 - raisInd; i < Children.Count - raisInd; i++)
@@ -142,8 +148,15 @@ namespace Nootus.Fabric.Mobile.Controls
 
         public void Expand(int time)
         {
+            MainButton.IconSrc = CloseIcon;
+
+            double adj = buttonHeight * Children.Count;
+            SetLayoutBounds(this, new Rectangle(this.X, this.Y - adj, buttonWidth, buttonHeight + adj));
+            SetLayoutFlags(this, AbsoluteLayoutFlags.None);
+
             RaiseChild(MainButton);
             raised = true;
+
             for (int i = 0; i < Children.Count - 1; i++)
             {
                 Children[i].IsVisible = true;

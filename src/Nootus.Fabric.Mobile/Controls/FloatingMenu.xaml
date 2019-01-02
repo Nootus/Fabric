@@ -3,9 +3,8 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              xmlns:controls="clr-namespace:Nootus.Fabric.Mobile.Controls"
              Rotation="180"
-             Margin="0,0,0,10"
              x:Class="Nootus.Fabric.Mobile.Controls.FloatingMenu">
 
-    <controls:FloatingButton x:Name="MainButton" Rotation="180" AbsoluteLayout.LayoutBounds="0,0,60,60"/>
+    <controls:FloatingButton x:Name="MainButton" Rotation="180" />
                       
 </AbsoluteLayout>
