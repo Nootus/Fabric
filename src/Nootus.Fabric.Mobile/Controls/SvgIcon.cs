@@ -47,7 +47,7 @@ namespace Nootus.Fabric.Mobile.Controls
             SvgIcon.DrawPicture(args.Surface.Canvas, ResourceId, args.Info.Width, args.Info.Height, Color);
         }
 
-        private static void DrawPicture(SKCanvas canvas, string resourceId, int width, int height, Color color)
+        private static void DrawPicture(SKCanvas canvas, string resourceId, double width, double height, Color color)
         {
             canvas.Clear();
 
@@ -60,11 +60,11 @@ namespace Nootus.Fabric.Mobile.Controls
                 SKSvg svg = new SKSvg();
                 svg.Load(stream);
 
-                canvas.Translate(width / 2f, height / 2f);
+                canvas.Translate((float)width / 2, (float)height / 2);
 
                 SKRect bounds = svg.ViewBox;
-                float xRatio = width / bounds.Width;
-                float yRatio = height / bounds.Height;
+                float xRatio = (float)width / bounds.Width;
+                float yRatio = (float)height / bounds.Height;
 
                 float ratio = Math.Min(xRatio, yRatio);
 
@@ -77,32 +77,49 @@ namespace Nootus.Fabric.Mobile.Controls
             }
         }
 
-        public static ImageSource GetSvgImageSource(string resourceId, int width, int height)
+        public static ImageSource GetSvgImageSource(string resourceId, double width, double height, bool aspectRatio = true)
         {
-            return GetSvgImageSource(resourceId, width, height, new Color());
+            return GetSvgImageSource(resourceId, width, height, new Color(), aspectRatio);
         }
 
-        public static ImageSource GetSvgImageSource(string resourceId, int width, int height, Color color)
+        public static ImageSource GetSvgImageSource(string resourceId, double width, double height, Color color, bool aspectRatio = true)
         {
 
-            return (SKBitmapImageSource)GetSvgBitmap(resourceId, width, height, color);
+            return (SKBitmapImageSource)GetSvgBitmap(resourceId, width, height, color, aspectRatio);
         }
 
-        public static SKBitmap GetSvgBitmap(string resourceId, int width, int height, Color color)
+        public static SKBitmap GetSvgBitmap(string resourceId, double width, double height, Color color, bool aspectRatio = true)
         {
             Assembly assembly = DependencyInjection.Container.Resolve<Session>().ResourceAssembly;
             using (Stream stream = assembly.GetManifestResourceStream(resourceId))
             {
 
-                var svg = new SKSvg(new SKSize(width, height));
+                var svg = new SKSvg();
                 svg.Load(stream);
 
-                var bitmap = new SKBitmap(width, height);
+                var bitmap = new SKBitmap((int)width, (int)height);
                 var canvas = new SKCanvas(bitmap);
                 canvas.Clear();
 
+                float svgWidth = svg.Picture.CullRect.Width;
+                float svgHeight = svg.Picture.CullRect.Height;
+                float sx, sy;
+
+                if (aspectRatio)
+                {
+                    float canvasMin = Math.Min((float)width, (float)height);
+                    float svgMax = Math.Max(svgWidth, svgHeight);
+                    sx = sy = canvasMin / svgMax;
+                }
+                else
+                {
+                    sx = (float)width / svgWidth;
+                    sy = (float)height / svgHeight;
+                }
+                var matrix = SKMatrix.MakeScale(sx, sy);
+
                 SKPaint paint = GetPaint(color);
-                canvas.DrawPicture(svg.Picture, paint);
+                canvas.DrawPicture(svg.Picture, ref matrix, paint);
                 return bitmap;
             }
         }
