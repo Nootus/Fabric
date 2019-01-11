@@ -46,6 +46,7 @@
     <Compile Include="BaseActivity.cs" />
     <Compile Include="BaseApplication.cs" />
     <Compile Include="Effects\EntryLineColorEffect.cs" />
+    <Compile Include="Renderers\GradientLayoutRenderer.cs" />
     <Compile Include="Renderers\SvgTabbedPageRenderer.cs" />
     <Compile Include="Resources\Resource.designer.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

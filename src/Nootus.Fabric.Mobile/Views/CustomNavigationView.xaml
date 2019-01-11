@@ -3,7 +3,7 @@
     xmlns="http://xamarin.com/schemas/2014/forms"
     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
     x:Class="Nootus.Fabric.Mobile.Views.CustomNavigationView"
-    BarBackgroundColor="{StaticResource GreenColor}"
-    BarTextColor="{StaticResource WhiteColor}"
+    BarBackgroundColor="Green"
+    BarTextColor="White"
     BackgroundColor="Transparent">
 </NavigationPage>

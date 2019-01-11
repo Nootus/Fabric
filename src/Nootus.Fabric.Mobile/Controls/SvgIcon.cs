@@ -1,6 +1,7 @@
 ﻿using System;
 using System.IO;
 using System.Reflection;
+using System.Runtime.CompilerServices;
 using Autofac;
 using Nootus.Fabric.Mobile.Core;
 using Nootus.Fabric.Mobile.Settings;
@@ -11,71 +12,13 @@ using SKSvg = SkiaSharp.Extended.Svg.SKSvg;
 
 namespace Nootus.Fabric.Mobile.Controls
 {
-    public class SvgIcon : Frame
+    public static class SvgIcon
     {
-        private readonly SKCanvasView canvasView = new SKCanvasView();
-
-        public static readonly BindableProperty ResourceIdProperty = BindableProperty.Create(
-            nameof(ResourceId), typeof(string), typeof(SvgIcon), default(string), propertyChanged: RedrawCanvas);
-
-        public string ResourceId
+        public static ImageSource GetSvgImageSource(string resourceId, bool aspectRatio = true)
         {
-            get => (string)GetValue(ResourceIdProperty);
-            set => SetValue(ResourceIdProperty, value);
+            return GetSvgImageSource(resourceId, 0, 0, new Color(), aspectRatio);
         }
 
-        public Color Color { get; set; }
-
-        public SvgIcon()
-        {
-            Padding = new Thickness(0);
-            BackgroundColor = Color.Transparent;
-            HasShadow = false;
-            Content = canvasView;
-            canvasView.PaintSurface += CanvasViewOnPaintSurface;
-
-        }
-
-        private static void RedrawCanvas(BindableObject bindable, object oldvalue, object newvalue)
-        {
-            SvgIcon svgIcon = bindable as SvgIcon;
-            svgIcon?.canvasView.InvalidateSurface();
-        }
-
-        private void CanvasViewOnPaintSurface(object sender, SKPaintSurfaceEventArgs args)
-        {
-            SvgIcon.DrawPicture(args.Surface.Canvas, ResourceId, args.Info.Width, args.Info.Height, Color);
-        }
-
-        private static void DrawPicture(SKCanvas canvas, string resourceId, double width, double height, Color color)
-        {
-            canvas.Clear();
-
-            if (string.IsNullOrEmpty(resourceId))
-                return;
-
-            Assembly assembly = DependencyInjection.Container.Resolve<Session>().ResourceAssembly;
-            using (Stream stream = assembly.GetManifestResourceStream(resourceId))
-            {
-                SKSvg svg = new SKSvg();
-                svg.Load(stream);
-
-                canvas.Translate((float)width / 2, (float)height / 2);
-
-                SKRect bounds = svg.ViewBox;
-                float xRatio = (float)width / bounds.Width;
-                float yRatio = (float)height / bounds.Height;
-
-                float ratio = Math.Min(xRatio, yRatio);
-
-                canvas.Scale(ratio);
-                canvas.Translate(-bounds.MidX, -bounds.MidY);
-
-                SKPaint paint = GetPaint(color);
-
-                canvas.DrawPicture(svg.Picture, paint);
-            }
-        }
 
         public static ImageSource GetSvgImageSource(string resourceId, double width, double height, bool aspectRatio = true)
         {
@@ -90,6 +33,12 @@ namespace Nootus.Fabric.Mobile.Controls
 
         public static SKBitmap GetSvgBitmap(string resourceId, double width, double height, Color color, bool aspectRatio = true)
         {
+            return DrawPicture(resourceId, width, height, color, aspectRatio);
+        }
+
+
+        private static SKBitmap DrawPicture(string resourceId, double width, double height, Color color, bool aspectRatio = true)
+        {
             Assembly assembly = DependencyInjection.Container.Resolve<Session>().ResourceAssembly;
             using (Stream stream = assembly.GetManifestResourceStream(resourceId))
             {
@@ -97,13 +46,12 @@ namespace Nootus.Fabric.Mobile.Controls
                 var svg = new SKSvg();
                 svg.Load(stream);
 
-                var bitmap = new SKBitmap((int)width, (int)height);
-                var canvas = new SKCanvas(bitmap);
-                canvas.Clear();
-
                 float svgWidth = svg.Picture.CullRect.Width;
                 float svgHeight = svg.Picture.CullRect.Height;
                 float sx, sy;
+
+                width = width <= 0 ? svgWidth : width;
+                height = height <= 0 ? svgHeight : height;
 
                 if (aspectRatio)
                 {
@@ -119,6 +67,11 @@ namespace Nootus.Fabric.Mobile.Controls
                 var matrix = SKMatrix.MakeScale(sx, sy);
 
                 SKPaint paint = GetPaint(color);
+
+                SKBitmap bitmap = new SKBitmap((int)width, (int)height);
+                SKCanvas canvas = new SKCanvas(bitmap);
+                canvas.Clear();
+
                 canvas.DrawPicture(svg.Picture, ref matrix, paint);
                 return bitmap;
             }
@@ -137,8 +90,6 @@ namespace Nootus.Fabric.Mobile.Controls
             {
                 return null;
             }
-
-
         }
     }
 }
