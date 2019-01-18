@@ -15,7 +15,7 @@ namespace Nootus.Fabric.Mobile.Services
         {
             get
             {
-                return (Application.Current.MainPage as CustomNavigationView).Navigation;
+                return (Application.Current.MainPage as BaseNavigationPage).Navigation;
             }
         }
 
@@ -23,20 +23,20 @@ namespace Nootus.Fabric.Mobile.Services
         {
             Page page = await CreatePage(typeof(TViewModel));
 
-            if (Application.Current.MainPage is CustomNavigationView mainPage)
+            if (Application.Current.MainPage is BaseNavigationPage mainPage)
             {
                 await mainPage.PushAsync(page);
             }
             else
             {
-                Application.Current.MainPage = new CustomNavigationView(page);
+                Application.Current.MainPage = new BaseNavigationPage(page);
             }
         }
 
         public static async Task InsertPageBeforeLastAsync<TViewModel>() where TViewModel : BaseViewModel
         {
             Page page = await CreatePage(typeof(TViewModel));
-            CustomNavigationView mainPage = Application.Current.MainPage as CustomNavigationView;
+            BaseNavigationPage mainPage = Application.Current.MainPage as BaseNavigationPage;
             Page currentPage = mainPage.Navigation.NavigationStack[mainPage.Navigation.NavigationStack.Count - 1];
             mainPage.Navigation.InsertPageBefore(page, currentPage);
             await mainPage.PopAsync();
