@@ -20,6 +20,7 @@ namespace Nootus.Fabric.Mobile.Controls
         public RoundSvg()
         {
             InitializeComponent();
+            this.BindingContext = this;
         }
 
         public ImageSource SvgSource
@@ -80,7 +81,7 @@ namespace Nootus.Fabric.Mobile.Controls
 
             if (propertyName == SvgSourceProperty.PropertyName)
             {
-                svg.Source = SvgSource;
+//                svg.Source = SvgSource;
             }
             else if (propertyName == SvgWidthRequestProperty.PropertyName)
             {
