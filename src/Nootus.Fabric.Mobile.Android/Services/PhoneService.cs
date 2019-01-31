@@ -1,9 +1,9 @@
 ﻿using Android.App;
 using Android.Gms.Auth.Api;
 using Android.Gms.Auth.Api.Credentials;
+using Android.Gms.Auth.Api.Phone;
 using Android.Gms.Common.Apis;
 using Android.Gms.Tasks;
-using Com.Google.Android.Gms.Auth.Api.Phone;
 using Nootus.Fabric.Mobile.Dialog;
 using Nootus.Fabric.Mobile.Droid.Services;
 using Nootus.Fabric.Mobile.NativeServices;

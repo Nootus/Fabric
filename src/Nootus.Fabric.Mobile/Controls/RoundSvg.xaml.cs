@@ -75,6 +75,8 @@ namespace Nootus.Fabric.Mobile.Controls
             }
         }
 
+        public object CommandParameter { get; set; }
+
         protected override void OnPropertyChanged(string propertyName = null)
         {
             base.OnPropertyChanged(propertyName);

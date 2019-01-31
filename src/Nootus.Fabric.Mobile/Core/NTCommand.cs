@@ -18,9 +18,7 @@ namespace Nootus.Fabric.Mobile.Core
                                                     DependencyService.Get<IDialogService>().DisplayAlert(AlertMode.Error, exp.Message);
                                                 }
                                             })
-        {
-
-        }
+        { }
 
         public NTCommand(Action execute) : base(() =>
         {
@@ -33,8 +31,19 @@ namespace Nootus.Fabric.Mobile.Core
                 DependencyService.Get<IDialogService>().DisplayAlert(AlertMode.Error, exp.Message);
             }
         })
-        {
+        { }
 
-        }
+        public NTCommand(Action<object> execute) : base((obj) =>
+        {
+            try
+            {
+                execute(obj);
+            }
+            catch (System.Exception exp)
+            {
+                DependencyService.Get<IDialogService>().DisplayAlert(AlertMode.Error, exp.Message);
+            }
+        })
+        { }
     }
 }

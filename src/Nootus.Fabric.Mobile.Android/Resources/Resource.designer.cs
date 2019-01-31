@@ -70,10 +70,22 @@ namespace Nootus.Fabric.Mobile.Droid
 			public static int design_snackbar_out = 2130968589;
 			
 			// aapt resource value: 0x7f04000e
-			public static int tooltip_enter = 2130968590;
+			public static int EnterFromLeft = 2130968590;
 			
 			// aapt resource value: 0x7f04000f
-			public static int tooltip_exit = 2130968591;
+			public static int EnterFromRight = 2130968591;
+			
+			// aapt resource value: 0x7f040010
+			public static int ExitToLeft = 2130968592;
+			
+			// aapt resource value: 0x7f040011
+			public static int ExitToRight = 2130968593;
+			
+			// aapt resource value: 0x7f040012
+			public static int tooltip_enter = 2130968594;
+			
+			// aapt resource value: 0x7f040013
+			public static int tooltip_exit = 2130968595;
 			
 			static Animation()
 			{
@@ -3145,8 +3157,8 @@ namespace Nootus.Fabric.Mobile.Droid
 			// aapt resource value: 0x7f0b003f
 			public static int SYM = 2131427391;
 			
-			// aapt resource value: 0x7f0b00bd
-			public static int action0 = 2131427517;
+			// aapt resource value: 0x7f0b00c1
+			public static int action0 = 2131427521;
 			
 			// aapt resource value: 0x7f0b0083
 			public static int action_bar = 2131427459;
@@ -3169,17 +3181,17 @@ namespace Nootus.Fabric.Mobile.Droid
 			// aapt resource value: 0x7f0b0061
 			public static int action_bar_title = 2131427425;
 			
-			// aapt resource value: 0x7f0b00ba
-			public static int action_container = 2131427514;
+			// aapt resource value: 0x7f0b00be
+			public static int action_container = 2131427518;
 			
 			// aapt resource value: 0x7f0b0084
 			public static int action_context_bar = 2131427460;
 			
-			// aapt resource value: 0x7f0b00c1
-			public static int action_divider = 2131427521;
+			// aapt resource value: 0x7f0b00c5
+			public static int action_divider = 2131427525;
 			
-			// aapt resource value: 0x7f0b00bb
-			public static int action_image = 2131427515;
+			// aapt resource value: 0x7f0b00bf
+			public static int action_image = 2131427519;
 			
 			// aapt resource value: 0x7f0b0003
 			public static int action_menu_divider = 2131427331;
@@ -3196,11 +3208,11 @@ namespace Nootus.Fabric.Mobile.Droid
 			// aapt resource value: 0x7f0b0063
 			public static int action_mode_close_button = 2131427427;
 			
-			// aapt resource value: 0x7f0b00bc
-			public static int action_text = 2131427516;
+			// aapt resource value: 0x7f0b00c0
+			public static int action_text = 2131427520;
 			
-			// aapt resource value: 0x7f0b00ca
-			public static int actions = 2131427530;
+			// aapt resource value: 0x7f0b00ce
+			public static int actions = 2131427534;
 			
 			// aapt resource value: 0x7f0b0064
 			public static int activity_chooser_view_content = 2131427428;
@@ -3238,11 +3250,17 @@ namespace Nootus.Fabric.Mobile.Droid
 			// aapt resource value: 0x7f0b0045
 			public static int bottom = 2131427397;
 			
+			// aapt resource value: 0x7f0b0092
+			public static int bottomtab_navarea = 2131427474;
+			
+			// aapt resource value: 0x7f0b0093
+			public static int bottomtab_tabbar = 2131427475;
+			
 			// aapt resource value: 0x7f0b006a
 			public static int buttonPanel = 2131427434;
 			
-			// aapt resource value: 0x7f0b00be
-			public static int cancel_action = 2131427518;
+			// aapt resource value: 0x7f0b00c2
+			public static int cancel_action = 2131427522;
 			
 			// aapt resource value: 0x7f0b004c
 			public static int center = 2131427404;
@@ -3256,8 +3274,8 @@ namespace Nootus.Fabric.Mobile.Droid
 			// aapt resource value: 0x7f0b007a
 			public static int checkbox = 2131427450;
 			
-			// aapt resource value: 0x7f0b00c6
-			public static int chronometer = 2131427526;
+			// aapt resource value: 0x7f0b00ca
+			public static int chronometer = 2131427530;
 			
 			// aapt resource value: 0x7f0b0055
 			public static int clip_horizontal = 2131427413;
@@ -3268,14 +3286,14 @@ namespace Nootus.Fabric.Mobile.Droid
 			// aapt resource value: 0x7f0b0041
 			public static int collapseActionView = 2131427393;
 			
-			// aapt resource value: 0x7f0b0094
-			public static int container = 2131427476;
+			// aapt resource value: 0x7f0b0096
+			public static int container = 2131427478;
 			
 			// aapt resource value: 0x7f0b006d
 			public static int contentPanel = 2131427437;
 			
-			// aapt resource value: 0x7f0b0095
-			public static int coordinator = 2131427477;
+			// aapt resource value: 0x7f0b0097
+			public static int coordinator = 2131427479;
 			
 			// aapt resource value: 0x7f0b0074
 			public static int custom = 2131427444;
@@ -3292,20 +3310,20 @@ namespace Nootus.Fabric.Mobile.Droid
 			// aapt resource value: 0x7f0b0067
 			public static int default_activity_button = 2131427431;
 			
-			// aapt resource value: 0x7f0b0097
-			public static int design_bottom_sheet = 2131427479;
+			// aapt resource value: 0x7f0b0099
+			public static int design_bottom_sheet = 2131427481;
+			
+			// aapt resource value: 0x7f0b00a0
+			public static int design_menu_item_action_area = 2131427488;
+			
+			// aapt resource value: 0x7f0b009f
+			public static int design_menu_item_action_area_stub = 2131427487;
 			
 			// aapt resource value: 0x7f0b009e
-			public static int design_menu_item_action_area = 2131427486;
+			public static int design_menu_item_text = 2131427486;
 			
 			// aapt resource value: 0x7f0b009d
-			public static int design_menu_item_action_area_stub = 2131427485;
-			
-			// aapt resource value: 0x7f0b009c
-			public static int design_menu_item_text = 2131427484;
-			
-			// aapt resource value: 0x7f0b009b
-			public static int design_navigation_view = 2131427483;
+			public static int design_navigation_view = 2131427485;
 			
 			// aapt resource value: 0x7f0b0029
 			public static int disableHome = 2131427369;
@@ -3316,8 +3334,8 @@ namespace Nootus.Fabric.Mobile.Droid
 			// aapt resource value: 0x7f0b0038
 			public static int end = 2131427384;
 			
-			// aapt resource value: 0x7f0b00cc
-			public static int end_padder = 2131427532;
+			// aapt resource value: 0x7f0b00d0
+			public static int end_padder = 2131427536;
 			
 			// aapt resource value: 0x7f0b0047
 			public static int enterAlways = 2131427399;
@@ -3346,6 +3364,12 @@ namespace Nootus.Fabric.Mobile.Droid
 			// aapt resource value: 0x7f0b005b
 			public static int @fixed = 2131427419;
 			
+			// aapt resource value: 0x7f0b00a2
+			public static int flyoutcontent_appbar = 2131427490;
+			
+			// aapt resource value: 0x7f0b00a3
+			public static int flyoutcontent_recycler = 2131427491;
+			
 			// aapt resource value: 0x7f0b005f
 			public static int forever = 2131427423;
 			
@@ -3361,8 +3385,8 @@ namespace Nootus.Fabric.Mobile.Droid
 			// aapt resource value: 0x7f0b0069
 			public static int icon = 2131427433;
 			
-			// aapt resource value: 0x7f0b00cb
-			public static int icon_group = 2131427531;
+			// aapt resource value: 0x7f0b00cf
+			public static int icon_group = 2131427535;
 			
 			// aapt resource value: 0x7f0b0020
 			public static int icon_only = 2131427360;
@@ -3373,8 +3397,8 @@ namespace Nootus.Fabric.Mobile.Droid
 			// aapt resource value: 0x7f0b0066
 			public static int image = 2131427430;
 			
-			// aapt resource value: 0x7f0b00c7
-			public static int info = 2131427527;
+			// aapt resource value: 0x7f0b00cb
+			public static int info = 2131427531;
 			
 			// aapt resource value: 0x7f0b0060
 			public static int italic = 2131427424;
@@ -3382,8 +3406,8 @@ namespace Nootus.Fabric.Mobile.Droid
 			// aapt resource value: 0x7f0b0000
 			public static int item_touch_helper_previous_elevation = 2131427328;
 			
-			// aapt resource value: 0x7f0b0093
-			public static int largeLabel = 2131427475;
+			// aapt resource value: 0x7f0b0095
+			public static int largeLabel = 2131427477;
 			
 			// aapt resource value: 0x7f0b0050
 			public static int left = 2131427408;
@@ -3403,14 +3427,26 @@ namespace Nootus.Fabric.Mobile.Droid
 			// aapt resource value: 0x7f0b0068
 			public static int list_item = 2131427432;
 			
-			// aapt resource value: 0x7f0b00cf
-			public static int masked = 2131427535;
+			// aapt resource value: 0x7f0b00d1
+			public static int main_appbar = 2131427537;
 			
-			// aapt resource value: 0x7f0b00c0
-			public static int media_actions = 2131427520;
+			// aapt resource value: 0x7f0b00d4
+			public static int main_scrollview = 2131427540;
 			
-			// aapt resource value: 0x7f0b00cd
-			public static int message = 2131427533;
+			// aapt resource value: 0x7f0b00d3
+			public static int main_tablayout = 2131427539;
+			
+			// aapt resource value: 0x7f0b00d2
+			public static int main_toolbar = 2131427538;
+			
+			// aapt resource value: 0x7f0b00da
+			public static int masked = 2131427546;
+			
+			// aapt resource value: 0x7f0b00c4
+			public static int media_actions = 2131427524;
+			
+			// aapt resource value: 0x7f0b00d8
+			public static int message = 2131427544;
 			
 			// aapt resource value: 0x7f0b0039
 			public static int middle = 2131427385;
@@ -3418,86 +3454,86 @@ namespace Nootus.Fabric.Mobile.Droid
 			// aapt resource value: 0x7f0b005a
 			public static int mini = 2131427418;
 			
-			// aapt resource value: 0x7f0b00ac
-			public static int mr_art = 2131427500;
-			
-			// aapt resource value: 0x7f0b00a1
-			public static int mr_chooser_list = 2131427489;
-			
-			// aapt resource value: 0x7f0b00a4
-			public static int mr_chooser_route_desc = 2131427492;
-			
-			// aapt resource value: 0x7f0b00a2
-			public static int mr_chooser_route_icon = 2131427490;
-			
-			// aapt resource value: 0x7f0b00a3
-			public static int mr_chooser_route_name = 2131427491;
-			
-			// aapt resource value: 0x7f0b00a0
-			public static int mr_chooser_title = 2131427488;
-			
-			// aapt resource value: 0x7f0b00a9
-			public static int mr_close = 2131427497;
-			
-			// aapt resource value: 0x7f0b00af
-			public static int mr_control_divider = 2131427503;
-			
-			// aapt resource value: 0x7f0b00b5
-			public static int mr_control_playback_ctrl = 2131427509;
-			
-			// aapt resource value: 0x7f0b00b8
-			public static int mr_control_subtitle = 2131427512;
-			
-			// aapt resource value: 0x7f0b00b7
-			public static int mr_control_title = 2131427511;
-			
-			// aapt resource value: 0x7f0b00b6
-			public static int mr_control_title_container = 2131427510;
-			
-			// aapt resource value: 0x7f0b00aa
-			public static int mr_custom_control = 2131427498;
-			
-			// aapt resource value: 0x7f0b00ab
-			public static int mr_default_control = 2131427499;
-			
-			// aapt resource value: 0x7f0b00a6
-			public static int mr_dialog_area = 2131427494;
+			// aapt resource value: 0x7f0b00b0
+			public static int mr_art = 2131427504;
 			
 			// aapt resource value: 0x7f0b00a5
-			public static int mr_expandable_area = 2131427493;
-			
-			// aapt resource value: 0x7f0b00b9
-			public static int mr_group_expand_collapse = 2131427513;
-			
-			// aapt resource value: 0x7f0b00ad
-			public static int mr_media_main_control = 2131427501;
+			public static int mr_chooser_list = 2131427493;
 			
 			// aapt resource value: 0x7f0b00a8
-			public static int mr_name = 2131427496;
+			public static int mr_chooser_route_desc = 2131427496;
 			
-			// aapt resource value: 0x7f0b00ae
-			public static int mr_playback_control = 2131427502;
+			// aapt resource value: 0x7f0b00a6
+			public static int mr_chooser_route_icon = 2131427494;
 			
 			// aapt resource value: 0x7f0b00a7
-			public static int mr_title_bar = 2131427495;
+			public static int mr_chooser_route_name = 2131427495;
 			
-			// aapt resource value: 0x7f0b00b0
-			public static int mr_volume_control = 2131427504;
+			// aapt resource value: 0x7f0b00a4
+			public static int mr_chooser_title = 2131427492;
 			
-			// aapt resource value: 0x7f0b00b1
-			public static int mr_volume_group_list = 2131427505;
+			// aapt resource value: 0x7f0b00ad
+			public static int mr_close = 2131427501;
 			
 			// aapt resource value: 0x7f0b00b3
-			public static int mr_volume_item_icon = 2131427507;
+			public static int mr_control_divider = 2131427507;
+			
+			// aapt resource value: 0x7f0b00b9
+			public static int mr_control_playback_ctrl = 2131427513;
+			
+			// aapt resource value: 0x7f0b00bc
+			public static int mr_control_subtitle = 2131427516;
+			
+			// aapt resource value: 0x7f0b00bb
+			public static int mr_control_title = 2131427515;
+			
+			// aapt resource value: 0x7f0b00ba
+			public static int mr_control_title_container = 2131427514;
+			
+			// aapt resource value: 0x7f0b00ae
+			public static int mr_custom_control = 2131427502;
+			
+			// aapt resource value: 0x7f0b00af
+			public static int mr_default_control = 2131427503;
+			
+			// aapt resource value: 0x7f0b00aa
+			public static int mr_dialog_area = 2131427498;
+			
+			// aapt resource value: 0x7f0b00a9
+			public static int mr_expandable_area = 2131427497;
+			
+			// aapt resource value: 0x7f0b00bd
+			public static int mr_group_expand_collapse = 2131427517;
+			
+			// aapt resource value: 0x7f0b00b1
+			public static int mr_media_main_control = 2131427505;
+			
+			// aapt resource value: 0x7f0b00ac
+			public static int mr_name = 2131427500;
+			
+			// aapt resource value: 0x7f0b00b2
+			public static int mr_playback_control = 2131427506;
+			
+			// aapt resource value: 0x7f0b00ab
+			public static int mr_title_bar = 2131427499;
 			
 			// aapt resource value: 0x7f0b00b4
-			public static int mr_volume_slider = 2131427508;
+			public static int mr_volume_control = 2131427508;
+			
+			// aapt resource value: 0x7f0b00b5
+			public static int mr_volume_group_list = 2131427509;
+			
+			// aapt resource value: 0x7f0b00b7
+			public static int mr_volume_item_icon = 2131427511;
+			
+			// aapt resource value: 0x7f0b00b8
+			public static int mr_volume_slider = 2131427512;
 			
 			// aapt resource value: 0x7f0b0030
 			public static int multiply = 2131427376;
 			
-			// aapt resource value: 0x7f0b009a
-			public static int navigation_header_container = 2131427482;
+			// aapt resource value: 0x7f0b009c
+			public static int navigation_header_container = 2131427484;
 			
 			// aapt resource value: 0x7f0b0043
 			public static int never = 2131427395;
@@ -3508,14 +3544,14 @@ namespace Nootus.Fabric.Mobile.Droid
 			// aapt resource value: 0x7f0b0027
 			public static int normal = 2131427367;
 			
-			// aapt resource value: 0x7f0b00c9
-			public static int notification_background = 2131427529;
+			// aapt resource value: 0x7f0b00cd
+			public static int notification_background = 2131427533;
 			
-			// aapt resource value: 0x7f0b00c3
-			public static int notification_main_column = 2131427523;
+			// aapt resource value: 0x7f0b00c7
+			public static int notification_main_column = 2131427527;
 			
-			// aapt resource value: 0x7f0b00c2
-			public static int notification_main_column_container = 2131427522;
+			// aapt resource value: 0x7f0b00c6
+			public static int notification_main_column_container = 2131427526;
 			
 			// aapt resource value: 0x7f0b0053
 			public static int parallax = 2131427411;
@@ -3541,11 +3577,11 @@ namespace Nootus.Fabric.Mobile.Droid
 			// aapt resource value: 0x7f0b0051
 			public static int right = 2131427409;
 			
-			// aapt resource value: 0x7f0b00c8
-			public static int right_icon = 2131427528;
+			// aapt resource value: 0x7f0b00cc
+			public static int right_icon = 2131427532;
 			
-			// aapt resource value: 0x7f0b00c4
-			public static int right_side = 2131427524;
+			// aapt resource value: 0x7f0b00c8
+			public static int right_side = 2131427528;
 			
 			// aapt resource value: 0x7f0b000c
 			public static int save_image_matrix = 2131427340;
@@ -3607,6 +3643,15 @@ namespace Nootus.Fabric.Mobile.Droid
 			// aapt resource value: 0x7f0b0091
 			public static int select_dialog_listview = 2131427473;
 			
+			// aapt resource value: 0x7f0b00d5
+			public static int shellcontent_appbar = 2131427541;
+			
+			// aapt resource value: 0x7f0b00d7
+			public static int shellcontent_scrollview = 2131427543;
+			
+			// aapt resource value: 0x7f0b00d6
+			public static int shellcontent_toolbar = 2131427542;
+			
 			// aapt resource value: 0x7f0b007b
 			public static int shortcut = 2131427451;
 			
@@ -3619,14 +3664,14 @@ namespace Nootus.Fabric.Mobile.Droid
 			// aapt resource value: 0x7f0b002d
 			public static int showTitle = 2131427373;
 			
-			// aapt resource value: 0x7f0b0092
-			public static int smallLabel = 2131427474;
+			// aapt resource value: 0x7f0b0094
+			public static int smallLabel = 2131427476;
 			
-			// aapt resource value: 0x7f0b0099
-			public static int snackbar_action = 2131427481;
+			// aapt resource value: 0x7f0b009b
+			public static int snackbar_action = 2131427483;
 			
-			// aapt resource value: 0x7f0b0098
-			public static int snackbar_text = 2131427480;
+			// aapt resource value: 0x7f0b009a
+			public static int snackbar_text = 2131427482;
 			
 			// aapt resource value: 0x7f0b004b
 			public static int snap = 2131427403;
@@ -3652,8 +3697,8 @@ namespace Nootus.Fabric.Mobile.Droid
 			// aapt resource value: 0x7f0b0052
 			public static int start = 2131427410;
 			
-			// aapt resource value: 0x7f0b00bf
-			public static int status_bar_latest_event_content = 2131427519;
+			// aapt resource value: 0x7f0b00c3
+			public static int status_bar_latest_event_content = 2131427523;
 			
 			// aapt resource value: 0x7f0b007d
 			public static int submenuarrow = 2131427453;
@@ -3679,8 +3724,8 @@ namespace Nootus.Fabric.Mobile.Droid
 			// aapt resource value: 0x7f0b0070
 			public static int textSpacerNoTitle = 2131427440;
 			
-			// aapt resource value: 0x7f0b009f
-			public static int text_input_password_toggle = 2131427487;
+			// aapt resource value: 0x7f0b00a1
+			public static int text_input_password_toggle = 2131427489;
 			
 			// aapt resource value: 0x7f0b0014
 			public static int textinput_counter = 2131427348;
@@ -3688,8 +3733,8 @@ namespace Nootus.Fabric.Mobile.Droid
 			// aapt resource value: 0x7f0b0015
 			public static int textinput_error = 2131427349;
 			
-			// aapt resource value: 0x7f0b00c5
-			public static int time = 2131427525;
+			// aapt resource value: 0x7f0b00c9
+			public static int time = 2131427529;
 			
 			// aapt resource value: 0x7f0b001c
 			public static int title = 2131427356;
@@ -3706,8 +3751,8 @@ namespace Nootus.Fabric.Mobile.Droid
 			// aapt resource value: 0x7f0b0075
 			public static int topPanel = 2131427445;
 			
-			// aapt resource value: 0x7f0b0096
-			public static int touch_outside = 2131427478;
+			// aapt resource value: 0x7f0b0098
+			public static int touch_outside = 2131427480;
 			
 			// aapt resource value: 0x7f0b000f
 			public static int transition_current_scene = 2131427343;
@@ -3736,11 +3781,11 @@ namespace Nootus.Fabric.Mobile.Droid
 			// aapt resource value: 0x7f0b0016
 			public static int view_offset_helper = 2131427350;
 			
-			// aapt resource value: 0x7f0b00ce
-			public static int visible = 2131427534;
+			// aapt resource value: 0x7f0b00d9
+			public static int visible = 2131427545;
 			
-			// aapt resource value: 0x7f0b00b2
-			public static int volume_item_container = 2131427506;
+			// aapt resource value: 0x7f0b00b6
+			public static int volume_item_container = 2131427510;
 			
 			// aapt resource value: 0x7f0b0022
 			public static int wide = 2131427362;
@@ -3917,124 +3962,136 @@ namespace Nootus.Fabric.Mobile.Droid
 			public static int abc_select_dialog_material = 2130903065;
 			
 			// aapt resource value: 0x7f03001a
-			public static int design_bottom_navigation_item = 2130903066;
+			public static int BottomTabLayout = 2130903066;
 			
 			// aapt resource value: 0x7f03001b
-			public static int design_bottom_sheet_dialog = 2130903067;
+			public static int design_bottom_navigation_item = 2130903067;
 			
 			// aapt resource value: 0x7f03001c
-			public static int design_layout_snackbar = 2130903068;
+			public static int design_bottom_sheet_dialog = 2130903068;
 			
 			// aapt resource value: 0x7f03001d
-			public static int design_layout_snackbar_include = 2130903069;
+			public static int design_layout_snackbar = 2130903069;
 			
 			// aapt resource value: 0x7f03001e
-			public static int design_layout_tab_icon = 2130903070;
+			public static int design_layout_snackbar_include = 2130903070;
 			
 			// aapt resource value: 0x7f03001f
-			public static int design_layout_tab_text = 2130903071;
+			public static int design_layout_tab_icon = 2130903071;
 			
 			// aapt resource value: 0x7f030020
-			public static int design_menu_item_action_area = 2130903072;
+			public static int design_layout_tab_text = 2130903072;
 			
 			// aapt resource value: 0x7f030021
-			public static int design_navigation_item = 2130903073;
+			public static int design_menu_item_action_area = 2130903073;
 			
 			// aapt resource value: 0x7f030022
-			public static int design_navigation_item_header = 2130903074;
+			public static int design_navigation_item = 2130903074;
 			
 			// aapt resource value: 0x7f030023
-			public static int design_navigation_item_separator = 2130903075;
+			public static int design_navigation_item_header = 2130903075;
 			
 			// aapt resource value: 0x7f030024
-			public static int design_navigation_item_subheader = 2130903076;
+			public static int design_navigation_item_separator = 2130903076;
 			
 			// aapt resource value: 0x7f030025
-			public static int design_navigation_menu = 2130903077;
+			public static int design_navigation_item_subheader = 2130903077;
 			
 			// aapt resource value: 0x7f030026
-			public static int design_navigation_menu_item = 2130903078;
+			public static int design_navigation_menu = 2130903078;
 			
 			// aapt resource value: 0x7f030027
-			public static int design_text_input_password_icon = 2130903079;
+			public static int design_navigation_menu_item = 2130903079;
 			
 			// aapt resource value: 0x7f030028
-			public static int mr_chooser_dialog = 2130903080;
+			public static int design_text_input_password_icon = 2130903080;
 			
 			// aapt resource value: 0x7f030029
-			public static int mr_chooser_list_item = 2130903081;
+			public static int FlyoutContent = 2130903081;
 			
 			// aapt resource value: 0x7f03002a
-			public static int mr_controller_material_dialog_b = 2130903082;
+			public static int mr_chooser_dialog = 2130903082;
 			
 			// aapt resource value: 0x7f03002b
-			public static int mr_controller_volume_item = 2130903083;
+			public static int mr_chooser_list_item = 2130903083;
 			
 			// aapt resource value: 0x7f03002c
-			public static int mr_playback_control = 2130903084;
+			public static int mr_controller_material_dialog_b = 2130903084;
 			
 			// aapt resource value: 0x7f03002d
-			public static int mr_volume_control = 2130903085;
+			public static int mr_controller_volume_item = 2130903085;
 			
 			// aapt resource value: 0x7f03002e
-			public static int notification_action = 2130903086;
+			public static int mr_playback_control = 2130903086;
 			
 			// aapt resource value: 0x7f03002f
-			public static int notification_action_tombstone = 2130903087;
+			public static int mr_volume_control = 2130903087;
 			
 			// aapt resource value: 0x7f030030
-			public static int notification_media_action = 2130903088;
+			public static int notification_action = 2130903088;
 			
 			// aapt resource value: 0x7f030031
-			public static int notification_media_cancel_action = 2130903089;
+			public static int notification_action_tombstone = 2130903089;
 			
 			// aapt resource value: 0x7f030032
-			public static int notification_template_big_media = 2130903090;
+			public static int notification_media_action = 2130903090;
 			
 			// aapt resource value: 0x7f030033
-			public static int notification_template_big_media_custom = 2130903091;
+			public static int notification_media_cancel_action = 2130903091;
 			
 			// aapt resource value: 0x7f030034
-			public static int notification_template_big_media_narrow = 2130903092;
+			public static int notification_template_big_media = 2130903092;
 			
 			// aapt resource value: 0x7f030035
-			public static int notification_template_big_media_narrow_custom = 2130903093;
+			public static int notification_template_big_media_custom = 2130903093;
 			
 			// aapt resource value: 0x7f030036
-			public static int notification_template_custom_big = 2130903094;
+			public static int notification_template_big_media_narrow = 2130903094;
 			
 			// aapt resource value: 0x7f030037
-			public static int notification_template_icon_group = 2130903095;
+			public static int notification_template_big_media_narrow_custom = 2130903095;
 			
 			// aapt resource value: 0x7f030038
-			public static int notification_template_lines_media = 2130903096;
+			public static int notification_template_custom_big = 2130903096;
 			
 			// aapt resource value: 0x7f030039
-			public static int notification_template_media = 2130903097;
+			public static int notification_template_icon_group = 2130903097;
 			
 			// aapt resource value: 0x7f03003a
-			public static int notification_template_media_custom = 2130903098;
+			public static int notification_template_lines_media = 2130903098;
 			
 			// aapt resource value: 0x7f03003b
-			public static int notification_template_part_chronometer = 2130903099;
+			public static int notification_template_media = 2130903099;
 			
 			// aapt resource value: 0x7f03003c
-			public static int notification_template_part_time = 2130903100;
+			public static int notification_template_media_custom = 2130903100;
 			
 			// aapt resource value: 0x7f03003d
-			public static int select_dialog_item_material = 2130903101;
+			public static int notification_template_part_chronometer = 2130903101;
 			
 			// aapt resource value: 0x7f03003e
-			public static int select_dialog_multichoice_material = 2130903102;
+			public static int notification_template_part_time = 2130903102;
 			
 			// aapt resource value: 0x7f03003f
-			public static int select_dialog_singlechoice_material = 2130903103;
+			public static int RootLayout = 2130903103;
 			
 			// aapt resource value: 0x7f030040
-			public static int support_simple_spinner_dropdown_item = 2130903104;
+			public static int select_dialog_item_material = 2130903104;
 			
 			// aapt resource value: 0x7f030041
-			public static int tooltip = 2130903105;
+			public static int select_dialog_multichoice_material = 2130903105;
+			
+			// aapt resource value: 0x7f030042
+			public static int select_dialog_singlechoice_material = 2130903106;
+			
+			// aapt resource value: 0x7f030043
+			public static int ShellContent = 2130903107;
+			
+			// aapt resource value: 0x7f030044
+			public static int support_simple_spinner_dropdown_item = 2130903108;
+			
+			// aapt resource value: 0x7f030045
+			public static int tooltip = 2130903109;
 			
 			static Layout()
 			{
@@ -4049,104 +4106,104 @@ namespace Nootus.Fabric.Mobile.Droid
 		public partial class String
 		{
 			
-			// aapt resource value: 0x7f080026
-			public static int abc_action_bar_home_description = 2131230758;
-			
 			// aapt resource value: 0x7f080027
-			public static int abc_action_bar_up_description = 2131230759;
+			public static int abc_action_bar_home_description = 2131230759;
 			
 			// aapt resource value: 0x7f080028
-			public static int abc_action_menu_overflow_description = 2131230760;
+			public static int abc_action_bar_up_description = 2131230760;
 			
 			// aapt resource value: 0x7f080029
-			public static int abc_action_mode_done = 2131230761;
+			public static int abc_action_menu_overflow_description = 2131230761;
 			
 			// aapt resource value: 0x7f08002a
-			public static int abc_activity_chooser_view_see_all = 2131230762;
+			public static int abc_action_mode_done = 2131230762;
 			
 			// aapt resource value: 0x7f08002b
-			public static int abc_activitychooserview_choose_application = 2131230763;
+			public static int abc_activity_chooser_view_see_all = 2131230763;
 			
 			// aapt resource value: 0x7f08002c
-			public static int abc_capital_off = 2131230764;
+			public static int abc_activitychooserview_choose_application = 2131230764;
 			
 			// aapt resource value: 0x7f08002d
-			public static int abc_capital_on = 2131230765;
-			
-			// aapt resource value: 0x7f080038
-			public static int abc_font_family_body_1_material = 2131230776;
-			
-			// aapt resource value: 0x7f080039
-			public static int abc_font_family_body_2_material = 2131230777;
-			
-			// aapt resource value: 0x7f08003a
-			public static int abc_font_family_button_material = 2131230778;
-			
-			// aapt resource value: 0x7f08003b
-			public static int abc_font_family_caption_material = 2131230779;
-			
-			// aapt resource value: 0x7f08003c
-			public static int abc_font_family_display_1_material = 2131230780;
-			
-			// aapt resource value: 0x7f08003d
-			public static int abc_font_family_display_2_material = 2131230781;
-			
-			// aapt resource value: 0x7f08003e
-			public static int abc_font_family_display_3_material = 2131230782;
-			
-			// aapt resource value: 0x7f08003f
-			public static int abc_font_family_display_4_material = 2131230783;
-			
-			// aapt resource value: 0x7f080040
-			public static int abc_font_family_headline_material = 2131230784;
-			
-			// aapt resource value: 0x7f080041
-			public static int abc_font_family_menu_material = 2131230785;
-			
-			// aapt resource value: 0x7f080042
-			public static int abc_font_family_subhead_material = 2131230786;
-			
-			// aapt resource value: 0x7f080043
-			public static int abc_font_family_title_material = 2131230787;
+			public static int abc_capital_off = 2131230765;
 			
 			// aapt resource value: 0x7f08002e
-			public static int abc_search_hint = 2131230766;
+			public static int abc_capital_on = 2131230766;
 			
-			// aapt resource value: 0x7f08002f
-			public static int abc_searchview_description_clear = 2131230767;
+			// aapt resource value: 0x7f080039
+			public static int abc_font_family_body_1_material = 2131230777;
 			
-			// aapt resource value: 0x7f080030
-			public static int abc_searchview_description_query = 2131230768;
+			// aapt resource value: 0x7f08003a
+			public static int abc_font_family_body_2_material = 2131230778;
 			
-			// aapt resource value: 0x7f080031
-			public static int abc_searchview_description_search = 2131230769;
+			// aapt resource value: 0x7f08003b
+			public static int abc_font_family_button_material = 2131230779;
 			
-			// aapt resource value: 0x7f080032
-			public static int abc_searchview_description_submit = 2131230770;
+			// aapt resource value: 0x7f08003c
+			public static int abc_font_family_caption_material = 2131230780;
 			
-			// aapt resource value: 0x7f080033
-			public static int abc_searchview_description_voice = 2131230771;
+			// aapt resource value: 0x7f08003d
+			public static int abc_font_family_display_1_material = 2131230781;
 			
-			// aapt resource value: 0x7f080034
-			public static int abc_shareactionprovider_share_with = 2131230772;
+			// aapt resource value: 0x7f08003e
+			public static int abc_font_family_display_2_material = 2131230782;
 			
-			// aapt resource value: 0x7f080035
-			public static int abc_shareactionprovider_share_with_application = 2131230773;
+			// aapt resource value: 0x7f08003f
+			public static int abc_font_family_display_3_material = 2131230783;
 			
-			// aapt resource value: 0x7f080036
-			public static int abc_toolbar_collapse_description = 2131230774;
+			// aapt resource value: 0x7f080040
+			public static int abc_font_family_display_4_material = 2131230784;
 			
-			// aapt resource value: 0x7f08004e
-			public static int app_name = 2131230798;
+			// aapt resource value: 0x7f080041
+			public static int abc_font_family_headline_material = 2131230785;
+			
+			// aapt resource value: 0x7f080042
+			public static int abc_font_family_menu_material = 2131230786;
+			
+			// aapt resource value: 0x7f080043
+			public static int abc_font_family_subhead_material = 2131230787;
 			
 			// aapt resource value: 0x7f080044
-			public static int appbar_scrolling_view_behavior = 2131230788;
+			public static int abc_font_family_title_material = 2131230788;
+			
+			// aapt resource value: 0x7f08002f
+			public static int abc_search_hint = 2131230767;
+			
+			// aapt resource value: 0x7f080030
+			public static int abc_searchview_description_clear = 2131230768;
+			
+			// aapt resource value: 0x7f080031
+			public static int abc_searchview_description_query = 2131230769;
+			
+			// aapt resource value: 0x7f080032
+			public static int abc_searchview_description_search = 2131230770;
+			
+			// aapt resource value: 0x7f080033
+			public static int abc_searchview_description_submit = 2131230771;
+			
+			// aapt resource value: 0x7f080034
+			public static int abc_searchview_description_voice = 2131230772;
+			
+			// aapt resource value: 0x7f080035
+			public static int abc_shareactionprovider_share_with = 2131230773;
+			
+			// aapt resource value: 0x7f080036
+			public static int abc_shareactionprovider_share_with_application = 2131230774;
+			
+			// aapt resource value: 0x7f080037
+			public static int abc_toolbar_collapse_description = 2131230775;
+			
+			// aapt resource value: 0x7f08004f
+			public static int app_name = 2131230799;
 			
 			// aapt resource value: 0x7f080045
-			public static int bottom_sheet_behavior = 2131230789;
+			public static int appbar_scrolling_view_behavior = 2131230789;
 			
 			// aapt resource value: 0x7f080046
-			public static int character_counter_pattern = 2131230790;
+			public static int bottom_sheet_behavior = 2131230790;
+			
+			// aapt resource value: 0x7f080047
+			public static int character_counter_pattern = 2131230791;
 			
 			// aapt resource value: 0x7f080001
 			public static int common_google_play_services_enable_button = 2131230721;
@@ -4167,124 +4224,127 @@ namespace Nootus.Fabric.Mobile.Droid
 			public static int common_google_play_services_install_title = 2131230726;
 			
 			// aapt resource value: 0x7f080007
-			public static int common_google_play_services_notification_ticker = 2131230727;
+			public static int common_google_play_services_notification_channel_name = 2131230727;
+			
+			// aapt resource value: 0x7f080008
+			public static int common_google_play_services_notification_ticker = 2131230728;
 			
 			// aapt resource value: 0x7f080000
 			public static int common_google_play_services_unknown_issue = 2131230720;
 			
-			// aapt resource value: 0x7f080008
-			public static int common_google_play_services_unsupported_text = 2131230728;
-			
 			// aapt resource value: 0x7f080009
-			public static int common_google_play_services_update_button = 2131230729;
+			public static int common_google_play_services_unsupported_text = 2131230729;
 			
 			// aapt resource value: 0x7f08000a
-			public static int common_google_play_services_update_text = 2131230730;
+			public static int common_google_play_services_update_button = 2131230730;
 			
 			// aapt resource value: 0x7f08000b
-			public static int common_google_play_services_update_title = 2131230731;
+			public static int common_google_play_services_update_text = 2131230731;
 			
 			// aapt resource value: 0x7f08000c
-			public static int common_google_play_services_updating_text = 2131230732;
+			public static int common_google_play_services_update_title = 2131230732;
 			
 			// aapt resource value: 0x7f08000d
-			public static int common_google_play_services_wear_update_text = 2131230733;
+			public static int common_google_play_services_updating_text = 2131230733;
 			
 			// aapt resource value: 0x7f08000e
-			public static int common_open_on_phone = 2131230734;
+			public static int common_google_play_services_wear_update_text = 2131230734;
 			
 			// aapt resource value: 0x7f08000f
-			public static int common_signin_button_text = 2131230735;
+			public static int common_open_on_phone = 2131230735;
 			
 			// aapt resource value: 0x7f080010
-			public static int common_signin_button_text_long = 2131230736;
-			
-			// aapt resource value: 0x7f08004d
-			public static int hello = 2131230797;
+			public static int common_signin_button_text = 2131230736;
 			
 			// aapt resource value: 0x7f080011
-			public static int mr_button_content_description = 2131230737;
+			public static int common_signin_button_text_long = 2131230737;
+			
+			// aapt resource value: 0x7f08004e
+			public static int hello = 2131230798;
 			
 			// aapt resource value: 0x7f080012
-			public static int mr_cast_button_connected = 2131230738;
+			public static int mr_button_content_description = 2131230738;
 			
 			// aapt resource value: 0x7f080013
-			public static int mr_cast_button_connecting = 2131230739;
+			public static int mr_cast_button_connected = 2131230739;
 			
 			// aapt resource value: 0x7f080014
-			public static int mr_cast_button_disconnected = 2131230740;
+			public static int mr_cast_button_connecting = 2131230740;
 			
 			// aapt resource value: 0x7f080015
-			public static int mr_chooser_searching = 2131230741;
+			public static int mr_cast_button_disconnected = 2131230741;
 			
 			// aapt resource value: 0x7f080016
-			public static int mr_chooser_title = 2131230742;
+			public static int mr_chooser_searching = 2131230742;
 			
 			// aapt resource value: 0x7f080017
-			public static int mr_controller_album_art = 2131230743;
+			public static int mr_chooser_title = 2131230743;
 			
 			// aapt resource value: 0x7f080018
-			public static int mr_controller_casting_screen = 2131230744;
+			public static int mr_controller_album_art = 2131230744;
 			
 			// aapt resource value: 0x7f080019
-			public static int mr_controller_close_description = 2131230745;
+			public static int mr_controller_casting_screen = 2131230745;
 			
 			// aapt resource value: 0x7f08001a
-			public static int mr_controller_collapse_group = 2131230746;
+			public static int mr_controller_close_description = 2131230746;
 			
 			// aapt resource value: 0x7f08001b
-			public static int mr_controller_disconnect = 2131230747;
+			public static int mr_controller_collapse_group = 2131230747;
 			
 			// aapt resource value: 0x7f08001c
-			public static int mr_controller_expand_group = 2131230748;
+			public static int mr_controller_disconnect = 2131230748;
 			
 			// aapt resource value: 0x7f08001d
-			public static int mr_controller_no_info_available = 2131230749;
+			public static int mr_controller_expand_group = 2131230749;
 			
 			// aapt resource value: 0x7f08001e
-			public static int mr_controller_no_media_selected = 2131230750;
+			public static int mr_controller_no_info_available = 2131230750;
 			
 			// aapt resource value: 0x7f08001f
-			public static int mr_controller_pause = 2131230751;
+			public static int mr_controller_no_media_selected = 2131230751;
 			
 			// aapt resource value: 0x7f080020
-			public static int mr_controller_play = 2131230752;
+			public static int mr_controller_pause = 2131230752;
 			
 			// aapt resource value: 0x7f080021
-			public static int mr_controller_stop = 2131230753;
+			public static int mr_controller_play = 2131230753;
 			
 			// aapt resource value: 0x7f080022
-			public static int mr_controller_stop_casting = 2131230754;
+			public static int mr_controller_stop = 2131230754;
 			
 			// aapt resource value: 0x7f080023
-			public static int mr_controller_volume_slider = 2131230755;
+			public static int mr_controller_stop_casting = 2131230755;
 			
 			// aapt resource value: 0x7f080024
-			public static int mr_system_route_name = 2131230756;
+			public static int mr_controller_volume_slider = 2131230756;
 			
 			// aapt resource value: 0x7f080025
-			public static int mr_user_route_category_name = 2131230757;
+			public static int mr_system_route_name = 2131230757;
 			
-			// aapt resource value: 0x7f080047
-			public static int password_toggle_content_description = 2131230791;
+			// aapt resource value: 0x7f080026
+			public static int mr_user_route_category_name = 2131230758;
 			
 			// aapt resource value: 0x7f080048
-			public static int path_password_eye = 2131230792;
+			public static int password_toggle_content_description = 2131230792;
 			
 			// aapt resource value: 0x7f080049
-			public static int path_password_eye_mask_strike_through = 2131230793;
+			public static int path_password_eye = 2131230793;
 			
 			// aapt resource value: 0x7f08004a
-			public static int path_password_eye_mask_visible = 2131230794;
+			public static int path_password_eye_mask_strike_through = 2131230794;
 			
 			// aapt resource value: 0x7f08004b
-			public static int path_password_strike_through = 2131230795;
-			
-			// aapt resource value: 0x7f080037
-			public static int search_menu_title = 2131230775;
+			public static int path_password_eye_mask_visible = 2131230795;
 			
 			// aapt resource value: 0x7f08004c
-			public static int status_bar_notification_info_overflow = 2131230796;
+			public static int path_password_strike_through = 2131230796;
+			
+			// aapt resource value: 0x7f080038
+			public static int search_menu_title = 2131230776;
+			
+			// aapt resource value: 0x7f08004d
+			public static int status_bar_notification_info_overflow = 2131230797;
 			
 			static String()
 			{

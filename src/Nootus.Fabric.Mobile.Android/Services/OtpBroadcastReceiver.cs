@@ -1,16 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-
+﻿
 using Android.App;
 using Android.Content;
+using Android.Gms.Auth.Api.Phone;
 using Android.Gms.Common.Apis;
 using Android.OS;
-using Android.Runtime;
-using Android.Views;
-using Android.Widget;
-using Com.Google.Android.Gms.Auth.Api.Phone;
 
 namespace Nootus.Fabric.Mobile.Droid.Services
 {
