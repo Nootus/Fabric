@@ -1,23 +1,27 @@
-<Project Sdk="Microsoft.NET.Sdk">
+﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
     <TargetFramework>netstandard2.0</TargetFramework>
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="Autofac" Version="4.9.0-beta1" />
-    <PackageReference Include="Newtonsoft.Json" Version="12.0.1" />
-    <PackageReference Include="Polly" Version="6.1.2" />
+    <PackageReference Include="Autofac" Version="4.9.2" />
+    <PackageReference Include="CardsView" Version="2.0.9" />
+    <PackageReference Include="Newtonsoft.Json" Version="12.0.2" />
+    <PackageReference Include="Polly" Version="7.1.0" />
     <PackageReference Include="SkiaSharp.Extended" Version="1.60.0" />
     <PackageReference Include="SkiaSharp.Svg" Version="1.60.0" />
     <PackageReference Include="SkiaSharp.Views.Forms" Version="1.68.0" />
-    <PackageReference Include="Xamarin.Essentials" Version="1.0.1" />
-    <PackageReference Include="Xamarin.FFImageLoading.Svg.Forms" Version="2.4.5.860-pre" />
-    <PackageReference Include="Xamarin.FFImageLoading.Transformations" Version="2.4.5.860-pre" />
-    <PackageReference Include="Xamarin.Forms" Version="4.0.0.94569-pre3" />
+    <PackageReference Include="Xamarin.Essentials" Version="1.1.0" />
+    <PackageReference Include="Xamarin.FFImageLoading.Svg.Forms" Version="2.4.5.870-pre" />
+    <PackageReference Include="Xamarin.FFImageLoading.Transformations" Version="2.4.5.870-pre" />
+    <PackageReference Include="Xamarin.Forms" Version="4.0.0.304370-pre8" />
   </ItemGroup>
 
   <ItemGroup>
+    <Compile Update="Controls\BadgeSvg.xaml.cs">
+      <DependentUpon>BadgeSvg.xaml</DependentUpon>
+    </Compile>
     <Compile Update="Views\BaseNavigationPage.xaml.cs">
       <DependentUpon>BaseNavigationPage.xaml</DependentUpon>
     </Compile>
@@ -27,7 +31,19 @@
   </ItemGroup>
 
   <ItemGroup>
+    <EmbeddedResource Update="Controls\RoundImage.xaml">
+      <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
+    </EmbeddedResource>
     <EmbeddedResource Update="Controls\RoundSvg.xaml">
+      <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
+    </EmbeddedResource>
+    <EmbeddedResource Update="Controls\TabView.xaml">
+      <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
+    </EmbeddedResource>
+    <EmbeddedResource Update="Controls\TabViewResourceDictionary.xaml">
+      <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
+    </EmbeddedResource>
+    <EmbeddedResource Update="Controls\BadgeSvg.xaml">
       <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
     </EmbeddedResource>
     <EmbeddedResource Update="Views\LoadingPage.xaml">

@@ -7,7 +7,7 @@ using SkiaSharp.Views.Android;
 using Xamarin.Forms;
 using Xamarin.Forms.Platform.Android.AppCompat;
 
-[assembly: ExportRenderer(typeof(TabbedPage), typeof(SvgTabbedPageRenderer))]
+// [assembly: ExportRenderer(typeof(TabbedPage), typeof(SvgTabbedPageRenderer))]
 namespace Nootus.Fabric.Mobile.Droid.Renderers
 {
     public class SvgTabbedPageRenderer : TabbedPageRenderer

@@ -16,12 +16,12 @@ namespace Nootus.Fabric.Mobile.Views
             InitializeComponent();
         }
 
-        public bool IgnoreLayoutChange { get; set; } = false;
+        //public bool IgnoreLayoutChange { get; set; } = false;
 
-        protected override void OnSizeAllocated(double width, double height)
-        {
-            if (!IgnoreLayoutChange)
-                base.OnSizeAllocated(width, height);
-        }
+        //protected override void OnSizeAllocated(double width, double height)
+        //{
+        //    if (!IgnoreLayoutChange)
+        //        base.OnSizeAllocated(width, height);
+        //}
     }
 }

@@ -50,11 +50,15 @@ namespace Nootus.Fabric.Mobile.Services
         private static async Task BindViewModel(Page page, Type viewModelType)
         {
             BaseViewModel viewModel = DependencyInjection.Container.Resolve(viewModelType) as BaseViewModel;
+            await BindViewModel(page, viewModel);
+        }
+
+        private static async Task BindViewModel(Page page, BaseViewModel viewModel)
+        {
             page.BindingContext = viewModel;
             page.Appearing += viewModel.PageAppearing;
             await viewModel.InitializeAsync(page);
         }
-
 
         private static async Task<Page> CreatePage(Type viewModelType)
         {
@@ -64,8 +68,11 @@ namespace Nootus.Fabric.Mobile.Services
                 throw new System.Exception($"Cannot locate page type for {viewModelType}");
             }
 
+            BaseViewModel viewModel = DependencyInjection.Container.Resolve(viewModelType) as BaseViewModel;
             Page page = DependencyInjection.Container.Resolve(pageType) as Page;
-            await BindViewModel(page, viewModelType);
+            NavigationPage.SetHasNavigationBar(page, false);
+            
+            await BindViewModel(page, viewModel);
 
             return page;
         }

@@ -1,28 +1,24 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
 
 namespace Nootus.Fabric.Mobile.Controls
 {
     [XamlCompilation(XamlCompilationOptions.Compile)]
-    public partial class RoundSvg : Frame
+    public partial class RoundSvg : Frame, ICloneable
     {
-        public static readonly BindableProperty SvgSourceProperty = BindableProperty.Create(nameof(SvgSource), typeof(ImageSource), typeof(RoundSvg), default(ImageSource), BindingMode.OneWay);
-        public static readonly BindableProperty SvgWidthRequestProperty = BindableProperty.Create(nameof(SvgWidthRequest), typeof(double), typeof(RoundSvg), default(double), BindingMode.OneWay);
-        public static readonly BindableProperty SvgHeightRequestProperty = BindableProperty.Create(nameof(SvgHeightRequest), typeof(double), typeof(RoundSvg), default(double), BindingMode.OneWay);
-        public static readonly BindableProperty SvgHexColorProperty = BindableProperty.Create(nameof(SvgHexColor), typeof(string), typeof(RoundSvg), default(string), BindingMode.OneWay);
-
         public RoundSvg()
         {
             InitializeComponent();
-            this.BindingContext = this;
         }
 
+        public static readonly BindableProperty SvgSourceProperty = BindableProperty.Create(nameof(SvgSource), typeof(ImageSource), typeof(RoundSvg), default(ImageSource), BindingMode.OneWay,
+            propertyChanged:
+                (BindableObject bindable, object oldValue, object newValue) =>
+                {
+                    ((RoundSvg)bindable).svg.Source = (ImageSource)newValue;
+                }
+        );
         public ImageSource SvgSource
         {
             get
@@ -36,6 +32,13 @@ namespace Nootus.Fabric.Mobile.Controls
             }
         }
 
+        public static readonly BindableProperty SvgWidthRequestProperty = BindableProperty.Create(nameof(SvgWidthRequest), typeof(double), typeof(RoundSvg), default(double), BindingMode.OneWay,
+            propertyChanged:
+                (BindableObject bindable, object oldValue, object newValue) =>
+                {
+                    ((RoundSvg)bindable).svg.WidthRequest = (double) newValue;
+                }
+        );
         public double SvgWidthRequest
         {
             get
@@ -49,6 +52,14 @@ namespace Nootus.Fabric.Mobile.Controls
             }
         }
 
+
+        public static readonly BindableProperty SvgHeightRequestProperty = BindableProperty.Create(nameof(SvgHeightRequest), typeof(double), typeof(RoundSvg), default(double), BindingMode.OneWay,
+            propertyChanged:
+                (BindableObject bindable, object oldValue, object newValue) =>
+                {
+                    ((RoundSvg) bindable).svg.HeightRequest = (double) newValue;
+                }
+        );
         public double SvgHeightRequest
         {
             get
@@ -62,6 +73,13 @@ namespace Nootus.Fabric.Mobile.Controls
             }
         }
 
+        public static readonly BindableProperty SvgHexColorProperty = BindableProperty.Create(nameof(SvgHexColor), typeof(string), typeof(RoundSvg), default(string), BindingMode.OneWay,
+            propertyChanged:
+                (BindableObject bindable, object oldValue, object newValue) =>
+                {
+                    ((RoundSvg) bindable).svgTrans.HexColor = (string) newValue;
+                }
+        );
         public string SvgHexColor
         {
             get
@@ -75,28 +93,41 @@ namespace Nootus.Fabric.Mobile.Controls
             }
         }
 
+        public static readonly BindableProperty SvgRotationProperty = BindableProperty.Create(nameof(SvgRotation), typeof(double), typeof(RoundSvg), default(double), BindingMode.OneWay,
+            propertyChanged:
+                (BindableObject bindable, object oldValue, object newValue) =>
+                {
+                    ((RoundSvg)bindable).svg.Rotation = (double)newValue;
+                }
+        );
+        public double SvgRotation
+        {
+            get
+            {
+                return (double)GetValue(SvgRotationProperty);
+            }
+
+            set
+            {
+                SetValue(SvgRotationProperty, value);
+            }
+        }
+
         public object CommandParameter { get; set; }
 
-        protected override void OnPropertyChanged(string propertyName = null)
+        public object Clone()
         {
-            base.OnPropertyChanged(propertyName);
+            RoundSvg svg = new RoundSvg()
+            {
+                BackgroundColor = this.BackgroundColor,
+                SvgWidthRequest = this.SvgWidthRequest,
+                SvgHeightRequest = this.SvgHeightRequest,
+                SvgHexColor = this.SvgHexColor,
+                HorizontalOptions = this.HorizontalOptions,
+                VerticalOptions = this.VerticalOptions
+            };
 
-            if (propertyName == SvgSourceProperty.PropertyName)
-            {
-//                svg.Source = SvgSource;
-            }
-            else if (propertyName == SvgWidthRequestProperty.PropertyName)
-            {
-                svg.WidthRequest = SvgWidthRequest;
-            }
-            else if (propertyName == SvgHeightRequestProperty.PropertyName)
-            {
-                svg.HeightRequest = SvgHeightRequest;
-            }
-            else if (propertyName == SvgHexColorProperty.PropertyName)
-            {
-                svgTrans.HexColor = SvgHexColor;
-            }
+            return svg;
         }
     }
 }

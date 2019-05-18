@@ -1,0 +1,29 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<ContentView xmlns="http://xamarin.com/schemas/2014/forms" 
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+		     xmlns:svg="clr-namespace:FFImageLoading.Svg.Forms;assembly=FFImageLoading.Svg.Forms"
+		     xmlns:svgimg="clr-namespace:FFImageLoading.Forms;assembly=FFImageLoading.Forms"
+		     xmlns:svgtrans="clr-namespace:FFImageLoading.Transformations;assembly=FFImageLoading.Transformations"
+             x:Class="Nootus.Fabric.Mobile.Controls.BadgeSvg">
+  <ContentView.Content>
+        <Grid>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto"></RowDefinition>
+            </Grid.RowDefinitions>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="Auto"></ColumnDefinition>
+            </Grid.ColumnDefinitions>
+            <StackLayout Spacing="0" Padding="0" Margin="0">
+                <svg:SvgCachedImage x:Name="svg">
+                    <svgimg:CachedImage.Transformations>
+                        <svgtrans:TintTransformation x:Name="svgTrans" EnableSolidColor="true"/>
+                    </svgimg:CachedImage.Transformations>
+                </svg:SvgCachedImage>
+            </StackLayout>
+            <Frame x:Name="badgeFrame" Padding="0" Margin="0, 5, -10, 0" HorizontalOptions="End" VerticalOptions="Start">
+                <Label x:Name="badgeText" HorizontalOptions="Center" VerticalOptions="Center"></Label>
+            </Frame>
+        </Grid>
+    </ContentView.Content>
+</ContentView>
+    

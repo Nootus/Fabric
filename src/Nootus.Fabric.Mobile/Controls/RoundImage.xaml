@@ -1,0 +1,11 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<Frame xmlns="http://xamarin.com/schemas/2014/forms" 
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:ffimageloading="clr-namespace:FFImageLoading.Forms;assembly=FFImageLoading.Forms"
+             CornerRadius="30" 
+             HorizontalOptions="Center" VerticalOptions="CenterAndExpand" 
+             x:Class="Nootus.Fabric.Mobile.Controls.RoundImage">
+        <ffimageloading:CachedImage x:Name="img" VerticalOptions="Center"
+                  DownsampleToViewSize="true">
+        </ffimageloading:CachedImage>
+</Frame>

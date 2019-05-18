@@ -1,0 +1,25 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<ContentView xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:cards="clr-namespace:PanCardView;assembly=PanCardView"
+             x:Class="Nootus.Fabric.Mobile.Controls.TabView">
+    <ContentView.Resources>
+        <ResourceDictionary Source="TabViewResourceDictionary.xaml"></ResourceDictionary>
+    </ContentView.Resources>
+    <ContentView.Content>
+        <Grid>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto"></RowDefinition>
+                <RowDefinition Height="*"></RowDefinition>
+            </Grid.RowDefinitions>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*"></ColumnDefinition>
+            </Grid.ColumnDefinitions>
+
+            <StackLayout x:Name="tabHeaders" Grid.Row="0" Grid.Column="0" Orientation="Horizontal" Style="{StaticResource TabHeaderStackStyle}">
+                
+            </StackLayout>
+            <cards:CarouselView x:Name="tabs" Grid.Row="1" Grid.Column="0" IsCyclical="false"></cards:CarouselView>
+        </Grid>
+    </ContentView.Content>
+</ContentView>
