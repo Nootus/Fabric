@@ -158,6 +158,8 @@ namespace Nootus.Fabric.Mobile.Controls
             tabs.ItemAppearing += Tabs_ItemAppearing;
         }
 
+        public PanCardView.CarouselView Tabs => tabs;
+
         private void Tabs_ItemAppearing(PanCardView.CardsView view, PanCardView.EventArgs.ItemAppearingEventArgs args)
         {
             SelectTab(tabs.SelectedIndex);

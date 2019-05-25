@@ -79,8 +79,7 @@ namespace Nootus.Fabric.Mobile.Controls
                 (BindableObject bindable, object oldValue, object newValue) =>
                 {
                     ((BadgeSvg)bindable).svgTrans.HexColor = (string)newValue;
-                }
-            );
+                });
 
         public string SvgHexColor
         {

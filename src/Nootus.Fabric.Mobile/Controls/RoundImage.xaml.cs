@@ -1,10 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-using Xamarin.Forms;
+﻿using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
 
 namespace Nootus.Fabric.Mobile.Controls
@@ -17,7 +11,7 @@ namespace Nootus.Fabric.Mobile.Controls
             InitializeComponent();
         }
 
-        public static readonly BindableProperty SvgSourceProperty = BindableProperty.Create(nameof(Source), typeof(ImageSource), typeof(RoundImage), default(ImageSource), BindingMode.OneWay,
+        public static readonly BindableProperty SourceProperty = BindableProperty.Create(nameof(Source), typeof(ImageSource), typeof(RoundImage), default(ImageSource), BindingMode.OneWay,
             propertyChanged:
                 (BindableObject bindable, object oldValue, object newValue) =>
                 {
@@ -29,14 +23,42 @@ namespace Nootus.Fabric.Mobile.Controls
         {
             get
             {
-                return (ImageSource)GetValue(SvgSourceProperty);
+                return (ImageSource)GetValue(SourceProperty);
             }
 
             set
             {
-                SetValue(SvgSourceProperty, value);
+                SetValue(SourceProperty, value);
             }
         }
 
+        public static readonly BindableProperty DiameterProperty = BindableProperty.Create(nameof(Diameter), typeof(int), typeof(RoundImage), default(int), BindingMode.OneWay,
+            propertyChanged:
+                (BindableObject bindable, object oldValue, object newValue) =>
+                {
+                    int diameter = (int)newValue;
+                    int heightWidth = diameter * 2;
+
+                    RoundImage control = (RoundImage)bindable;
+                    control.CornerRadius = diameter;
+                    control.HeightRequest = heightWidth;
+                    control.WidthRequest = heightWidth;
+                    control.img.HeightRequest = heightWidth;
+                    control.img.WidthRequest = heightWidth;
+                }
+        );
+
+        public int Diameter
+        {
+            get
+            {
+                return (int)GetValue(DiameterProperty);
+            }
+
+            set
+            {
+                SetValue(DiameterProperty, value);
+            }
+        }
     }
 }

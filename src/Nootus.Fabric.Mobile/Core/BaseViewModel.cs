@@ -14,8 +14,8 @@ namespace Nootus.Fabric.Mobile.Core
         string title = string.Empty;
         public string Title
         {
-            get { return title; }
-            set { SetProperty(ref title, value); }
+            get => title; 
+            set => SetProperty(ref title, value); 
         }
 
         public virtual async Task InitializeAsync(Page page)

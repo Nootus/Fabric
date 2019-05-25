@@ -1,0 +1,15 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<ContentView xmlns="http://xamarin.com/schemas/2014/forms" 
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:svg="clr-namespace:FFImageLoading.Svg.Forms;assembly=FFImageLoading.Svg.Forms"
+		     xmlns:svgimg="clr-namespace:FFImageLoading.Forms;assembly=FFImageLoading.Forms"
+		     xmlns:svgtrans="clr-namespace:FFImageLoading.Transformations;assembly=FFImageLoading.Transformations"
+             x:Class="Nootus.Fabric.Mobile.Controls.Svg">
+  <ContentView.Content>
+        <svg:SvgCachedImage x:Name="svg">
+            <svgimg:CachedImage.Transformations>
+                <svgtrans:TintTransformation x:Name="svgTrans" EnableSolidColor="true"/>
+            </svgimg:CachedImage.Transformations>
+        </svg:SvgCachedImage>
+    </ContentView.Content>
+</ContentView>

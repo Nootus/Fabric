@@ -22,6 +22,9 @@
     <Compile Update="Controls\BadgeSvg.xaml.cs">
       <DependentUpon>BadgeSvg.xaml</DependentUpon>
     </Compile>
+    <Compile Update="Controls\BorderlessSvgEntry.xaml.cs">
+      <DependentUpon>BorderlessSvgEntry.xaml</DependentUpon>
+    </Compile>
     <Compile Update="Views\BaseNavigationPage.xaml.cs">
       <DependentUpon>BaseNavigationPage.xaml</DependentUpon>
     </Compile>
@@ -31,10 +34,22 @@
   </ItemGroup>
 
   <ItemGroup>
+    <EmbeddedResource Update="Controls\BorderlessSvgDatePicker.xaml">
+      <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
+    </EmbeddedResource>
+    <EmbeddedResource Update="Controls\BorderlessSvgEntry.xaml">
+      <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
+    </EmbeddedResource>
+    <EmbeddedResource Update="Controls\BorderlessSvgTimePicker.xaml">
+      <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
+    </EmbeddedResource>
     <EmbeddedResource Update="Controls\RoundImage.xaml">
       <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
     </EmbeddedResource>
     <EmbeddedResource Update="Controls\RoundSvg.xaml">
+      <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
+    </EmbeddedResource>
+    <EmbeddedResource Update="Controls\Svg.xaml">
       <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
     </EmbeddedResource>
     <EmbeddedResource Update="Controls\TabView.xaml">

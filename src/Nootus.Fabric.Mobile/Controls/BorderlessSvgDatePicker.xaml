@@ -1,0 +1,21 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<fabric:BorderlessSvgStackLayout xmlns="http://xamarin.com/schemas/2014/forms" 
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:fabric="clr-namespace:Nootus.Fabric.Mobile.Controls;assembly=Nootus.Fabric.Mobile"
+             xmlns:svg="clr-namespace:FFImageLoading.Svg.Forms;assembly=FFImageLoading.Svg.Forms"
+		     xmlns:svgimg="clr-namespace:FFImageLoading.Forms;assembly=FFImageLoading.Forms"
+		     xmlns:svgtrans="clr-namespace:FFImageLoading.Transformations;assembly=FFImageLoading.Transformations"
+             Orientation="Horizontal" HorizontalOptions="FillAndExpand" 
+             x:Name="control"
+             x:Class="Nootus.Fabric.Mobile.Controls.BorderlessSvgDatePicker">
+    <fabric:BorderlessDatePicker x:Name="datePicker" BackgroundColor="Transparent" HorizontalOptions="FillAndExpand" 
+                            Date="{Binding Date, Source={Reference control}}"
+                            TextColor="{Binding TextColor, Source={Reference control}}" 
+                            Placeholder="{Binding Placeholder, Source={Reference control}}" PlaceholderColor="{Binding PlaceholderColor, Source={Reference control}}" />
+    <svg:SvgCachedImage x:Name="svg" Source="{Binding SvgSource, Source={Reference control}}" 
+                        HeightRequest="{Binding SvgHeightRequest, Source={Reference control}}" WidthRequest="{Binding SvgWidthRequest, Source={Reference control}}">
+        <svgimg:CachedImage.Transformations>
+            <svgtrans:TintTransformation x:Name="svgTrans" EnableSolidColor="true"/>
+        </svgimg:CachedImage.Transformations>
+    </svg:SvgCachedImage>
+</fabric:BorderlessSvgStackLayout>
