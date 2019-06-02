@@ -1,4 +1,6 @@
 ﻿using Android.Content;
+using Android.Graphics.Drawables;
+using Android.Support.V4.View;
 using Nootus.Fabric.Mobile.Controls;
 using Nootus.Fabric.Mobile.Droid.Renderers;
 using Xamarin.Forms;
@@ -9,16 +11,15 @@ namespace Nootus.Fabric.Mobile.Droid.Renderers
 {
     public class GradientLayoutRenderer : VisualElementRenderer<StackLayout>
     {
-        private Color[] Colors { get; set; }
-
-        private GradientColorStackMode Mode { get; set; }
-
         public GradientLayoutRenderer(Context ctx) : base(ctx)
         { }
 
         protected override void DispatchDraw(global::Android.Graphics.Canvas canvas)
         {
-            Android.Graphics.LinearGradient gradient;
+            GradientLayout layout = (GradientLayout)this.Element;
+
+            Color[] Colors = layout.Colors;
+            GradientColorStackMode Mode = layout.Mode;
 
             int[] colors = new int[Colors.Length];
 
@@ -27,6 +28,44 @@ namespace Nootus.Fabric.Mobile.Droid.Renderers
                 colors[i] = Colors[i].ToAndroid().ToArgb();
             }
 
+            // temporary workaround for Android 9 PIE
+            if (Android.OS.Build.VERSION.SdkInt > Android.OS.BuildVersionCodes.O)
+            {
+                GradientDrawable.Orientation orientation;
+
+                switch (Mode)
+                {
+                    default:
+                    case GradientColorStackMode.ToRight:
+                        orientation = GradientDrawable.Orientation.LeftRight;
+                        break;
+                    case GradientColorStackMode.ToTop:
+                        orientation = GradientDrawable.Orientation.BottomTop;
+                        break;
+                    case GradientColorStackMode.ToBottom:
+                        orientation = GradientDrawable.Orientation.TopBottom;
+                        break;
+                    case GradientColorStackMode.ToTopLeft:
+                        orientation = GradientDrawable.Orientation.BrTl;
+                        break;
+                    case GradientColorStackMode.ToTopRight:
+                        orientation = GradientDrawable.Orientation.BlTr;
+                        break;
+                    case GradientColorStackMode.ToBottomLeft:
+                        orientation = GradientDrawable.Orientation.TrBl;
+                        break;
+                    case GradientColorStackMode.ToBottomRight:
+                        orientation = GradientDrawable.Orientation.TlBr;
+                        break;
+                }
+
+                var gradient2 = new GradientDrawable(orientation, colors);
+                ViewCompat.SetBackground(this, gradient2);
+                base.DispatchDraw(canvas);
+                return;
+            }
+
+            Android.Graphics.LinearGradient gradient;
             switch (Mode)
             {
                 default:
@@ -63,29 +102,7 @@ namespace Nootus.Fabric.Mobile.Droid.Renderers
 
             paint.SetShader(gradient);
             canvas.DrawPaint(paint);
-
             base.DispatchDraw(canvas);
-        }
-
-        protected override void OnElementChanged(ElementChangedEventArgs<StackLayout> e)
-        {
-            base.OnElementChanged(e);
-
-            if (e.OldElement != null || Element == null)
-                return;
-
-            try
-            {
-                if (e.NewElement is GradientLayout layout)
-                {
-                    Colors = layout.Colors;
-                    Mode = layout.Mode;
-                }
-            }
-            catch (System.Exception ex)
-            {
-                System.Diagnostics.Debug.WriteLine(@"ERROR:", ex.Message);
-            }
         }
     }
 }

@@ -19,10 +19,11 @@ namespace Nootus.Fabric.Mobile.Services
             }
         }
 
-        public static async Task NavigateToAsync<TViewModel>() where TViewModel : BaseViewModel
+        public static async Task NavigateToAsync<TViewModel>(object navigationData = null) where TViewModel : BaseViewModel
         {
             Page page = await CreatePage(typeof(TViewModel));
-
+            ((TViewModel)page.BindingContext).NavigationData = navigationData;
+            
             if (Application.Current.MainPage is BaseNavigationPage mainPage)
             {
                 await mainPage.PushAsync(page);
@@ -31,6 +32,19 @@ namespace Nootus.Fabric.Mobile.Services
             {
                 Application.Current.MainPage = new BaseNavigationPage(page);
             }
+        }
+
+        public static async Task PushModalAsync<TViewModel>(object navigationData = null) where TViewModel : BaseViewModel
+        {
+            Page page = await CreatePage(typeof(TViewModel));
+            ((TViewModel)page.BindingContext).NavigationData = navigationData;
+
+            await Application.Current.MainPage.Navigation.PushModalAsync(page, true);
+        }
+
+        public static async Task PushModalAsync()
+        {
+            await Application.Current.MainPage.Navigation.PopModalAsync(true);
         }
 
         public static async Task InsertPageBeforeLastAsync<TViewModel>() where TViewModel : BaseViewModel

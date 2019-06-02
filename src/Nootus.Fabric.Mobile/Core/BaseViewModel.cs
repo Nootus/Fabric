@@ -1,7 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Runtime.CompilerServices;
 using System.Threading.Tasks;
 using Xamarin.Forms;
 
@@ -34,5 +31,6 @@ namespace Nootus.Fabric.Mobile.Core
             OnAppearing();
         }
 
+        public object NavigationData { get; set; }
     }
 }

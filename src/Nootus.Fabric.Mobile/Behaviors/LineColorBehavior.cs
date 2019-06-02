@@ -46,11 +46,11 @@ namespace Nootus.Fabric.Mobile.Behaviors
 
             if (hasLine)
             {
-                view.Effects.Add(new EntryLineColorEffect());
+                view.Effects.Add(new LineColorEffect());
             }
             else
             {
-                var entryLineColorEffectToRemove = view.Effects.FirstOrDefault(e => e is EntryLineColorEffect);
+                var entryLineColorEffectToRemove = view.Effects.FirstOrDefault(e => e is LineColorEffect);
                 if (entryLineColorEffectToRemove != null)
                 {
                     view.Effects.Remove(entryLineColorEffectToRemove);

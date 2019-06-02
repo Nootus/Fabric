@@ -6,7 +6,7 @@
 		     xmlns:svgtrans="clr-namespace:FFImageLoading.Transformations;assembly=FFImageLoading.Transformations"
              x:Class="Nootus.Fabric.Mobile.Controls.Svg">
   <ContentView.Content>
-        <svg:SvgCachedImage x:Name="svg">
+        <svg:SvgCachedImage x:Name="svg" HorizontalOptions="Center" VerticalOptions="Center">
             <svgimg:CachedImage.Transformations>
                 <svgtrans:TintTransformation x:Name="svgTrans" EnableSolidColor="true"/>
             </svgimg:CachedImage.Transformations>

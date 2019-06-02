@@ -50,6 +50,7 @@
     <Compile Include="Renderers\BorderlessEntryRenderer.cs" />
     <Compile Include="Renderers\BorderlessTimePickerRenderer.cs" />
     <Compile Include="Renderers\GradientLayoutRenderer.cs" />
+    <Compile Include="Renderers\SvgEntryRenderer.cs" />
     <Compile Include="Renderers\SvgTabbedPageRenderer.cs" />
     <Compile Include="Resources\Resource.designer.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

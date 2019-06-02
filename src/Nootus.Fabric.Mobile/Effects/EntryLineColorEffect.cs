@@ -2,10 +2,12 @@
 
 namespace Nootus.Fabric.Mobile.Effects
 {
-    public class EntryLineColorEffect : RoutingEffect
+    public class LineColorEffect : RoutingEffect
     {
-        public EntryLineColorEffect() : base("Nootus.EntryLineColorEffect")
+        public LineColorEffect() : base("Nootus.EntryLineColorEffect")
         {
         }
+
+        public Color Color { get; set; } = Color.Default;
     }
 }

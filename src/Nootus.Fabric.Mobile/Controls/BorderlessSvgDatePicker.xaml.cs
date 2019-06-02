@@ -17,6 +17,8 @@ namespace Nootus.Fabric.Mobile.Controls
             svgTrans.HexColor = color;
         }
 
+        public BorderlessDatePicker DatePicker => DatePicker;
+
         public static readonly BindableProperty DateProperty = BindableProperty.Create(nameof(Date), typeof(DateTime), typeof(BorderlessSvgDatePicker), default(DateTime), BindingMode.TwoWay);
         public DateTime Date
         {
